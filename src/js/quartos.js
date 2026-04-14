@@ -1,6 +1,7 @@
 import Splide from "@splidejs/splide";
 
 import "scss/styles.scss";
+import "css/quartos.css";
 //import * as bootstrap from "bootstrap";
 import "@splidejs/splide/css";
 
