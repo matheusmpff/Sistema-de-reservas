@@ -21,12 +21,7 @@ else{
 let footer = document.querySelector("footer");
 let desenho = document.querySelector("#desenho")
 const ajustar_footer = () => {
-        
         let altura = img.getBoundingClientRect().height;
-        
-
-        console.log(altura - desenho.getBoundingClientRect().height)
-        console.log("oii")
         footer.style.top = `${altura - desenho.getBoundingClientRect().height}px`;
     }
 
