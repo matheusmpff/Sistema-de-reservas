@@ -1,0 +1,27 @@
+{
+  "name": "ybitu-reservas",
+  "version": "0.1.0",
+  "description": "Um website para o motor de reservas da pousada Ybitu.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheusmpff/Sistema-de-reservas.git"
+  },
+  "author": "Muzza",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matheusmpff/Sistema-de-reservas/issues"
+  },
+  "homepage": "https://github.com/matheusmpff/Sistema-de-reservas#readme",
+  "dependencies": {
+    "@splidejs/splide": "^4.1.4"
+  },
+  "devDependencies": {
+    "webpack": "^5.106.1",
+    "webpack-cli": "^7.0.2"
+  }
+}
