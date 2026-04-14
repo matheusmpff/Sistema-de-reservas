@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/quartos.css">
   <link rel="stylesheet" href="../node_modules/@splidejs/splide/dist/css/themes/splide-default.min.css">
-  <script src="main.js" defer></script>
+  <script src="quartos.js" defer></script>
 </head>
 
 <body>
@@ -41,14 +41,64 @@
     </div>
   </div>
 
-  <section id="quartos-carousel" class="splide" aria-label="Lista dos quartos" hidden>
+  <section id="quartos-carousel" class="splide" aria-label="Lista dos quartos">
     <div class="splide__track">
       <ul class="splide__list">
         <li id="quarto-casal-aba" class="splide__slide">
-          <img src="../images/quartos/QuartoCasal.png" alt="Imagem do quarto de casal">
+          <div id="quarto-casal-aba" class="aba">
+            <img src="../images/quartos/QuartoCasal.png" alt="Foto de um quarto com uma cama de casal">
+            <div class="aba-info">
+              <h2>Quarto de casal</h2>
+              <ul>
+                <li>1 cama de casal</li>
+                <li>1 banheiro</li>
+                <li>Televisão</li>
+                <li>Frigobar</li>
+            </div>
+            <div class="aba-numerador">
+              <p>Quantidade disponível:</p>
+              <div class="aba-mostrador">
+                <p>1</p>
+              </div>
+            </div>
+            <div class="aba-contador">
+              <p>Quantidade de reservas:</p>
+              <button class="subtraction">-</button>
+              <div class="aba-mostrador">
+                <p>1</p>
+              </div>
+              <button class="addition">+</button>
+            </div>
+          </div>
         </li>
         <li id="quarto-triplo-aba" class="splide__slide">
-          <img src="../images/quartos/QuartoTriplo.png" alt="Imagem do quarto triplo">
+          <div id="quarto-triplo-aba" class="aba">
+            <img src="../images/quartos/QuartoTriplo.png"
+              alt="Foto de um quarto com uma cama de casal e uma de solteiro">
+            <div class="aba-info">
+              <h2>Quarto triplo</h2>
+              <ul>
+                <li>1 cama de casal ou 2 de solteiro</li>
+                <li>1 cama de solteiro</li>
+                <li>1 banheiro</li>
+                <li>Televisão</li>
+                <li>Frigobar</li>
+            </div>
+            <div class="aba-numerador">
+              <p>Quantidade disponível:</p>
+              <div class="aba-mostrador">
+                <p>1</p>
+              </div>
+            </div>
+            <div class="aba-contador">
+              <p>Quantidade de reservas:</p>
+              <button class="subtraction">-</button>
+              <div class="aba-mostrador">
+                <p>1</p>
+              </div>
+              <button class="addition">+</button>
+            </div>
+          </div>
         </li>
 
       </ul>
