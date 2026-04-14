@@ -1,5 +1,6 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
 // In Node.js versions prior to native support for import.meta.dirname,
 // derive __dirname from import.meta.url.
@@ -12,9 +13,28 @@ export default {
   entry: {
     quartos: "./src/quartos.js",
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "quartos.bundle.html",
+      template: "./html/quartos.html",
+    }),
+  ],
   output: {
-    filename: "[name].js",
+    filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
   devtool: "inline-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.(png|svg|jpeg|jpg|gif)$/i,
+        type: "asset/resource",
+      },
+    ],
+  },
 };

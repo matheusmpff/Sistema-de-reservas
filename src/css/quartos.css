@@ -1,8 +1,3 @@
-.splide__slide img {
-  width: 100%;
-  height: auto;
-}
-
 body {
   background-color: #F5F0E6;
 }
@@ -21,14 +16,14 @@ h2 {
 .aba {
   display: grid;
   grid-template-columns: 50% auto;
-  grid-template-rows: 550px auto auto;
+  grid-template-rows: 450px auto auto;
   grid-template-areas:
     'imagem-quarto imagem-quarto'
     'info numerador'
     'info contador';
 
-  margin: 15px;
-  padding: 60px 90px;
+  margin: 40px auto;
+  padding: 30px 60px;
   border-radius: 10%;
   width: fit-content;
   box-shadow: 4px 4px 12px black;
@@ -56,16 +51,12 @@ h2 {
     grid-area: numerador;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
 
     margin-right: 0;
     margin-bottom: 2%;
     background-color: #D9D9D9;
     border-radius: 15%;
-
-    div {
-      margin-top: 0;
-    }
   }
 
   .aba-info {
@@ -79,47 +70,46 @@ h2 {
   .aba-contador {
     grid-area: contador;
 
-    display: flex;
+    /*display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-around;*/
 
-    margin-right: 0;
     background-color: #D9D9D9;
     border-radius: 15%;
-
-    button {
-      width: 1.5em;
-      aspect-ratio: 1;
-
-      background-color: inherit;
-      border: solid 2px black;
-      font-size: 2.5em;
-      font-weight: bold;
-    }
-
-    >p {
-      margin-bottom: 0;
-    }
-
-    .aba-mostrador {
-      flex: 1 0 3.5em;
-      width: 3.5em;
-      max-width: 4.2em;
-    }
-
+    margin-top: 6%;
+    margin-right: 0;
   }
 
   .aba-mostrador {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: space-around;
 
-    border: solid 2px black;
-    background-color: white;
-    width: 4.5em;
-    height: 2em;
-    font-size: 2em;
+    margin-top: 0;
+    height: 4.5em;
     font-weight: bold;
+
+    p,
+    button {
+      border: solid 2px black;
+      margin: 0 6px;
+    }
+
+    p {
+      flex: 1 1 40%;
+
+      max-width: 60%;
+      background-color: white;
+      font-size: 3.0em;
+    }
+
+    button {
+      height: 100%;
+      aspect-ratio: 1;
+
+      background-color: inherit;
+      font-size: 3.0em;
+    }
   }
 }
