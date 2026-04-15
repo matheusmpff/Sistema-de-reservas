@@ -1,3 +1,12 @@
+import "css/feedback.scss"
+
+import Logo from "images/logo.png"
+import FooterWave from "images/FooterWave.png"
+
+document.querySelector("#logo").src = Logo;
+document.querySelector("#footer-image").src = FooterWave;
+
+
 let inputImg = document.querySelector("#foto");
 let previa = document.querySelector("#previa");
 
