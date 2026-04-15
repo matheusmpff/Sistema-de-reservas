@@ -9,72 +9,73 @@
 </head>
 
 <body>
-  <header>
-    <nav class="navbar navbar-expand-lg">
-      <div class="container-fluid">
+  <div>
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
 
-        <a class="navbar-brand" href="#">
-          <img id="logo" alt="Logo" height="90" width="104">
-        </a>
+          <a class="navbar-brand" href="#">
+            <img id="logo" alt="Logo" height="90" width="104">
+          </a>
 
-        <!-- Botão hamburguer para mobile -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          <!-- Botão hamburguer para mobile -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="menu">
-          <ul class="navbar-nav">
-            <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">POUSADA YBITU</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">PASSEIOS E EVENTOS</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">CONTATO</a></li>
-            <li id="btn-carrinho" class="nav-item">
-              <button class="nav-link">
-                <div class="square">
-                  <i class="bi bi-arrow-up-right-square-fill"></i>
-                </div>
-                VER CARRINHO
-              </button>
-            </li>
-          </ul>
+          <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="#">HOME</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">POUSADA YBITU</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">PASSEIOS E EVENTOS</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">CONTATO</a></li>
+              <li id="btn-carrinho" class="nav-item">
+                <button class="nav-link">
+                  <div class="square">
+                    <i class="bi bi-arrow-up-right-square-fill"></i>
+                  </div>
+                  VER CARRINHO
+                </button>
+              </li>
+            </ul>
+          </div>
+
         </div>
+      </nav>
+    </header>
 
+    <h1>Reserva em andamento</h1>
+
+    <article id="reserva-etapas">
+      <div id="etapa-data" class="etapa">
+        <h2>Data</h2>
+        <!--<svg width="300" height="40" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0.5 0.5V32.5H194.423L229.5 16.2808L194.423 0.5H0.5Z" fill="#2E8B57" stroke="black" />
+      </svg>-->
       </div>
-    </nav>
-  </header>
-
-  <h1>Reserva em andamento</h1>
-
-  <article id="reserva-etapas">
-    <div id="etapa-data" class="etapa">
-      <h2>Data</h2>
-      <!--<svg width="300" height="40" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div id="etapa-quarto" class="etapa">
+        <h2>Quartos</h2>
+        <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0.5 0.5V32.5H194.423L229.5 16.2808L194.423 0.5H0.5Z" fill="#2E8B57" stroke="black" />
       </svg>-->
-    </div>
-    <div id="etapa-quarto" class="etapa">
-      <h2>Quartos</h2>
-      <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      </div>
+      <div id="etapa-hospedes" class="etapa">
+        <h2>Hóspedes</h2>
+        <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0.5 0.5V32.5H194.423L229.5 16.2808L194.423 0.5H0.5Z" fill="#2E8B57" stroke="black" />
       </svg>-->
-    </div>
-    <div id="etapa-hospedes" class="etapa">
-      <h2>Hóspedes</h2>
-      <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+      </div>
+      <div id="etapa-pagamento" class="etapa">
+        <h2>Pagamento</h2>
+        <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0.5 0.5V32.5H194.423L229.5 16.2808L194.423 0.5H0.5Z" fill="#2E8B57" stroke="black" />
       </svg>-->
-    </div>
-    <div id="etapa-pagamento" class="etapa">
-      <h2>Pagamento</h2>
-      <!--<svg width="231" height="33" viewBox="0 0 231 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0.5 0.5V32.5H194.423L229.5 16.2808L194.423 0.5H0.5Z" fill="#2E8B57" stroke="black" />
-      </svg>-->
-    </div>
-  </article>
+      </div>
+    </article>
 
-  <h2>Escolha os quartos e a quantidade que serão reservados:</h2>
+    <h2>Escolha os quartos e a quantidade que serão reservados:</h2>
 
-  <!--
+    <!--
   <div id="quarto-aba" class="aba" hidden>
     <img src="../images/quartos/QuartoCasal.png" alt="Foto de um quarto com uma cama de casal">
     <div class="aba-info">
@@ -88,109 +89,113 @@
     <div class="aba-numerador">
       <p>Quantidade disponível:</p>
       <div class="aba-mostrador">
-        <p>1</p>
+        <p>3</p>
       </div>
     </div>
     <div class="aba-contador">
       <p>Quantidade de reservas:</p>
       <button class="subtraction">-</button>
       <div class="aba-mostrador">
-        <p>1</p>
+        <p>0</p>
       </div>
       <button class="addition">+</button>
     </div>
   </div>
   -->
 
-  <section id="quartos-carousel" class="splide" aria-label="Lista dos quartos">
-    <div class="splide__track">
-      <ul class="splide__list">
-        <li id="quarto-casal" class="splide__slide">
-          <div id="quarto-casal-aba" class="aba">
-            <img alt="Foto de um quarto com uma cama de casal">
-            <div class="aba-info">
-              <h2>Quarto de casal</h2>
-              <ul>
-                <li>1 cama de casal</li>
-                <li>1 banheiro</li>
-                <li>Televisão</li>
-                <li>Frigobar</li>
-            </div>
-            <div class="aba-numerador">
-              <p>Quantidade disponível:</p>
-              <div class="aba-mostrador">
-                <p>1</p>
+    <section id="quartos-carousel" class="splide" aria-label="Lista dos quartos">
+      <div class="splide__track">
+        <ul class="splide__list">
+          <li id="quarto-casal" class="splide__slide">
+            <div id="quarto-casal-aba" class="aba">
+              <img alt="Foto de um quarto com uma cama de casal">
+              <div class="aba-info">
+                <h2>Quarto de casal</h2>
+                <ul>
+                  <li>1 cama de casal</li>
+                  <li>1 banheiro</li>
+                  <li>Televisão</li>
+                  <li>Frigobar</li>
+              </div>
+              <div class="aba-numerador">
+                <p>Quantidade disponível:</p>
+                <div class="aba-mostrador">
+                  <p>3</p>
+                </div>
+              </div>
+              <div class="aba-contador">
+                <p>Quantidade de reservas:</p>
+                <div class="aba-mostrador">
+                  <button class="subtraction">-</button>
+                  <p>0</p>
+                  <button class="addition">+</button>
+                </div>
               </div>
             </div>
-            <div class="aba-contador">
-              <p>Quantidade de reservas:</p>
-              <div class="aba-mostrador">
-                <button class="subtraction">-</button>
-                <p>1</p>
-                <button class="addition">+</button>
+          </li>
+          <li id="quarto-triplo" class="splide__slide">
+            <div id="quarto-triplo-aba" class="aba">
+              <img alt="Foto de um quarto com uma cama de casal e uma de solteiro">
+              <div class="aba-info">
+                <h2>Quarto triplo</h2>
+                <ul>
+                  <li>1 cama de casal ou 2 de solteiro</li>
+                  <li>1 cama de solteiro</li>
+                  <li>1 banheiro</li>
+                  <li>Televisão</li>
+                  <li>Frigobar</li>
+              </div>
+              <div class="aba-numerador">
+                <p>Quantidade disponível:</p>
+                <div class="aba-mostrador">
+                  <p>3</p>
+                </div>
+              </div>
+              <div class="aba-contador">
+                <p>Quantidade de reservas:</p>
+                <div class="aba-mostrador">
+                  <button class="subtraction">-</button>
+                  <p>0</p>
+                  <button class="addition">+</button>
+                </div>
               </div>
             </div>
-          </div>
-        </li>
-        <li id="quarto-triplo" class="splide__slide">
-          <div id="quarto-triplo-aba" class="aba">
-            <img alt="Foto de um quarto com uma cama de casal e uma de solteiro">
-            <div class="aba-info">
-              <h2>Quarto triplo</h2>
-              <ul>
-                <li>1 cama de casal ou 2 de solteiro</li>
-                <li>1 cama de solteiro</li>
-                <li>1 banheiro</li>
-                <li>Televisão</li>
-                <li>Frigobar</li>
-            </div>
-            <div class="aba-numerador">
-              <p>Quantidade disponível:</p>
-              <div class="aba-mostrador">
-                <p>1</p>
+          </li>
+          <li id="quarto-quadruplo" class="splide__slide">
+            <div id="quarto-quadruplo-aba" class="aba">
+              <img alt="Foto de um quarto com uma cama de casal e duas de solteiro">
+              <div class="aba-info">
+                <h2>Quarto quádruplo</h2>
+                <ul>
+                  <li>1 cama de casal ou 2 de solteiro</li>
+                  <li>2 cama de solteiro</li>
+                  <li>1 banheiro</li>
+                  <li>Televisão</li>
+                  <li>Frigobar</li>
+              </div>
+              <div class="aba-numerador">
+                <p>Quantidade disponível:</p>
+                <div class="aba-mostrador">
+                  <p>3</p>
+                </div>
+              </div>
+              <div class="aba-contador">
+                <p>Quantidade de reservas:</p>
+                <div class="aba-mostrador">
+                  <button class="subtraction">-</button>
+                  <p>0</p>
+                  <button class="addition">+</button>
+                </div>
               </div>
             </div>
-            <div class="aba-contador">
-              <p>Quantidade de reservas:</p>
-              <div class="aba-mostrador">
-                <button class="subtraction">-</button>
-                <p>1</p>
-                <button class="addition">+</button>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li id="quarto-quadruplo" class="splide__slide">
-          <div id="quarto-quadruplo-aba" class="aba">
-            <img alt="Foto de um quarto com uma cama de casal e duas de solteiro">
-            <div class="aba-info">
-              <h2>Quarto quádruplo</h2>
-              <ul>
-                <li>1 cama de casal ou 2 de solteiro</li>
-                <li>2 cama de solteiro</li>
-                <li>1 banheiro</li>
-                <li>Televisão</li>
-                <li>Frigobar</li>
-            </div>
-            <div class="aba-numerador">
-              <p>Quantidade disponível:</p>
-              <div class="aba-mostrador">
-                <p>1</p>
-              </div>
-            </div>
-            <div class="aba-contador">
-              <p>Quantidade de reservas:</p>
-              <div class="aba-mostrador">
-                <button class="subtraction">-</button>
-                <p>1</p>
-                <button class="addition">+</button>
-              </div>
-            </div>
-          </div>
-        </li>
+          </li>
 
-      </ul>
-    </div>
-  </section>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <footer>
+  </footer>
+</body>
 
 </html>

@@ -21,3 +21,29 @@ document.querySelector("#quarto-casal-aba img").src = QuartoCasalImg;
 document.querySelector("#quarto-triplo-aba img").src = QuartoTriploImg;
 document.querySelector("#quarto-quadruplo-aba img").src = QuartoQuadruploImg;
 //document.querySelector('#QuartoCasal').src = QuartoCasalImg;
+
+// inicializar os botoes dos contadores
+const counters = document.getElementsByClassName("aba-contador");
+
+for (const counter of counters) {
+  const sum = counter.querySelector(".addition");
+  const minus = counter.querySelector(".subtraction");
+  const number_viewer = counter.querySelector(".aba-mostrador p");
+  const max_number = Number(counter.parentElement.querySelector(".aba-numerador .aba-mostrador p").innerText);
+
+  sum.addEventListener("click", (ev) => {
+    let num = Number(number_viewer.innerText);
+    if (num < max_number) {
+      num = num + 1;
+    }
+    number_viewer.innerText = String(num);
+  });
+  
+  minus.addEventListener("click", (ev) => {
+    let num = Number(number_viewer.innerText);
+    if (num > 0) {
+      num = num - 1;
+    }
+    number_viewer.innerText = String(num);
+  })
+}
