@@ -84,13 +84,16 @@ h1 {
 }
 
 .form-part {
-  margin-top: 12px;
+  margin-top: 6px;
   display: flex;
 
+  & label {
+    margin-bottom: -18px;
+  }
 
   & input {
     width: 100%;
-    height: 40px;
+    height: 30px;
     padding-left: 10px;
     border-radius: 100px;
   }
@@ -99,11 +102,11 @@ h1 {
     resize: none;
     padding: 10px;
     border-radius: 20px;
-    height: 156px;
+    height: 116px;
   }
 
   & .left {
-    margin-left: 20px;
+    margin-left: 10px;
     display: flex;
     width: 100%;
     flex-direction: column;
@@ -125,7 +128,7 @@ form {
 .envio {
   align-self: center;
   background-color: #272623;
-  margin-top: 16px;
+  margin-top: 5px;
   background-color: var(--cor-primaria);
   color: var(--cor-background);
   padding: 10px 16px;
@@ -210,6 +213,7 @@ footer img {
     display: flex;
 
     & label {
+      margin-bottom: -18px;
       font-size: 11px;
     }
 
@@ -309,6 +313,7 @@ footer img {
     display: flex;
 
     & label {
+      margin-bottom: -18px;
       font-size: 10px;
     }
 
