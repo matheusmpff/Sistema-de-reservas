@@ -148,52 +148,66 @@ article#reserva-mini-etapa {
 
 main {
   display: flex;
-  flex-direction: column;
-
-  margin: 30px 20px;
+  margin: 80px 20px;
 
   section {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     height: fit-content;
-
+    p{
+      margin-top: 16px;
+      width: 524px;
+    }
   }
 
   aside {
     display: flex;
     flex-direction: column;
-
-    width: 250px;
+    align-items: center;
+    color: var(--branco);
+    width: 343px;
+    height: 537px;
     background-color: var(--cor-primaria);
+    border-radius: 20px;
 
     div#reserva-imagem {
       margin: 5px;
     }
 
+   .alinhar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+    
     div#reserva-titulo {
       color: var(--branco);
+      display: flex;
+      justify-content: space-around;
     }
 
     div#reserva-opcoes {
-      border-top: solid 6px var(--branco);
-      border-bottom: solid 6px var(--branco);
-
+      border-top: solid 1px var(--branco);
+      width: 100%;
       .opcao-reserva {
-        display: grid;
-        grid-template-columns: auto 40px;
-        grid-template-rows: 2em 2em 2em;
-        grid-template-areas:
-          "header icones"
-          "data data"
-          "quartos .";
+        border-bottom: solid 1px var(--branco);
+        
       }
     }
+    
 
-    div#reserva-botao {
+    #reserva-botao {
+      border: 0px;
+      text-decoration: none;
       margin: 20px;
-
-      button {
-        border-radius: 15%;
-        background-color: var(--cor-secundaria);
-      }
+      border-radius: 10px;
+      padding: 8px 8px;
+      color: var(--branco);
+      cursor: pointer;
+      background-color: var(--cor-secundaria);
     }
   }
 }
@@ -208,4 +222,77 @@ footer {
   background-image: url("images/FooterWave.png");
   background-size: 100vw 148px;
   background-repeat: no-repeat;
+}
+
+@media (max-width:990px){
+  main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 70px 20px;
+
+  section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    p{
+      margin-top: 16px;
+      width: 524px;
+    }
+  }
+
+  aside {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--branco);
+    width: 343px;
+    height: 537px;
+    background-color: var(--cor-primaria);
+    border-radius: 20px;
+
+    div#reserva-imagem {
+      margin: 5px;
+    }
+
+   .alinhar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   }
+    
+    div#reserva-titulo {
+      color: var(--branco);
+      display: flex;
+      justify-content: space-around;
+    }
+
+    div#reserva-opcoes {
+      border-top: solid 1px var(--branco);
+      width: 100%;
+      .opcao-reserva {
+        border-bottom: solid 1px var(--branco);
+        
+      }
+    }
+    
+
+    #reserva-botao {
+      border: 0px;
+      text-decoration: none;
+      margin: 20px;
+      border-radius: 10px;
+      padding: 8px 8px;
+      color: var(--branco);
+      cursor: pointer;
+      background-color: var(--cor-secundaria);
+    }
+  }
+}
+
+
 }
