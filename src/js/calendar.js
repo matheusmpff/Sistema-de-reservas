@@ -1,4 +1,5 @@
 import "css/calendar.scss"
+import * as bootstrap from "bootstrap";
 
 import Logo from "images/logo.png";
 import FooterWave from "images/FooterWave.png";
@@ -7,9 +8,14 @@ document.querySelector("#footer-image").src = FooterWave;
 document.querySelector("#logo").src = Logo;
 
 // redirect to next step
+let next_step = "./quartos.bundle.html";
 const progress_bar = document.querySelector("article#reserva-etapas");
 progress_bar.addEventListener("click", (ev) => {
-    window.location.href = "./quartos.bundle.html";
+    window.location.href = next_step;
+})
+const mini_progress_bar = document.querySelector("article#reserva-mini-etapas");
+mini_progress_bar.addEventListener("click", (ev) => {
+    window.location.href = next_step;
 })
 
 

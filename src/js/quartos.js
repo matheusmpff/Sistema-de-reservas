@@ -1,7 +1,7 @@
 import Splide from "@splidejs/splide";
 
 import "css/quartos.scss";
-//import * as bootstrap from "bootstrap";
+import * as bootstrap from "bootstrap";
 import "@splidejs/splide/css";
 
 import QuartoCasalImg from "images/quartos/QuartoCasal.png";
@@ -31,9 +31,14 @@ document.querySelector("#quarto-quadruplo-aba img").src = QuartoQuadruploImg;
 //document.querySelector('#QuartoCasal').src = QuartoCasalImg;
 
 // mandar para proxima etapa
+let next_step = "./pagamento.bundle.html";
 const progress_bar = document.querySelector("article#reserva-etapas");
 progress_bar.addEventListener("click", (ev) => {
-  window.location.href = "./pagamento.bundle.js";
+    window.location.href = next_step;
+})
+const mini_progress_bar = document.querySelector("article#reserva-mini-etapas");
+mini_progress_bar.addEventListener("click", (ev) => {
+    window.location.href = next_step;
 })
 
 // inicializar os botoes dos contadores
