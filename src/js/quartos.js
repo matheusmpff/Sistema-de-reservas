@@ -30,6 +30,12 @@ document.querySelector("#quarto-triplo-aba img").src = QuartoTriploImg;
 document.querySelector("#quarto-quadruplo-aba img").src = QuartoQuadruploImg;
 //document.querySelector('#QuartoCasal').src = QuartoCasalImg;
 
+// mandar para proxima etapa
+const progress_bar = document.querySelector("article#reserva-etapas");
+progress_bar.addEventListener("click", (ev) => {
+  window.location.href = "./pagamento.bundle.js";
+})
+
 // inicializar os botoes dos contadores
 const counters = document.getElementsByClassName("aba-contador");
 

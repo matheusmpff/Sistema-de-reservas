@@ -6,6 +6,13 @@ import FooterWave from "images/FooterWave.png";
 document.querySelector("#footer-image").src = FooterWave;
 document.querySelector("#logo").src = Logo;
 
+// redirect to next step
+const progress_bar = document.querySelector("article#reserva-etapas");
+progress_bar.addEventListener("click", (ev) => {
+    window.location.href = "./quartos.bundle.html";
+})
+
+
 $(function () {
     // Referência da div principal onde o calendário será injetado
     const calendarioContainer = $('.calendario');
