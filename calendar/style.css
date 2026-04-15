@@ -105,62 +105,56 @@ button:hover {
 }
 
 article#reserva-etapas {
-    max-height: 100%;
-    display: flex;
-    align-content: center;
-    justify-content: center;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 
 .etapa {
-    margin: 0 -32px;
-    width: 300px;
-    height: 43px;
+  margin: 0 -32px;
+  width: 300px;
+  height: 43px;
 
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-    position: relative;
-
-    h2 {
-        position: absolute;
-        right: 80px;
-        font-size: 1.8em;
-        font-weight: bold;
-    }
-
+  h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
 }
 
 .etapa#etapa-data {
-    z-index: 3;
-    background-image: url("images/seta_quarto_amarelo.svg");
+  z-index: 3;
+  background-image: url("images/seta_quarto_amarelo.svg");
 
-    h2 {
-        margin-right: 32px;
-    }
+  h2 {
+    margin-right: 16px;
+  }
 }
 
 .etapa#etapa-quarto {
-    z-index: 2;
-    background-image: url("images/seta_quarto_cinza.svg");
+  z-index: 2;
+  background-image: url("images/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-hospedes {
-    z-index: 1;
-    background-image: url("images/seta_quarto_cinza.svg");
+  z-index: 1;
+  display: none;
 }
 
 .etapa#etapa-pagamento {
-    margin: 0px -20px;
-    z-index: 0;
-    background-image: url("images/seta_quarto_cinza.svg");
+  margin: 0 -60px;
+  z-index: 0;
+  background-image: url("images/seta_pagamento_cinza.svg");
 
-    h2 {
-        margin-left: 70px;
-    }
+  h2 {
+    margin-left: 70px;
+  }
 }
 
 .main {
@@ -170,6 +164,26 @@ article#reserva-etapas {
     flex-direction: column;
     align-items: center;
 }
+
+/* .calendario {
+    height: auto;
+    min-height: 444px;
+    width: 852px;
+    background-color: var(--cor-background);
+    box-shadow: 0px 80px 120px rgba(0, 0, 0, 0.50);
+    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50);
+    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.50);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+
+/* ===== CALENDÁRIO - Ajustes para ficar igual ao design ===== */
+
+/* Container principal */
 .calendario {
     height: auto;
     min-height: 444px;
@@ -185,7 +199,7 @@ article#reserva-etapas {
     align-items: center;
 }
 
-
+/* Wrapper do daterangepicker */
 .calendario .daterangepicker {
     position: relative !important;
     top: 0 !important;
@@ -200,40 +214,106 @@ article#reserva-etapas {
     background: transparent !important;
 }
 
-.calendario .daterangepicker:before, 
+/* Remove triângulo */
+.calendario .daterangepicker:before,
 .calendario .daterangepicker:after {
-    display: none !important; /* Remove o triângulo do balão */
+    display: none !important;
 }
 
-/* 2. Ajustar os meses para ocuparem 50% cada */
+/* Cada mês ocupa 50% */
 .calendario .drp-calendar {
     float: none !important;
     width: 50% !important;
     max-width: 50% !important;
-    height: 100% !important;
-    padding: 10px !important;
+    padding: 16px !important;
 }
 
-/* 3. Estilização das Datas (Cores do Figma) */
-.calendario .daterangepicker td.active, 
+/* Divisor entre os dois calendários */
+.calendario .drp-calendar.left {
+    border-right: 1px solid #e0e0e0 !important;
+}
+
+/* Header do mês (setas + nome do mês) */
+.calendario .daterangepicker th.month {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: var(--preto) !important;
+    letter-spacing: 0.5px;
+}
+
+/* Setas prev/next */
+.calendario .daterangepicker .prev span,
+.calendario .daterangepicker .next span {
+    border-color: var(--preto) !important;
+}
+
+.calendario .daterangepicker th.prev,
+.calendario .daterangepicker th.next {
+    color: var(--preto) !important;
+    font-size: 1.2rem;
+}
+
+/* Dias da semana (Mo, Tu, We...) */
+.calendario .daterangepicker th.dow {
+    color: #9e9e9e !important;
+    font-weight: 600 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase;
+    padding: 8px 0 !important;
+}
+
+/* Células de datas */
+.calendario .daterangepicker td {
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    border-radius: 4px !important;
+    height: 36px !important;
+    width: 36px !important;
+    text-align: center;
+    color: var(--preto) !important;
+}
+
+/* Dias fora do mês */
+.calendario .daterangepicker td.off {
+    color: #cccccc !important;
+}
+
+/* Data ativa (check-in / check-out) */
+.calendario .daterangepicker td.active,
 .calendario .daterangepicker td.active:hover {
-    background-color: var(--cor-primaria) !important; /* Verde */
+    background-color: var(--cor-primaria) !important;
     color: var(--branco) !important;
-    border-radius: 4px;
+    border-radius: 4px !important;
 }
 
+/* Período entre check-in e check-out */
 .calendario .daterangepicker td.in-range {
-    background-color: #e8f3ef !important; /* Verde clarinho para o meio do range */
+    background-color: #e8f3ef !important;
     color: var(--cor-primaria) !important;
+    border-radius: 0 !important;
 }
 
+/* Hover */
 .calendario .daterangepicker td.available:hover {
-    background-color: var(--cor-secundaria) !important; /* Amarelo no hover */
+    background-color: var(--cor-secundaria) !important;
+    color: var(--preto) !important;
+    border-radius: 4px !important;
 }
 
-/* 4. Esconder botões e inputs de texto do topo se necessário */
-.calendario .drp-buttons, 
-.calendario .daterangepicker .drp-selected {
+/* Esconder botões e inputs desnecessários */
+.calendario .drp-buttons,
+.calendario .daterangepicker .drp-selected,
+.calendario .daterangepicker .ranges {
     display: none !important;
 }
 
+/* Dropdowns de mês/ano (select) */
+.calendario .daterangepicker select.monthselect,
+.calendario .daterangepicker select.yearselect {
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    border: none !important;
+    background: transparent !important;
+    cursor: pointer;
+    appearance: auto;
+}
