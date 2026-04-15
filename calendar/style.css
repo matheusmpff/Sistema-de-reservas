@@ -25,12 +25,12 @@ header {
 }
 
 .navbar {
-    height: 20vh;                        
-    background-color: var(--cor-background) !important; 
+    height: 15vh;
+    background-color: var(--cor-background) !important;
     padding: 0 2rem;
 }
 
-.navbar-nav{
+.navbar-nav {
     margin-left: 10%;
     width: 100%;
     display: flex;
@@ -82,7 +82,7 @@ footer {
     width: 100vw;
 }
 
-footer img{
+footer img {
     width: 100vw;
 }
 
@@ -95,56 +95,145 @@ button:hover {
     border: solid 1px var(--cor-secundaria);
 }
 
-article#reserva-etapas {
-  display: flex;
-  align-content: center;
-  justify-content: center;
+.barra-progresso {
+    height: auto;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-  margin: 30px 0;
+article#reserva-etapas {
+    max-height: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+
+    margin: 30px 0;
 }
 
 
 .etapa {
-  margin: 0 -32px;
-  width: 300px;
-  height: 43px;
+    margin: 0 -32px;
+    width: 300px;
+    height: 43px;
 
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-  h2 {
-    font-size: 1.8em;
-    font-weight: bold;
-  }
+    position: relative;
+
+    h2 {
+        position: absolute;
+        right: 80px;
+        font-size: 1.8em;
+        font-weight: bold;
+    }
+
 }
 
 .etapa#etapa-data {
-  z-index: 3;
-  background-image: url("../images/seta_data_verde.svg");
+    z-index: 3;
+    background-image: url("images/seta_quarto_amarelo.svg");
 
-  h2 {
-    margin-right: 16px;
-  }
+    h2 {
+        margin-right: 32px;
+    }
 }
 
 .etapa#etapa-quarto {
-  z-index: 2;
-  background-image: url("../images/seta_quarto_amarelo.svg");
+    z-index: 2;
+    background-image: url("images/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-hospedes {
-  z-index: 1;
-  display: none;
+    z-index: 1;
+    background-image: url("images/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-pagamento {
-  margin: 0 -60px;
-  z-index: 0;
-  background-image: url("../images/seta_pagamento_cinza.svg");
+    margin: 0px -20px;
+    z-index: 0;
+    background-image: url("images/seta_quarto_cinza.svg");
 
-  h2 {
-    margin-left: 70px;
-  }
+    h2 {
+        margin-left: 70px;
+    }
+}
+
+.main {
+    height: 700px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.calendario {
+    height: auto;
+    min-height: 444px;
+    width: 852px;
+    background-color: var(--cor-background);
+    box-shadow: 0px 80px 120px rgba(0, 0, 0, 0.50);
+    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50);
+    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.50);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.calendario .daterangepicker {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    flex-direction: row;
+    flex: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+.calendario .daterangepicker:before, 
+.calendario .daterangepicker:after {
+    display: none !important; /* Remove o triângulo do balão */
+}
+
+/* 2. Ajustar os meses para ocuparem 50% cada */
+.calendario .drp-calendar {
+    float: none !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    height: 100% !important;
+    padding: 10px !important;
+}
+
+/* 3. Estilização das Datas (Cores do Figma) */
+.calendario .daterangepicker td.active, 
+.calendario .daterangepicker td.active:hover {
+    background-color: var(--cor-primaria) !important; /* Verde */
+    color: var(--branco) !important;
+    border-radius: 4px;
+}
+
+.calendario .daterangepicker td.in-range {
+    background-color: #e8f3ef !important; /* Verde clarinho para o meio do range */
+    color: var(--cor-primaria) !important;
+}
+
+.calendario .daterangepicker td.available:hover {
+    background-color: var(--cor-secundaria) !important; /* Amarelo no hover */
+}
+
+/* 4. Esconder botões e inputs de texto do topo se necessário */
+.calendario .drp-buttons, 
+.calendario .daterangepicker .drp-selected {
+    display: none !important;
 }
 

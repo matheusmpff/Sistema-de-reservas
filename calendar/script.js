@@ -1,10 +1,13 @@
 $(function () {
-    // Cria um input escondido e anexa dentro da div
-    $('#calendar-inline').append('<input type="text" id="drp-hidden" style="display:none">');
+    // Referência da div principal onde o calendário será injetado
+    const calendarioContainer = $('.calendario');
 
-    $('#drp-hidden').daterangepicker({
-        parentEl: '#calendar-inline',  // ← renderiza dentro da sua div
-        inline: true,
+    // Inicializa o daterangepicker
+    calendarioContainer.daterangepicker({
+        parentEl: '.calendario',    // Define onde o HTML do calendário será renderizado
+        alwaysShowCalendars: true,  // Força a exibição dos dois meses lado a lado
+        autoApply: true,            // Aplica a seleção sem precisar do botão "Confirmar"
+        inline: true,               // Tenta manter o fluxo inline (ajudado pelo CSS)
         opens: 'center',
         locale: {
             format: 'DD/MM/YYYY',
@@ -18,17 +21,26 @@ $(function () {
             ],
             firstDay: 1
         },
-        minDate: moment(),
+        minDate: moment(),          // Impede reserva em datas passadas
         showDropdowns: true,
-        linkedCalendars: false
+        linkedCalendars: false      // Permite que os calendários mostrem meses diferentes de forma independente
     });
 
-    // Captura a seleção
-    $('#drp-hidden').on('apply.daterangepicker', function(ev, picker) {
+    // --- O PULO DO GATO ---
+    // 1. Força o calendário a abrir imediatamente ao carregar a página
+    calendarioContainer.data('daterangepicker').show();
+
+    // 2. Remove o evento que fecha o calendário ao clicar fora dele
+    $(document).off('click.daterangepicker');
+
+    // Captura a seleção de datas para o seu sistema de reserva
+    calendarioContainer.on('apply.daterangepicker', function(ev, picker) {
         const start = picker.startDate.format('DD/MM/YYYY');
         const end   = picker.endDate.format('DD/MM/YYYY');
         const noites = picker.endDate.diff(picker.startDate, 'days');
+        
         console.log('Check-in:', start);
-        console.log('Check-out:', end, '— Noites:', noites);
+        console.log('Check-out:', end);
+        console.log('Total de Noites:', noites);
     });
 });
