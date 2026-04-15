@@ -1,3 +1,4 @@
+@import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
 :root {
@@ -153,7 +154,7 @@ article#reserva-mini-etapa {
 .aba {
   display: grid;
   grid-template-columns: 50% auto;
-  grid-template-rows: 450px auto auto;
+  grid-template-rows: 220px auto auto;
   grid-template-areas:
     'imagem-quarto imagem-quarto'
     'info numerador'
@@ -165,6 +166,7 @@ article#reserva-mini-etapa {
   width: fit-content;
   background-color: var(--cor-background);
   box-shadow: 4px 4px 12px black;
+  font-size: 0.5em;
 
   img {
     grid-area: imagem-quarto;
@@ -268,6 +270,27 @@ article#reserva-mini-etapa {
       transition-duration: 0.2s;
       border: solid 4px var(--cor-primaria);
     }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .aba {
+    grid-template-rows: 450px auto auto;
+    font-size: 1em;
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .aba {
+    grid-template-rows: 320px auto auto;
+    font-size: 0.7em;
+  }
+}
+
+@include media-breakpoint-up(xxl) {
+  .aba {
+    grid-template-rows: 450px auto auto;
+    font-size: 1em;
   }
 }
 

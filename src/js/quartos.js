@@ -1,7 +1,6 @@
 import Splide from "@splidejs/splide";
 
-import "scss/styles.scss";
-import "css/quartos.css";
+import "css/quartos.scss";
 //import * as bootstrap from "bootstrap";
 import "@splidejs/splide/css";
 
@@ -13,6 +12,15 @@ import Logo from "images/logo.png";
 new Splide( ".splide", {
   perPage: 2,
   perMove: 1,
+  i18n: {
+    prev: "Aba anterior",
+    next: "Próxima aba",
+  },
+  breakpoints: {
+    1200: {
+      perPage: 1,
+    },
+  }
 } ).mount();
 //  arrowPath: 'M11 20.3152L19.3152 12M11 20.3152H27.6304M11 20.3152L19.3152 27.4425',
 
