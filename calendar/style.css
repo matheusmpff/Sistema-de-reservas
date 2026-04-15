@@ -148,39 +148,3 @@ article#reserva-etapas {
   }
 }
 
-.daterangepicker .applyBtn {
-    background-color: var(--cor-primaria) !important;
-    border-color: var(--cor-primaria) !important;
-}
-
-.daterangepicker td.active,
-.daterangepicker td.active:hover {
-    background-color: var(--cor-primaria) !important;
-    border-color: var(--cor-primaria) !important;
-}
-
-.daterangepicker td.in-range {
-    background-color: #c5e0d4 !important;
-    color: var(--cor-terciaria) !important;
-}
-
-#periodo-estadia {
-    border: 2px solid var(--cor-primaria);
-    border-radius: 8px;
-    padding: 10px 16px;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: var(--branco);
-    text-align: center;
-    width: 280px;
-}
-
-#calendar-inline .daterangepicker {
-    position: relative !important;
-    display: block !important;
-    float: none !important;
-    top: auto !important;
-    left: auto !important;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    border-radius: 12px;
-}
