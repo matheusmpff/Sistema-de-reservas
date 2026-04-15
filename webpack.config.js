@@ -14,6 +14,7 @@ export default {
   entry: {
     quartos: "./src/js/quartos.js",
     login: "./src/js/login.js",
+    cadastro: "./src/js/cadastro.js",
   },
   resolve: {
     modules: [
@@ -31,6 +32,11 @@ export default {
       filename: "login.bundle.html",
       template: "./src/login.html",
       chunks: ["login"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "cadastro.bundle.html",
+      template: "./src/cadastro.html",
+      chunks: ["cadastro"],
     }),
   ],
   output: {
