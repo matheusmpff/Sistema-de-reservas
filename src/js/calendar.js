@@ -1,3 +1,11 @@
+import "css/calendar.scss"
+
+import Logo from "images/logo.png";
+import FooterWave from "images/FooterWave.png";
+
+document.querySelector("#footer-image").src = FooterWave;
+document.querySelector("#logo").src = Logo;
+
 $(function () {
     // Referência da div principal onde o calendário será injetado
     const calendarioContainer = $('.calendario');

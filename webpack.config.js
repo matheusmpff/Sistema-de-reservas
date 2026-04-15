@@ -16,6 +16,7 @@ export default {
     login: "./src/js/login.js",
     cadastro: "./src/js/cadastro.js",
     feedback: "./src/js/feedback.js",
+    calendar: "./src/js/calendar.js",
   },
   resolve: {
     modules: [
@@ -43,6 +44,11 @@ export default {
       filename: "feedback.bundle.html",
       template: "./src/feedback.html",
       chunks: ["feedback"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "calendar.bundle.html",
+      template: "./src/calendar.html",
+      chunks: ["calendar"],
     }),
   ],
   output: {
