@@ -1,0 +1,481 @@
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --cor-background: #F5F0E6;
+  --branco: #ffffff;
+  --preto: #000000;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
+
+body {
+  background-color: var(--cor-background) !important;
+  margin: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+header {
+  width: 100vw;
+}
+
+.navbar {
+  min-height: 80px;
+  padding: 10px 2rem;
+  background-color: var(--cor-background) !important;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+.navbar-brand {
+  margin-left: 5%;
+  font-size: 1.8rem;
+  color: var(--cor-secundaria) !important;
+  width: 104px;
+  height: 90px;
+}
+
+.nav-link {
+  color: var(--preto) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#btn-carrinho .nav-link {
+  padding: 10px 16px;
+  width: auto;
+  height: auto;
+  background-color: var(--cor-primaria);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--cor-background) !important;
+}
+
+#btn-carrinho i {
+  font-size: 42.25px;
+  color: var(--cor-secundaria);
+  margin-right: 1rem;
+}
+
+
+button {
+  transition-duration: 0.6s !important;
+}
+
+button:hover {
+  transform: scale(1.1) !important;
+  border: solid 1px var(--cor-secundaria);
+}
+
+.barra-progresso {
+  height: auto;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+article#reserva-etapas {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  margin: 30px 0;
+}
+
+h2 {
+  text-align: center;
+}
+
+.etapa {
+  margin: 0 -32px;
+  width: 300px;
+  height: 43px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+}
+
+.etapa#etapa-data {
+  z-index: 3;
+  background-image: url("images/seta_quarto_amarelo.svg");
+
+  h2 {
+    margin-right: 16px;
+  }
+}
+
+.etapa#etapa-quarto {
+  z-index: 2;
+  background-image: url("images/seta_quarto_cinza.svg");
+}
+
+.etapa#etapa-hospedes {
+  z-index: 1;
+  display: none;
+}
+
+.etapa#etapa-pagamento {
+  margin: 0 -60px;
+  z-index: 0;
+  background-image: url("images/seta_pagamento_cinza.svg");
+
+  h2 {
+    margin-left: 70px;
+  }
+}
+
+article#reserva-mini-etapa {
+  background-image: url("../images/mini_etapa.svg");
+  background-size: 240px 50px;
+  background-repeat: no-repeat;
+  background-color: var(--cor-primaria);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 240px;
+  height: 50px;
+  margin: 30px auto;
+
+  color: var(--branco);
+}
+
+.main {
+  min-height: 700px;
+  height: auto;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.calendario {
+  height: auto;
+  min-height: 444px;
+  width: 100%;
+  max-width: 852px;
+
+  background-color: var(--cor-background);
+  box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50), -10px 10px 40px rgba(0, 0, 0, 0.50);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Wrapper do daterangepicker */
+.calendario .daterangepicker {
+  position: relative !important;
+  top: 0 !important;
+  left: 0 !important;
+  display: flex !important;
+  flex-direction: row;
+  flex: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.calendario .calendar-table {
+  height: 100%;
+  background-color: var(--cor-background) !important;
+  border: none !important;
+}
+
+.calendario .table-condensed {
+  height: 100% !important;
+}
+
+.calendario .table-condensed thead th {
+  position: relative;
+}
+
+.calendario table {
+  border-collapse: separate !important;
+  /* Permite o uso de border-spacing */
+  border-spacing: 4px !important;
+  /* gap entre células */
+  table-layout: fixed !important;
+  /* Garante que todas as colunas tenham o mesmo tamanho */
+  width: 100% !important;
+}
+
+/* Remove triângulo */
+.calendario .daterangepicker:before,
+.calendario .daterangepicker:after {
+  display: none !important;
+}
+
+/* Cada mês ocupa 50% */
+.calendario .drp-calendar {
+  float: none !important;
+  width: 50% !important;
+  max-width: 50% !important;
+  padding: 16px !important;
+}
+
+
+/* Header do mês (setas + nome do mês) */
+.calendario .daterangepicker th.month {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--preto) !important;
+  letter-spacing: 0.5px;
+}
+
+/* Setas prev/next */
+.calendario .daterangepicker .prev span,
+.calendario .daterangepicker .next span {
+  height: 12px;
+  width: 12px;
+  font-size: 300px !important;
+  border-color: var(--cor-primaria) !important;
+  position: absolute;
+}
+
+.calendario .daterangepicker .prev span {
+  left: 12px;
+}
+
+.calendario .daterangepicker .next span {
+  right: 12px;
+}
+
+.calendario .daterangepicker th.prev,
+.calendario .daterangepicker th.next {
+  height: 32px !important;
+  width: 32px !important;
+  color: var(--cor-primaria) !important;
+  font-size: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--branco);
+  border-radius: 50%;
+  position: absolute;
+  top: 26px;
+}
+
+.calendario .daterangepicker th.next {
+  right: 20px;
+}
+
+/* Dias da semana (Mo, Tu, We...) */
+.calendario .daterangepicker th.dow {
+  color: #9e9e9e !important;
+  font-weight: 600 !important;
+  font-size: 0.85rem !important;
+  text-transform: uppercase;
+  padding: 8px 0 !important;
+}
+
+.calendario .daterangepicker td {
+  font-size: 0.95rem !important;
+  font-weight: bolder !important;
+  border-radius: 8px !important;
+  width: 14%;
+  height: auto;
+  aspect-ratio: 1/1;
+  text-align: center;
+  color: var(--preto) !important;
+}
+
+.calendario .daterangepicker td.available {
+  background-color: var(--branco) !important;
+}
+
+
+.calendario .daterangepicker td.off {
+  background-color: var(--cor-background) !important;
+  color: #cccccc !important;
+}
+
+.calendario .daterangepicker td.active,
+.calendario .daterangepicker td.active:hover {
+  background-color: var(--cor-primaria) !important;
+  color: var(--branco) !important;
+  border-radius: 8px !important;
+}
+
+.calendario .daterangepicker td.active::before {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: #bcbcbc;
+
+}
+
+/* Período entre check-in e check-out */
+.calendario .daterangepicker td.in-range {
+  background-color: #bcbcbc !important;
+  color: var(--cor-primaria) !important;
+  border-radius: 0 !important;
+}
+
+/* Hover */
+.calendario .daterangepicker td.available:hover {
+  background-color: var(--cor-secundaria) !important;
+  color: var(--preto) !important;
+  border-radius: 4px !important;
+}
+
+/* Esconder botões e inputs desnecessários */
+.calendario .drp-buttons,
+.calendario .daterangepicker .drp-selected,
+.calendario .daterangepicker .ranges {
+  display: none !important;
+}
+
+/* Arrumar o header do calendário*/
+.calendario .daterangepicker select.monthselect,
+.calendario .daterangepicker select.yearselect {
+  width: auto;
+  min-width: 0;
+  font-weight: 700 !important;
+  font-size: 1.5rem !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 10px 25px 10px 10px !important;
+  margin-bottom: 5px !important;
+  background: var(--branco) !important;
+  cursor: pointer;
+
+  /* Remover setinha padrão */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Adicionar ícone personalizado */
+  background-image: url('images/calendar/caret-down-fill.svg') !important;
+  background-repeat: no-repeat !important;
+  background-position: right 5px center !important;
+  background-size: 15px !important;
+}
+
+/*remover o foco padrão */
+.calendario .daterangepicker select.monthselect:focus {
+  outline: none;
+}
+
+footer {
+  width: 100vw;
+}
+
+footer img {
+  width: 100%;
+  height: auto;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 992px) {
+
+  .calendario .daterangepicker {
+    flex-direction: column !important;
+  }
+
+  .calendario .drp-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .calendario .daterangepicker td {
+    max-width: 30px !important;
+    max-height: 30px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .etapa {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  article#reserva-etapas {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    margin-left: 0;
+  }
+
+
+  .calendario {
+    padding: 10px;
+  }
+
+  /* Reduz ainda mais no celular pequeno */
+  .calendario .daterangepicker td {
+    font-size: 0.75rem !important;
+  }
+
+  .calendario .daterangepicker th.next {
+    right: 5px;
+  }
+}
+
+@media (max-width: 390px) {
+  .navbar-brand {
+    margin-left: 0;
+  }
+
+
+  .calendario {
+    padding: 0px;
+  }
+
+  /* Reduz ainda mais no celular pequeno */
+  .calendario .daterangepicker td {
+    font-size: 0.75rem !important;
+  }
+
+  .calendario .daterangepicker th.next,
+  .calendario .daterangepicker th.prev {
+    display: none;
+  }
+
+}

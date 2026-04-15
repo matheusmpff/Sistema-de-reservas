@@ -12,8 +12,12 @@ const __dirname = path.dirname(__filename);
 export default {
   mode: "development",
   entry: {
+    cadastro: "./src/js/cadastro.js",
+    login: "./src/js/login.js",
+    calendar: "./src/js/calendar.js",
     quartos: "./src/js/quartos.js",
     pagamento: "./src/js/pagamento.js",
+    feedback: "./src/js/feedback.js",
   },
   resolve: {
     modules: [
@@ -23,6 +27,21 @@ export default {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      filename: "login.bundle.html",
+      template: "./src/login.html",
+      chunks: ["login"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "cadastro.bundle.html",
+      template: "./src/cadastro.html",
+      chunks: ["cadastro"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "calendar.bundle.html",
+      template: "./src/calendar.html",
+      chunks: ["calendar"],
+    }),
+    new HtmlWebpackPlugin({
       filename: "quartos.bundle.html",
       template: "./src/quartos.html",
       chunks: ["quartos"],
@@ -31,6 +50,11 @@ export default {
       filename: "pagamento.bundle.html",
       template: "./src/pagamento.html",
       chunks: ["pagamento"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "feedback.bundle.html",
+      template: "./src/feedback.html",
+      chunks: ["feedback"],
     }),
   ],
   output: {

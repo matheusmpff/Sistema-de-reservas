@@ -1,0 +1,365 @@
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --cor-background: #F5F0E6;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
+a {
+  text-decoration: none;
+}
+
+* {
+  margin: 0px;
+  border: 0px;
+  box-sizing: border-box;
+  font: "Inter";
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-top: 10px;
+  width: 80px;
+  height: 68px;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+h1 {
+  margin-top: 56px;
+}
+
+.secao {
+  margin-top: 80px;
+  width: 100vw;
+  display: flex;
+
+}
+
+.esquerda {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  & p {
+    width: 541px;
+  }
+
+
+}
+
+.direita {
+  background-color: #D9D9D9;
+  border-radius: 10px;
+  width: 542px;
+  height: 435px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 12px;
+
+  }
+}
+
+.form-part {
+  margin-top: 12px;
+  display: flex;
+
+
+  & input {
+    width: 100%;
+    height: 40px;
+    padding-left: 10px;
+    border-radius: 100px;
+  }
+
+  & #comentario {
+    resize: none;
+    padding: 10px;
+    border-radius: 20px;
+    height: 156px;
+  }
+
+  & .left {
+    margin-left: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+
+  & .right {
+    width: 100%;
+
+  }
+
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.envio {
+  align-self: center;
+  background-color: #272623;
+  margin-top: 16px;
+  background-color: var(--cor-primaria);
+  color: var(--cor-background);
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+.botao-imagem {
+
+  margin-top: 30px;
+  display: inline-block;
+  width: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  background-color: var(--cor-terciaria);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#previa {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  margin-top: 40px;
+  font-size: 10px;
+
+  & p {
+    max-width: 100%;
+  }
+}
+
+footer {
+  width: 100vw;
+}
+
+footer img {
+  width: 100vw;
+}
+
+
+@media (max-width: 1100px) {
+  .conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .secao {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 60px;
+  }
+
+  .esquerda p {
+    width: 632px;
+    font-size: 24px;
+  }
+
+  .direita {
+    margin-top: 40px;
+    width: 560px;
+    height: 450px;
+
+
+  }
+
+  .direita h2 {
+    font-size: 20px;
+    margin-top: 18px;
+  }
+
+  .form-part {
+    margin-top: 13px;
+    display: flex;
+
+    & label {
+      font-size: 11px;
+    }
+
+    & input {
+      width: 232px;
+      height: 41px;
+      font-size: 10px;
+    }
+
+    & #comentario {
+      resize: none;
+      width: 240px;
+      height: 144px;
+      font-size: 10px;
+    }
+
+
+
+  }
+
+  .envio {
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .botao-imagem {
+
+    margin-top: 10px;
+    display: inline-block;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    font-size: 16px;
+
+  }
+
+  #previa {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-top: 40px;
+    font-size: 10px;
+
+    & p {
+      max-width: 100%;
+    }
+  }
+
+
+}
+
+
+@media (max-width: 700px) {
+  .conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .secao {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .esquerda {
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .esquerda p {
+
+    width: 364px;
+  }
+
+  .direita {
+    width: 324px;
+    height: 269px;
+
+
+  }
+
+  .direita h2 {
+    font-size: 12px;
+    margin-top: 10px;
+  }
+
+  .form-part {
+    margin-top: 8px;
+    display: flex;
+
+    & label {
+      font-size: 10px;
+    }
+
+    & input {
+      width: 132px;
+      height: 26px;
+      font-size: 8px;
+    }
+
+    & #comentario {
+      resize: none;
+      width: 138px;
+      height: 64px;
+      font-size: 8px;
+    }
+
+
+
+  }
+
+  .envio {
+    margin-top: 12px;
+    font-size: 12px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .botao-imagem {
+
+    margin-top: 10px;
+    display: inline-block;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 24px;
+
+  }
+
+  #previa {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin-top: 40px;
+    font-size: 6px;
+
+    & p {
+      max-width: 100%;
+    }
+  }
+
+
+}
