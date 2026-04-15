@@ -116,7 +116,7 @@ article#reserva-etapas {
 
 .etapa#etapa-quarto {
   z-index: 2;
-  background-image: url("../images/seta_quarto_amarelo.svg");
+  background-image: url("../images/seta_data_verde.svg");
 }
 
 .etapa#etapa-hospedes {
@@ -127,7 +127,7 @@ article#reserva-etapas {
 .etapa#etapa-pagamento {
   margin: 0 -60px;
   z-index: 0;
-  background-image: url("../images/seta_pagamento_cinza.svg");
+  background-image: url("../images/seta_pagamento_amarelo.svg");
 
   h2 {
     margin-left: 70px;
@@ -157,7 +157,8 @@ main {
     align-items: center;
     justify-content: center;
     height: fit-content;
-    p{
+
+    p {
       margin-top: 16px;
       width: 524px;
     }
@@ -177,12 +178,12 @@ main {
       margin: 5px;
     }
 
-   .alinhar{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-   }
-    
+    .alinhar {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
     div#reserva-titulo {
       color: var(--branco);
       display: flex;
@@ -192,12 +193,13 @@ main {
     div#reserva-opcoes {
       border-top: solid 1px var(--branco);
       width: 100%;
+
       .opcao-reserva {
         border-bottom: solid 1px var(--branco);
-        
+
       }
     }
-    
+
 
     #reserva-botao {
       border: 0px;
@@ -224,62 +226,63 @@ footer {
   background-repeat: no-repeat;
 }
 
-@media (max-width:990px){
+@media (max-width:990px) {
   main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 70px 20px;
-
-  section {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: fit-content;
-    p{
-      margin-top: 16px;
-      width: 524px;
+    margin: 70px 20px;
+
+    section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: fit-content;
+
+      p {
+        margin-top: 16px;
+        width: 524px;
+      }
+    }
+
+    aside {
+      margin-top: 30px;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--branco);
+      width: 343px;
+      height: 537px;
+      background-color: var(--cor-primaria);
+      border-radius: 20px;
+
+
     }
   }
-
-  aside {
-    margin-top: 30px;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--branco);
-    width: 343px;
-    height: 537px;
-    background-color: var(--cor-primaria);
-    border-radius: 20px;
-
-  
-  }
-}
 }
 
-@media (max-width:580px){
+@media (max-width:580px) {
   main {
-  section {
-    p{
-      margin-top: 14px;
-      width: 386px;
+    section {
+      p {
+        margin-top: 14px;
+        width: 386px;
+      }
     }
   }
-}
 }
 
-@media (max-width:460px){
+@media (max-width:460px) {
   main {
-  section {
-    p{
-      margin-top: 12px;
-      width: 308px;
-      font-size: 11px;
+    section {
+      p {
+        margin-top: 12px;
+        width: 308px;
+        font-size: 11px;
+      }
     }
   }
-}
 }
