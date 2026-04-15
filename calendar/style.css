@@ -12,12 +12,13 @@ body {
     background-color: var(--cor-background) !important;
     margin: 0;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 header {
@@ -25,18 +26,22 @@ header {
 }
 
 .navbar {
-    height: 15vh;
+    min-height: 80px;
+    padding: 10px 2rem;
     background-color: var(--cor-background) !important;
-    padding: 0 2rem;
 }
 
 .navbar-nav {
-    margin-left: 10%;
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: center;
+    }
 }
 
 .navbar-brand {
@@ -61,8 +66,9 @@ header {
 }
 
 #btn-carrinho .nav-link {
-    height: 65px;
-    width: 227.5px;
+    padding: 10px 16px;
+    width: auto;
+    height: auto;
     background-color: var(--cor-primaria);
     border-radius: 8px;
     display: flex;
@@ -75,16 +81,9 @@ header {
 #btn-carrinho i {
     font-size: 42.25px;
     color: var(--cor-secundaria);
+    margin-right: 1rem;
 }
 
-
-footer {
-    width: 100vw;
-}
-
-footer img {
-    width: 100vw;
-}
 
 button {
     transition-duration: 0.6s !important;
@@ -101,97 +100,100 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 article#reserva-etapas {
-  display: flex;
-  align-content: center;
-  justify-content: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
 
-  margin: 30px 0;
+    margin: 30px 0;
 }
 
+h2 {
+    text-align: center;
+}
 
 .etapa {
-  margin: 0 -32px;
-  width: 300px;
-  height: 43px;
+    margin: 0 -32px;
+    width: 300px;
+    height: 43px;
 
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-  h2 {
-    font-size: 1.8em;
-    font-weight: bold;
-  }
+    h2 {
+        font-size: 1.8em;
+        font-weight: bold;
+    }
 }
 
 .etapa#etapa-data {
-  z-index: 3;
-  background-image: url("images/seta_quarto_amarelo.svg");
+    z-index: 3;
+    background-image: url("images/seta_quarto_amarelo.svg");
 
-  h2 {
-    margin-right: 16px;
-  }
+    h2 {
+        margin-right: 16px;
+    }
 }
 
 .etapa#etapa-quarto {
-  z-index: 2;
-  background-image: url("images/seta_quarto_cinza.svg");
+    z-index: 2;
+    background-image: url("images/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-hospedes {
-  z-index: 1;
-  display: none;
+    z-index: 1;
+    display: none;
 }
 
 .etapa#etapa-pagamento {
-  margin: 0 -60px;
-  z-index: 0;
-  background-image: url("images/seta_pagamento_cinza.svg");
+    margin: 0 -60px;
+    z-index: 0;
+    background-image: url("images/seta_pagamento_cinza.svg");
 
-  h2 {
-    margin-left: 70px;
-  }
+    h2 {
+        margin-left: 70px;
+    }
+}
+
+article#reserva-mini-etapa {
+    background-image: url("../images/mini_etapa.svg");
+    background-size: 240px 50px;
+    background-repeat: no-repeat;
+    background-color: var(--cor-primaria);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 240px;
+    height: 50px;
+    margin: 30px auto;
+
+    color: var(--branco);
 }
 
 .main {
-    height: 700px;
-    width: 100vw;
+    min-height: 700px; 
+    height: auto;
+    width: 100%;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 15px; 
 }
 
-/* .calendario {
-    height: auto;
-    min-height: 444px;
-    width: 852px;
-    background-color: var(--cor-background);
-    box-shadow: 0px 80px 120px rgba(0, 0, 0, 0.50);
-    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50);
-    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.50);
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
-
-
-/* ===== CALENDÁRIO - Ajustes para ficar igual ao design ===== */
-
-/* Container principal */
 .calendario {
     height: auto;
     min-height: 444px;
-    width: 852px;
+    width: 100%; 
+    max-width: 852px;
+    
     background-color: var(--cor-background);
-    box-shadow: 0px 80px 120px rgba(0, 0, 0, 0.50);
-    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50);
-    box-shadow: -10px 10px 40px rgba(0, 0, 0, 0.50);
+    box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.50), -10px 10px 40px rgba(0, 0, 0, 0.50);
     border-radius: 16px;
     padding: 20px;
     display: flex;
@@ -214,6 +216,27 @@ article#reserva-etapas {
     background: transparent !important;
 }
 
+.calendario .calendar-table {
+    height: 100%;
+    background-color: var(--cor-background) !important;
+    border: none !important;
+}
+
+.calendario .table-condensed {
+    height: 100% !important;
+}
+
+.calendario .table-condensed thead th {
+    position: relative;
+}
+
+.calendario table {
+    border-collapse: separate !important; /* Permite o uso de border-spacing */
+    border-spacing: 4px !important;      /* gap entre células */
+    table-layout: fixed !important;      /* Garante que todas as colunas tenham o mesmo tamanho */
+    width: 100% !important;
+}
+
 /* Remove triângulo */
 .calendario .daterangepicker:before,
 .calendario .daterangepicker:after {
@@ -228,10 +251,6 @@ article#reserva-etapas {
     padding: 16px !important;
 }
 
-/* Divisor entre os dois calendários */
-.calendario .drp-calendar.left {
-    border-right: 1px solid #e0e0e0 !important;
-}
 
 /* Header do mês (setas + nome do mês) */
 .calendario .daterangepicker th.month {
@@ -244,13 +263,38 @@ article#reserva-etapas {
 /* Setas prev/next */
 .calendario .daterangepicker .prev span,
 .calendario .daterangepicker .next span {
-    border-color: var(--preto) !important;
+    height: 12px;
+    width: 12px;
+    font-size: 300px !important;
+    border-color: var(--cor-primaria) !important;
+    position: absolute;
+}
+
+.calendario .daterangepicker .prev span {
+    left: 12px;
+}
+
+.calendario .daterangepicker .next span {
+    right: 12px;
 }
 
 .calendario .daterangepicker th.prev,
 .calendario .daterangepicker th.next {
-    color: var(--preto) !important;
-    font-size: 1.2rem;
+    height: 32px !important;
+    width: 32px !important;
+    color: var(--cor-primaria) !important;
+    font-size: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--branco);
+    border-radius: 50%;
+    position: absolute;
+    top: 26px;
+}
+
+.calendario .daterangepicker th.next {
+    right: 20px;
 }
 
 /* Dias da semana (Mo, Tu, We...) */
@@ -262,33 +306,45 @@ article#reserva-etapas {
     padding: 8px 0 !important;
 }
 
-/* Células de datas */
 .calendario .daterangepicker td {
     font-size: 0.95rem !important;
-    font-weight: 500 !important;
-    border-radius: 4px !important;
-    height: 36px !important;
-    width: 36px !important;
+    font-weight: bolder !important;
+    border-radius: 8px !important;
+    width: 14%;
+    height: auto;
+    aspect-ratio: 1/1;
     text-align: center;
     color: var(--preto) !important;
 }
 
-/* Dias fora do mês */
+.calendario .daterangepicker td.available {
+    background-color: var(--branco) !important;
+}
+
+
 .calendario .daterangepicker td.off {
+    background-color: var(--cor-background) !important;
     color: #cccccc !important;
 }
 
-/* Data ativa (check-in / check-out) */
 .calendario .daterangepicker td.active,
 .calendario .daterangepicker td.active:hover {
     background-color: var(--cor-primaria) !important;
     color: var(--branco) !important;
-    border-radius: 4px !important;
+    border-radius: 8px !important;
+}
+
+.calendario .daterangepicker td.active::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: #bcbcbc;
+
 }
 
 /* Período entre check-in e check-out */
 .calendario .daterangepicker td.in-range {
-    background-color: #e8f3ef !important;
+    background-color: #bcbcbc !important;
     color: var(--cor-primaria) !important;
     border-radius: 0 !important;
 }
@@ -307,13 +363,113 @@ article#reserva-etapas {
     display: none !important;
 }
 
-/* Dropdowns de mês/ano (select) */
+/* Arrumar o header do calendário*/
 .calendario .daterangepicker select.monthselect,
 .calendario .daterangepicker select.yearselect {
+    width: auto; 
+    min-width: 0;
     font-weight: 700 !important;
-    font-size: 1rem !important;
+    font-size: 1.5rem !important;
     border: none !important;
-    background: transparent !important;
+    border-radius: 8px !important;
+    padding: 10px 25px 10px 10px !important;
+    margin-bottom: 5px !important;
+    background: var(--branco) !important;
     cursor: pointer;
-    appearance: auto;
+    
+    /* Remover setinha padrão */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    
+    /* Adicionar ícone personalizado */
+    background-image: url('images/caret-down-fill.svg') !important;
+    background-repeat: no-repeat !important;
+    background-position: right 5px center !important;
+    background-size: 15px !important;
+}
+
+/*remover o foco padrão */
+.calendario .daterangepicker select.monthselect:focus {
+    outline: none;
+}
+
+footer {
+    width: 100vw;
+}
+
+footer img {
+    width: 100%;
+    height: auto;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 992px) {
+
+    .calendario .daterangepicker {
+        flex-direction: column !important;
+    }
+    
+    .calendario .drp-calendar {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .calendario .daterangepicker td {
+        max-width: 30px !important;
+        max-height: 30px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .etapa {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    article#reserva-etapas {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        margin-left: 0;
+    }
+
+    
+    .calendario {
+        padding: 10px;
+    }
+
+    /* Reduz ainda mais no celular pequeno */
+    .calendario .daterangepicker td {
+        font-size: 0.75rem !important;
+    }
+
+    .calendario .daterangepicker th.next {
+        right: 5px;
+    }
+}
+
+@media (max-width: 390px) {
+    .navbar-brand {
+        margin-left: 0;
+    }
+
+    
+    .calendario {
+        padding: 0px;
+    }
+
+    /* Reduz ainda mais no celular pequeno */
+    .calendario .daterangepicker td {
+        font-size: 0.75rem !important;
+    }
+
+    .calendario .daterangepicker th.next, 
+    .calendario .daterangepicker th.prev {
+        display: none;
+    }
+
 }
