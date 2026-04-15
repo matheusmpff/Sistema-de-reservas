@@ -1,5 +1,21 @@
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --cor-background: #F5F0E6;
+  --branco: #ffffff;
+  --preto: #000000;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
 body {
-  background-color: #F5F0E6;
+  background-color: var(--cor-background) !important;
+}
+
+body>div {
+  position: absolute;
+  width: 100vw;
 }
 
 h1 {
@@ -11,6 +27,63 @@ h2 {
   text-align: center;
   font-size: 2.1em;
   font-weight: 500;
+}
+
+header {
+  width: 100vw;
+}
+
+.navbar {
+  height: 20vh;
+  background-color: var(--cor-background) !important;
+  padding: 0 2rem;
+}
+
+.navbar-nav {
+  margin-left: 10%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.navbar-brand {
+  margin-left: 5%;
+  font-size: 1.8rem;
+  color: var(--cor-secundaria) !important;
+  width: 104px;
+  height: 90px;
+}
+
+.nav-link {
+  color: var(--preto) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#btn-carrinho .nav-link {
+  height: 65px;
+  width: 227.5px;
+  background-color: var(--cor-primaria);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--cor-background) !important;
+}
+
+#btn-carrinho i {
+  font-size: 42.25px;
+  color: var(--cor-secundaria);
 }
 
 article#reserva-etapas {
@@ -80,6 +153,7 @@ article#reserva-etapas {
   padding: 30px 60px;
   border-radius: 10%;
   width: fit-content;
+  background-color: var(--cor-background);
   box-shadow: 4px 4px 12px black;
 
   img {
@@ -98,7 +172,8 @@ article#reserva-etapas {
 
   p {
     text-align: center;
-    font-size: 1.8em;
+    font-size: 1.6em;
+    margin-inline: 12px;
   }
 
   .aba-numerador {
@@ -119,6 +194,12 @@ article#reserva-etapas {
     margin-left: 0;
     background-color: #D9D9D9;
     border-radius: 5%;
+
+    h2 {
+      margin: 10px;
+      font-weight: bold;
+      font-size: 2.4em;
+    }
   }
 
   .aba-contador {
@@ -159,11 +240,35 @@ article#reserva-etapas {
     }
 
     button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: 100%;
+      padding-bottom: 5%;
       aspect-ratio: 1;
 
       background-color: inherit;
       font-size: 3.0em;
+      border-radius: 15%;
+
+    }
+
+    button:hover {
+      transform: scale(1.1) !important;
+      transition-duration: 0.2s;
+      border: solid 4px var(--cor-primaria);
     }
   }
+}
+
+footer {
+  width: 100vw;
+  height: 148px;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+
+  background-image: url("images/FooterWave.png");
+  background-size: 100vw 148px;
+  background-repeat: no-repeat;
 }
