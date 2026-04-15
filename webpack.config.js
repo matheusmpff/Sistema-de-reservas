@@ -13,6 +13,7 @@ export default {
   mode: "development",
   entry: {
     quartos: "./src/js/quartos.js",
+    pagamento: "./src/js/pagamento.js",
   },
   resolve: {
     modules: [
@@ -24,6 +25,12 @@ export default {
     new HtmlWebpackPlugin({
       filename: "quartos.bundle.html",
       template: "./src/quartos.html",
+      chunks: ["quartos"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "pagamento.bundle.html",
+      template: "./src/pagamento.html",
+      chunks: ["pagamento"],
     }),
   ],
   output: {
