@@ -15,6 +15,7 @@ export default {
     quartos: "./src/js/quartos.js",
     login: "./src/js/login.js",
     cadastro: "./src/js/cadastro.js",
+    feedback: "./src/js/feedback.js",
   },
   resolve: {
     modules: [
@@ -37,6 +38,11 @@ export default {
       filename: "cadastro.bundle.html",
       template: "./src/cadastro.html",
       chunks: ["cadastro"],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "feedback.bundle.html",
+      template: "./src/feedback.html",
+      chunks: ["feedback"],
     }),
   ],
   output: {
