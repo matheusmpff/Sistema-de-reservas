@@ -153,6 +153,7 @@ article#reserva-mini-etapas {
 
 .aba {
   display: grid;
+  place-items: stretch;
   grid-template-columns: 50% auto;
   grid-template-rows: 220px auto auto;
   grid-template-areas:
@@ -198,6 +199,7 @@ article#reserva-mini-etapas {
     margin-bottom: 2%;
     background-color: #D9D9D9;
     border-radius: 20px;
+    padding-top: 16px;
   }
 
   .aba-info {
@@ -206,9 +208,9 @@ article#reserva-mini-etapas {
     margin-left: 0;
     background-color: #D9D9D9;
     border-radius: 20px;
-
+    padding: 0px 12px;
     h2 {
-      margin: 10px;
+      margin: 20px;
       font-weight: bold;
       font-size: 2.4em;
     }
@@ -221,7 +223,7 @@ article#reserva-mini-etapas {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;*/
-
+    padding-top: 16px;
     background-color: #D9D9D9;
     border-radius: 20px;
     margin-top: 6%;
