@@ -1,16 +1,3 @@
-import "css/cadastro.scss"
-
-import Contraste from "images/contraste.png";
-import FrentePousada from "images/frente_pousada.png";
-import Logo from "images/logo_branca.png";
-import FooterWave from "images/FooterWave.png";
-
-
-document.querySelector("#contraste-img").src = Contraste;
-document.querySelector("#pousada-img").src = FrentePousada;
-document.querySelector("#logo").src = Logo;
-document.querySelector("#desenho").src = FooterWave;
-
 let img =  document.querySelector(".pousada")
 const ajustar_texto = () => {
 

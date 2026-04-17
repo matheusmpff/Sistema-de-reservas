@@ -1,15 +1,4 @@
-@import "bootstrap/scss/bootstrap";
-@import "bootstrap-icons/font/bootstrap-icons.css";
-
-:root {
-  --cor-background: #F5F0E6;
-  --branco: #ffffff;
-  --preto: #000000;
-  --cor-primaria: #1f6f50;
-  --cor-secundaria: #f4c430;
-  --cor-terciaria: #272623;
-}
-
+@import "/src/style.scss";
 
 body {
   background-color: var(--cor-background) !important;
@@ -23,70 +12,6 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 }
-
-header {
-  width: 100vw;
-}
-
-.navbar {
-  min-height: 80px;
-  padding: 10px 2rem;
-  background-color: var(--cor-background) !important;
-}
-
-.navbar-nav {
-  width: 100%;
-}
-
-@media (min-width: 992px) {
-  .navbar-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-}
-
-.navbar-brand {
-  margin-left: 5%;
-  font-size: 1.8rem;
-  color: var(--cor-secundaria) !important;
-  width: 104px;
-  height: 90px;
-}
-
-.nav-link {
-  color: var(--preto) !important;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.navbar .container-fluid {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#btn-carrinho .nav-link {
-  padding: 10px 16px;
-  width: auto;
-  height: auto;
-  background-color: var(--cor-primaria);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  color: var(--cor-background) !important;
-}
-
-#btn-carrinho i {
-  font-size: 42.25px;
-  color: var(--cor-secundaria);
-  margin-right: 1rem;
-}
-
 
 button {
   transition-duration: 0.6s !important;
@@ -134,7 +59,7 @@ h2 {
 
 .etapa#etapa-data {
   z-index: 3;
-  background-image: url("images/seta_quarto_amarelo.svg");
+  background-image: url("/src/assets/seta_quarto_amarelo.svg");
 
   h2 {
     margin-right: 16px;
@@ -143,7 +68,7 @@ h2 {
 
 .etapa#etapa-quarto {
   z-index: 2;
-  background-image: url("images/seta_quarto_cinza.svg");
+  background-image: url("/src/assets/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-hospedes {
@@ -154,7 +79,7 @@ h2 {
 .etapa#etapa-pagamento {
   margin: 0 -60px;
   z-index: 0;
-  background-image: url("images/seta_pagamento_cinza.svg");
+  background-image: url("/src/assets/seta_pagamento_cinza.svg");
 
   h2 {
     margin-left: 70px;
@@ -162,7 +87,7 @@ h2 {
 }
 
 article#reserva-mini-etapas {
-  background-image: url("../images/mini_etapa.svg");
+  background-image: url("/src/assets/mini_etapa.svg");
   background-size: 240px 50px;
   background-repeat: no-repeat;
   display: flex;

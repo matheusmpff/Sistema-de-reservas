@@ -1,14 +1,4 @@
-@import "bootstrap/scss/bootstrap";
-@import "bootstrap-icons/font/bootstrap-icons.css";
-
-:root {
-  --cor-background: #F5F0E6;
-  --branco: #ffffff;
-  --preto: #000000;
-  --cor-primaria: #1f6f50;
-  --cor-secundaria: #f4c430;
-  --cor-terciaria: #272623;
-}
+@import "/src/style.scss";
 
 body {
   background-color: var(--cor-background) !important;
@@ -23,63 +13,6 @@ h2 {
   text-align: center;
   font-size: 2.1em;
   font-weight: 500;
-}
-
-header {
-  width: 100vw;
-}
-
-.navbar {
-  height: 20vh;
-  background-color: var(--cor-background) !important;
-  padding: 0 2rem;
-}
-
-.navbar-nav {
-  margin-left: 10%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.navbar-brand {
-  margin-left: 5%;
-  font-size: 1.8rem;
-  color: var(--cor-secundaria) !important;
-  width: 104px;
-  height: 90px;
-}
-
-.nav-link {
-  color: var(--preto) !important;
-  font-weight: 600;
-  letter-spacing: 1px;
-}
-
-.navbar .container-fluid {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-#btn-carrinho .nav-link {
-  height: 65px;
-  width: 227.5px;
-  background-color: var(--cor-primaria);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  color: var(--cor-background) !important;
-}
-
-#btn-carrinho i {
-  font-size: 42.25px;
-  color: var(--cor-secundaria);
 }
 
 article#reserva-etapas {
@@ -107,7 +40,7 @@ article#reserva-etapas {
 
 .etapa#etapa-data {
   z-index: 3;
-  background-image: url("../images/seta_data_verde.svg");
+  background-image: url("/src/assets/seta_data_verde.svg");
 
   h2 {
     margin-right: 16px;
@@ -116,7 +49,7 @@ article#reserva-etapas {
 
 .etapa#etapa-quarto {
   z-index: 2;
-  background-image: url("../images/seta_data_verde.svg");
+  background-image: url("/src/assets/seta_data_verde.svg");
 }
 
 .etapa#etapa-hospedes {
@@ -127,7 +60,7 @@ article#reserva-etapas {
 .etapa#etapa-pagamento {
   margin: 0 -60px;
   z-index: 0;
-  background-image: url("../images/seta_pagamento_amarelo.svg");
+  background-image: url("/src/assets/seta_pagamento_amarelo.svg");
 
   h2 {
     margin-left: 70px;
@@ -135,7 +68,7 @@ article#reserva-etapas {
 }
 
 article#reserva-mini-etapas {
-  background-image: url("../images/mini_etapa.svg");
+  background-image: url("/src/assets/mini_etapa.svg");
   background-size: 240px 50px;
   background-repeat: no-repeat;
 
@@ -163,7 +96,7 @@ main {
       width: 524px;
     }
 
-    a{
+    a {
       text-decoration: none;
       background-color: var(--cor-primaria);
       color: var(--cor-background);
@@ -175,7 +108,7 @@ main {
       justify-content: center;
       font-weight: 600;
       margin-top: 10px;
-      
+
     }
   }
 
@@ -192,26 +125,29 @@ main {
     border: 1px solid #00000063;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.342);
 
-    .vazio{
+    .vazio {
       align-self: center;
       justify-self: center;
     }
-    p{
+
+    p {
       margin-bottom: 5px;
     }
-    h2{
+
+    h2 {
       font-size: 20px;
       font-weight: 800;
       margin-top: 30px;
     }
 
-    h3{
+    h3 {
       font-size: 16px;
       font-weight: 700;
-      
+
     }
 
-    p,li{
+    p,
+    li {
       font-size: 14px;
     }
 
@@ -219,15 +155,16 @@ main {
       margin-top: 20px;
     }
 
-    img{
+    img {
       width: 72px;
     }
 
-    .icones{
+    .icones {
       display: flex;
       gap: 10px;
       cursor: pointer;
     }
+
     .alinhar {
       margin-top: 20px;
       display: flex;
@@ -342,10 +279,11 @@ footer {
   }
 }
 
-a, button{
+a,
+button {
   transition: all 0.4s;
 }
 
-a:hover{
+a:hover {
   transform: translateY(-10px);
 }

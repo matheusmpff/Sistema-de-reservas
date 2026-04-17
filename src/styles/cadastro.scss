@@ -1,11 +1,4 @@
-@import "bootstrap/scss/bootstrap";
-
-:root {
-  --cor-background: #F5F0E6;
-  --cor-primaria: #1f6f50;
-  --cor-secundaria: #f4c430;
-  --cor-terciaria: #272623;
-}
+@import "/src/style.scss";
 
 * {
   border: 0px;

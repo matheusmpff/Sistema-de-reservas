@@ -27,3 +27,25 @@ Para a immplementação das páginas do Front-end foi utilizado:
 Matheus Muzza Pires Ferreira
 João Pedro Castelli
 João Pedro Neves
+
+# Setup
+
+Para abrir as páginas em um servidor local, instale em sua máquina Node.js e npm. Se você rodar
+
+`node --version`
+
+e aparecer algo como "v25.0.x", ele já está instalado. Senão, veja como instalar em https://nodejs.org/pt-br/download.
+Recomendo utilizar a ferramenta fnm e a versão 24 do Node.
+
+Após isso, entre no diretório principal/inicial (root) do projeto e rode
+
+`npm i`
+
+Isso deve instalar todas as depêndencias necessárias. Então rode
+
+`npm run dev`
+
+Isso deve abrir um servidor local na porta 5173. Portanto, escreva no navegador http://localhost:5173/src/cadastro.html
+e pronto. Você consegue ver qualquer página acessando o localhost em /src/[nome da página].html e não é
+necessário atualizar a página; quando o arquivo é salvo em disco (Ctrl+s), as mudanças aparecem automaticamente
+no navegador.
