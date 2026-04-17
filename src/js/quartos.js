@@ -13,7 +13,11 @@ new Splide( ".splide", {
     1200: {
       perPage: 1,
     },
-  }
+  },
+  dragMinThreshold: {
+    mouse: 20,
+    touch: 20,
+  },
 } ).mount();
 //  arrowPath: 'M11 20.3152L19.3152 12M11 20.3152H27.6304M11 20.3152L19.3152 27.4425',
 
