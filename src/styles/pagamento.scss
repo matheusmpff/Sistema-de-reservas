@@ -4,6 +4,13 @@ body {
   background-color: var(--cor-background) !important;
 }
 
+article#reserva-etapas {
+  button#etapas-next {
+    background-image: none;
+    background-color: transparent;
+  }
+}
+
 .etapa#etapa-data {
   background-image: url("/src/assets/seta_data_verde.svg");
 }

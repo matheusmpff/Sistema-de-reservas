@@ -117,6 +117,29 @@ article#reserva-etapas {
   justify-content: center;
 
   margin: 30px 0;
+
+  button {
+    height: 43px;
+    aspect-ratio: 1;
+    border: none;
+    background-size: 43px 43px;
+    transition-duration: 0.6s !important;
+  }
+
+  button:hover {
+    transform: none;
+    border: none;
+  }
+
+  button#etapas-prev {
+    background-image: url("/src/assets/carousel_button_left.svg");
+    margin-right: 50px;
+  }
+
+  button#etapas-next {
+    background-image: url("/src/assets/carousel_button_right.svg");
+    margin-left: 78px;
+  }
 }
 
 h2 {

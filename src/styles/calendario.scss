@@ -21,6 +21,18 @@ button:hover {
   border: solid 1px var(--cor-secundaria);
 }
 
+article#reserva-etapas {
+  button#etapas-prev {
+    background-image: none;
+    background-color: transparent;
+  }
+
+  button:hover {
+    transform: none !important;
+    border: none;
+  }
+}
+
 .etapa#etapa-data {
   background-image: url("/src/assets/seta_data_amarelo.svg");
 }

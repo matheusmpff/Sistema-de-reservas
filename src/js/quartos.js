@@ -22,12 +22,20 @@ new Splide( ".splide", {
 //  arrowPath: 'M11 20.3152L19.3152 12M11 20.3152H27.6304M11 20.3152L19.3152 27.4425',
 
 
-// mandar para proxima etapa
+// mandar para a etapa anterior ou a proxima
 let next_step = "./pagamento.html";
-const progress_bar = document.querySelector("article#reserva-etapas");
-progress_bar.addEventListener("click", (ev) => {
+let prev_step = "./calendario.html";
+const prev_button = document.querySelector("article#reserva-etapas #etapas-prev");
+const next_button = document.querySelector("article#reserva-etapas #etapas-next");
+
+next_button.addEventListener("click", (ev) => {
     window.location.href = next_step;
 })
+
+prev_button.addEventListener("click", (ev) => {
+    window.location.href = prev_step;
+})
+
 const mini_progress_bar = document.querySelector("article#reserva-mini-etapas");
 mini_progress_bar.addEventListener("click", (ev) => {
     window.location.href = next_step;
