@@ -1,3 +1,15 @@
+/* code to get inter fonts from npm into SCSS*/
+@use "inter-ui/default" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/web'
+);
+
+@use "inter-ui/variable" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/variable'
+);
+
+@include default.all;
+@include variable.all;
+
 @import "bootstrap/scss/bootstrap.scss";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
@@ -9,6 +21,17 @@
   --cor-secundaria: #f4c430;
   --cor-terciaria: #272623;
 }
+
+body {
+  font-family: "Inter", "system-ui";
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "InterVariable", "system-ui";
+  }
+}
+
 
 header {
   width: 100vw;
@@ -71,4 +94,16 @@ header {
   font-size: 42.25px;
   color: var(--cor-secundaria);
   margin-right: 1rem;
+}
+
+footer.wave {
+  width: 100vw;
+  height: 148px;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+
+  background-image: url("/src/assets/FooterWave.png");
+  background-size: 100vw 148px;
+  background-repeat: no-repeat;
 }
