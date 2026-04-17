@@ -9,7 +9,6 @@
 
   <!--<link rel="stylesheet" href="/src/styles/style.scss">-->
   <link rel="stylesheet" href="styles/pagamento.scss">
-  <script defer type="module" src="js/pagamento.js"></script>
 </head>
 
 <body>
@@ -47,33 +46,36 @@
     </nav>
   </header>
 
-  <h1>Finalizar reserva</h1>
+  <div class="barra-progresso">
 
-  <article id="reserva-etapas" class="d-none d-lg-flex">
-    <div id="etapa-data" class="etapa">
-      <h2>Data</h2>
-    </div>
-    <div id="etapa-quarto" class="etapa">
-      <h2>Quartos</h2>
-    </div>
-    <div id="etapa-hospedes" class="etapa">
-      <h2>Hóspedes</h2>
-    </div>
-    <div id="etapa-pagamento" class="etapa">
+    <h1>Reserva em andamento</h1>
+
+    <article id="reserva-etapas" class="d-none d-lg-flex">
+      <div id="etapa-data" class="etapa">
+        <h2>Data</h2>
+      </div>
+      <div id="etapa-quarto" class="etapa">
+        <h2>Quartos</h2>
+      </div>
+      <div id="etapa-hospedes" class="etapa">
+        <h2>Hóspedes</h2>
+      </div>
+      <div id="etapa-pagamento" class="etapa">
+        <h2>Pagamento</h2>
+      </div>
+    </article>
+
+    <article id="reserva-mini-etapas" class="d-lg-none">
       <h2>Pagamento</h2>
-    </div>
-  </article>
-
-  <article id="reserva-mini-etapas" class="d-lg-none">
-    <h2>Pagamento</h2>
-  </article>
+    </article>
+  </div>
 
   <main>
     <section>
       <h2>Como concluir a reserva</h2>
       <p>
         Ao lado, é possível ver a quantidade e as opções de quarto adicionados ao carrinho.Foram realizadas
-        2 reservas, totalizando 4 quartos.
+        2 reservas, totalizando 6 quartos.
       </p>
       <p>
         Caso deseje editar suas escolhas, clique no ícone do
@@ -99,7 +101,7 @@
       </div>
       <div id="reserva-opcoes">
         <div id="reserva-1" class="opcao-reserva">
-          <div id="reserva-titulo">
+          <div class="reserva-titulo">
             <h3>Grupo 1</h3>
             <div class="icones">
               <i class="bi bi-pencil-fill"></i>
@@ -117,7 +119,7 @@
         </div>
 
         <div id="reserva-2" class="opcao-reserva">
-          <div id="reserva-titulo">
+          <div class="reserva-titulo">
             <h3>Grupo 2</h3>
             <div class="icones">
               <i class="bi bi-pencil-fill"></i>
@@ -136,9 +138,11 @@
       <a id="reserva-botao" href="./feedback.html">CONCLUIR RESERVA</a>
     </aside>
   </main>
+
   <footer class="wave">
   </footer>
-  <script src="js/pagamento.js"></script>
+
+  <script type="module" src="js/pagamento.js"></script>
 </body>
 
 </html>

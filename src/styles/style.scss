@@ -24,6 +24,8 @@
 
 body {
   font-family: "Inter", "system-ui";
+
+  background-color: var(--cor-background) !important;
 }
 
 @supports (font-variation-settings: normal) {
@@ -32,6 +34,11 @@ body {
   }
 }
 
+h2 {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 500;
+}
 
 header {
   width: 100vw;
@@ -96,6 +103,82 @@ header {
   margin-right: 1rem;
 }
 
+.barra-progresso {
+  height: auto;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+article#reserva-etapas {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  margin: 30px 0;
+}
+
+h2 {
+  text-align: center;
+}
+
+.etapa {
+  margin: 0 -32px;
+  width: 300px;
+  height: 43px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+}
+
+.etapa#etapa-data {
+  z-index: 3;
+
+  h2 {
+    margin-right: 16px;
+  }
+}
+
+.etapa#etapa-quarto {
+  z-index: 2;
+}
+
+.etapa#etapa-hospedes {
+  z-index: 1;
+  display: none;
+}
+
+.etapa#etapa-pagamento {
+  margin: 0 -60px;
+  z-index: 0;
+
+  h2 {
+    margin-left: 70px;
+  }
+}
+
+article#reserva-mini-etapas {
+  background-image: url("/src/assets/mini_etapa.svg");
+  background-size: 240px 50px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 240px;
+  height: 50px;
+  margin: 30px auto;
+
+  color: var(--branco);
+}
+
 footer.wave {
   width: 100vw;
   height: 148px;
@@ -104,6 +187,6 @@ footer.wave {
   z-index: -1;
 
   background-image: url("/src/assets/FooterWave.png");
-  background-size: 100vw 148px;
+  background-size: max(100vw, 800px) 148px;
   background-repeat: no-repeat;
 }

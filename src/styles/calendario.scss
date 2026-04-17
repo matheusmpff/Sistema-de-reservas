@@ -1,7 +1,6 @@
 @import "/src/styles/style.scss";
 
 body {
-  background-color: var(--cor-background) !important;
   margin: 0;
   height: 100vh;
   width: 100%;
@@ -22,83 +21,20 @@ button:hover {
   border: solid 1px var(--cor-secundaria);
 }
 
-.barra-progresso {
-  height: auto;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-article#reserva-etapas {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-
-  margin: 30px 0;
-}
-
-h2 {
-  text-align: center;
-}
-
-.etapa {
-  margin: 0 -32px;
-  width: 300px;
-  height: 43px;
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-size: cover;
-
-  h2 {
-    font-size: 1.8em;
-    font-weight: bold;
-  }
-}
-
 .etapa#etapa-data {
-  z-index: 3;
-  background-image: url("/src/assets/seta_quarto_amarelo.svg");
-
-  h2 {
-    margin-right: 16px;
-  }
+  background-image: url("/src/assets/seta_data_amarelo.svg");
 }
 
 .etapa#etapa-quarto {
-  z-index: 2;
   background-image: url("/src/assets/seta_quarto_cinza.svg");
 }
 
-.etapa#etapa-hospedes {
-  z-index: 1;
-  display: none;
-}
-
 .etapa#etapa-pagamento {
-  margin: 0 -60px;
-  z-index: 0;
   background-image: url("/src/assets/seta_pagamento_cinza.svg");
-
-  h2 {
-    margin-left: 70px;
-  }
 }
 
 article#reserva-mini-etapas {
   background-image: url("/src/assets/mini_etapa.svg");
-  background-size: 240px 50px;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 240px;
-  height: 50px;
-  margin: 30px auto;
-
-  color: var(--branco);
 }
 
 .main {
