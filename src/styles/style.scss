@@ -123,6 +123,7 @@ article#reserva-etapas {
     aspect-ratio: 1;
     border: none;
     background-size: 43px 43px;
+    background-color: transparent;
     transition-duration: 0.6s !important;
   }
 
@@ -132,12 +133,12 @@ article#reserva-etapas {
   }
 
   button#etapas-prev {
-    background-image: url("/src/assets/carousel_button_left.svg");
+    background-image: url("/assets/carousel_button_left.svg");
     margin-right: 50px;
   }
 
   button#etapas-next {
-    background-image: url("/src/assets/carousel_button_right.svg");
+    background-image: url("/assets/carousel_button_right.svg");
     margin-left: 78px;
   }
 }
@@ -188,7 +189,7 @@ h2 {
 }
 
 article#reserva-mini-etapas {
-  background-image: url("/src/assets/mini_etapa.svg");
+  background-image: url("/assets/mini_etapa.svg");
   background-size: 240px 50px;
   background-repeat: no-repeat;
   display: flex;
@@ -209,7 +210,7 @@ footer.wave {
   bottom: 0;
   z-index: -1;
 
-  background-image: url("/src/assets/FooterWave.png");
+  background-image: url("/assets/FooterWave.png");
   background-size: max(100vw, 800px) 148px;
   background-repeat: no-repeat;
 }

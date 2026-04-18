@@ -1,3 +1,4 @@
+
 let img =  document.querySelector(".pousada")
 const ajustar_texto = () => {
 
