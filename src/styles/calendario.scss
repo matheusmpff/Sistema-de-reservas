@@ -34,20 +34,17 @@ article#reserva-etapas {
 }
 
 .etapa#etapa-data {
-  background-image: url("assets/seta_data_amarelo.svg");
+  background-image: url("/assets/seta_data_amarelo.svg");
 }
 
 .etapa#etapa-quarto {
-  background-image: url("assets/seta_quarto_cinza.svg");
+  background-image: url("/assets/seta_quarto_cinza.svg");
 }
 
 .etapa#etapa-pagamento {
-  background-image: url("assets/seta_pagamento_cinza.svg");
+  background-image: url("/assets/seta_pagamento_cinza.svg");
 }
 
-article#reserva-mini-etapas {
-  background-image: url("assets/mini_etapa.svg");
-}
 
 .main {
   min-height: 700px;

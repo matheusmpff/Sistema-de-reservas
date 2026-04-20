@@ -1,16 +1,17 @@
 @import "/styles/style.scss";
 
 .etapa#etapa-data {
-  background-image: url("assets/seta_data_verde.svg");
+  background-image: url("/assets/seta_data_verde.svg");
 }
 
 .etapa#etapa-quarto {
-  background-image: url("assets/seta_data_amarelo.svg");
+  background-image: url("/assets/seta_data_amarelo.svg");
 }
 
 .etapa#etapa-pagamento {
-  background-image: url("assets/seta_pagamento_cinza.svg");
+  background-image: url("/assets/seta_pagamento_cinza.svg");
 }
+
 
 section#quartos-carousel {
   margin: 10px auto 70px auto;
@@ -168,7 +169,7 @@ footer {
   bottom: 0;
   z-index: -1;
 
-  background-image: url("assets/FooterWave.png");
+  background-image: url("/assets/FooterWave.png");
   background-size: 100vw 148px;
   background-repeat: no-repeat;
 }

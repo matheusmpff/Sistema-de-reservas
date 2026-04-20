@@ -1,4 +1,4 @@
-import * as bootstrap from "bootstrap";
+import "/js/shared.js";
 
 
 // mandar para a etapa anterior ou a proxima

@@ -1,3 +1,5 @@
+import "/js/shared.js";
+
 // mandar para a etapa anterior ou a proxima
 //let next_step = "./pagamento.html";
 let prev_step = "./quartos.html";

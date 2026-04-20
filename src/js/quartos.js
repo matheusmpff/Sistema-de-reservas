@@ -1,5 +1,5 @@
 import Splide from "@splidejs/splide";
-import * as bootstrap from "bootstrap";
+import "/js/shared.js";
 import "@splidejs/splide/css";
 
 new Splide( ".splide", {

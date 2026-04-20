@@ -1,9 +1,5 @@
 @import "/styles/style.scss";
 
-body {
-  background-color: var(--cor-background) !important;
-}
-
 article#reserva-etapas {
   button#etapas-next {
     background-image: none;
@@ -12,16 +8,17 @@ article#reserva-etapas {
 }
 
 .etapa#etapa-data {
-  background-image: url("assets/seta_data_verde.svg");
+  background-image: url("/assets/seta_data_verde.svg");
 }
 
 .etapa#etapa-quarto {
-  background-image: url("assets/seta_data_verde.svg");
+  background-image: url("/assets/seta_data_verde.svg");
 }
 
 .etapa#etapa-pagamento {
-  background-image: url("assets/seta_pagamento_amarelo.svg");
+  background-image: url("/assets/seta_pagamento_amarelo.svg");
 }
+
 
 main {
   display: flex;
