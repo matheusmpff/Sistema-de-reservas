@@ -14,30 +14,32 @@
 
 
 section#quartos-carousel {
-  margin: 10px auto 70px auto;
+  margin: 10px auto 60px auto;
 }
 
 .aba {
   display: grid;
   place-items: stretch;
   grid-template-columns: 40% auto;
-  grid-template-rows: 220px auto auto;
+  grid-template-rows: 240px auto auto;
   grid-template-areas:
     'imagem-quarto imagem-quarto'
     'info info'
     'numerador contador';
 
-  margin: 40px auto;
-  padding: 30px 60px;
+  margin: 8px auto;
+  padding: 25px 25px;
+  max-width: calc((240px * (4/3)) + (2 * 25px));
+  /* 294 + padding*/
+
   border-radius: 20px;
-  width: fit-content;
   background-color: var(--cor-background);
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.35);
   font-size: 0.5em;
 
   img {
     grid-area: imagem-quarto;
-    width: auto;
+    width: calc(240px * (4/3));
     height: 100%;
     border-radius: 20px;
   }
@@ -71,13 +73,16 @@ section#quartos-carousel {
   .aba-info {
     grid-area: info;
 
-    margin: 20px 15px;
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 15px;
     background-color: #D9D9D9;
     border-radius: 20px;
-    padding: 10px 0;
+    padding: 15px 0;
 
     h2 {
       margin: 10px;
+      margin-top: 0;
       font-weight: bold;
       font-size: 2.8em;
     }
@@ -152,6 +157,7 @@ section#quartos-carousel {
   .aba {
     grid-template-rows: 320px auto auto;
     font-size: 0.7em;
+    margin: 40px auto;
   }
 }
 
@@ -159,8 +165,10 @@ section#quartos-carousel {
   .aba {
     grid-template-rows: 450px auto auto;
     font-size: 1em;
+    margin: 40px auto;
   }
 }
+
 
 footer {
   width: 100vw;
