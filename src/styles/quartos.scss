@@ -153,24 +153,130 @@ section#quartos-carousel {
 
 @include media-breakpoint-up(md) {
   .aba {
-    grid-template-rows: 450px auto auto;
-    font-size: 1em;
+    --img-height: 450px;
+    --aba-width: var(--img-height) * (4/3);
+
+    grid-template-columns: calc(var(--aba-width) / 2) calc(var(--aba-width) / 2);
+    grid-template-areas:
+      'imagem-quarto imagem-quarto'
+      'info numerador'
+      'info contador';
+
+    padding: 30px 30px;
+    max-width: calc(var(--aba-width) + (2 * 30px));
+
+    p {
+      font-size: 1.4rem;
+    }
+
+    li {
+      font-size: 1.2rem;
+    }
+
+    .aba-info {
+      margin: 20px 5px 0 0;
+
+      h2 {
+        max-width: 260px;
+        font-size: 2.2rem;
+      }
+    }
+
+    .aba-numerador {
+      margin: 20px 0 5px 5px;
+    }
+
+    .aba-contador {
+      margin: 5px 0 0 5px;
+    }
+
+    .aba-mostrador p {
+      max-width: 40%;
+    }
   }
 }
 
 @include media-breakpoint-up(xl) {
   .aba {
-    grid-template-rows: 320px auto auto;
-    font-size: 0.7em;
+    --img-height: 360px;
+    --aba-width: var(--img-height) * (4/3);
+
     margin: 40px auto;
+    padding: 30px 30px;
+    max-width: calc(var(--aba-width) + (2 * 30px));
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    li {
+      font-size: 1.1rem;
+    }
+
+    .aba-info {
+      margin: 20px 5px 0 0;
+
+      h2 {
+        max-width: 260px;
+        font-size: 2.2rem;
+      }
+    }
+
+    .aba-numerador {
+      margin: 20px 0 5px 5px;
+    }
+
+    .aba-contador {
+      margin: 5px 0 0 5px;
+    }
+
+    .aba-mostrador p {
+      max-width: 40%;
+    }
   }
 }
 
 @include media-breakpoint-up(xxl) {
   .aba {
-    grid-template-rows: 450px auto auto;
-    font-size: 1em;
+    --img-height: 450px;
+    --aba-width: var(--img-height) * (4/3);
+
     margin: 40px auto;
+    padding: 30px 30px;
+    max-width: calc(var(--aba-width) + (2 * 30px));
+
+    p {
+      font-size: 1.4rem;
+    }
+
+    li {
+      font-size: 1.2rem;
+    }
+
+    .aba-info {
+      margin: 20px 5px 0 0;
+
+      h2 {
+        max-width: 260px;
+        font-size: 2.2rem;
+      }
+    }
+
+    .aba-numerador {
+      margin: 20px 0 5px 5px;
+    }
+
+    .aba-contador {
+      margin: 5px 0 0 5px;
+    }
+
+    .aba-mostrador {
+      height: 3.5rem;
+
+      p {
+        max-width: 40%;
+      }
+    }
   }
 }
 
