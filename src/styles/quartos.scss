@@ -18,87 +18,87 @@ section#quartos-carousel {
 }
 
 .aba {
+  --img-height: 240px;
+  --aba-width: var(--img-height) * (4/3);
   display: grid;
   place-items: stretch;
-  grid-template-columns: 40% auto;
-  grid-template-rows: 240px auto auto;
+  grid-template-columns: calc((4/10) * var(--aba-width)) calc((6/10) * var(--aba-width));
+  grid-template-rows: var(--img-height) auto auto;
   grid-template-areas:
     'imagem-quarto imagem-quarto'
     'info info'
     'numerador contador';
 
-  margin: 8px auto;
-  padding: 25px 25px;
-  max-width: calc((240px * (4/3)) + (2 * 25px));
-  /* 294 + padding*/
+  margin: 24px auto;
+  padding: 25px min(25px, 50vw - (var(--aba-width) / 2));
+  max-width: calc(var(--aba-width) + (2 * 25px));
+  /*294 + padding*/
 
   border-radius: 20px;
   background-color: var(--cor-background);
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.35);
-  font-size: 0.5em;
 
   img {
     grid-area: imagem-quarto;
-    width: calc(240px * (4/3));
+    width: var(--aba-width);
     height: 100%;
     border-radius: 20px;
   }
 
-  div {
+  /*div {
     margin: 12% 4%;
-  }
+  }*/
 
   li {
-    font-size: 1.4em;
+    font-size: 1.0rem;
   }
 
   p {
     text-align: center;
-    font-size: 1.8em;
-    margin-inline: 12px;
-  }
-
-  .aba-numerador {
-    grid-area: numerador;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    margin: 0px 5px;
-    background-color: #D9D9D9;
-    border-radius: 20px;
-    padding-top: 16px;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
   }
 
   .aba-info {
     grid-area: info;
 
-    margin: 0;
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin: 20px 0 8px 0;
     background-color: #D9D9D9;
     border-radius: 20px;
-    padding: 15px 0;
+    padding: 12px 0 18px 0;
 
     h2 {
-      margin: 10px;
-      margin-top: 0;
+      margin: 0 auto 10px auto;
+      width: fit-content;
       font-weight: bold;
-      font-size: 2.8em;
+      font-size: 2.0em;
     }
+
+    ul {
+      margin-left: 4px;
+    }
+  }
+
+  .aba-numerador {
+    grid-area: numerador;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    margin: 0 3px 0 0;
+    padding-top: 12px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
   }
 
   .aba-contador {
     grid-area: contador;
 
-    /*display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;*/
-    padding-top: 16px;
+    margin: 0 0 0 3px;
+    padding-top: 12px;
     background-color: #D9D9D9;
     border-radius: 20px;
-    margin: 0px 5px;
   }
 
   .aba-mostrador {
@@ -106,36 +106,41 @@ section#quartos-carousel {
     align-items: stretch;
     justify-content: space-around;
 
-    margin-top: 0;
-    height: 4.5em;
+    margin-bottom: 12px;
+    height: 3.2rem;
     font-weight: bold;
 
     p,
     button {
       border: solid 2px black;
-      margin: 0 6px;
     }
 
     p {
       flex: 1 1 40%;
 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0;
       max-width: 60%;
       background-color: white;
-      font-size: 3.0em;
+      font-size: 2.8rem;
     }
 
     button {
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 100%;
+
+      margin: 0 6px;
       padding-bottom: 5%;
+      height: 100%;
       aspect-ratio: 1;
 
-      background-color: inherit;
-      font-size: 3.0em;
+      background-color: transparent;
+      font-size: 3.0rem;
       border-radius: 10px;
-
     }
 
     button:hover {
