@@ -1,0 +1,212 @@
+/* code to get inter fonts from npm into SCSS*/
+@use "inter-ui/default" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/web'
+);
+
+@use "inter-ui/variable" with ($inter-font-display: swap,
+  $inter-font-path: 'inter-ui/variable'
+);
+
+@include default.all;
+@include variable.all;
+
+@import "bootstrap/scss/bootstrap.scss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+:root {
+  --cor-background: #F5F0E6;
+  --branco: #ffffff;
+  --preto: #000000;
+  --cor-primaria: #1f6f50;
+  --cor-secundaria: #f4c430;
+  --cor-terciaria: #272623;
+}
+
+body {
+  font-family: "Inter", "system-ui";
+
+  background-color: var(--cor-background) !important;
+}
+
+@supports (font-variation-settings: normal) {
+  body {
+    font-family: "InterVariable", "system-ui";
+  }
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 500;
+}
+
+header {
+  width: 100vw;
+}
+
+.navbar {
+  min-height: 80px;
+  padding: 10px 2rem;
+  background-color: var(--cor-background) !important;
+}
+
+.navbar-nav {
+  width: 100%;
+}
+
+@include media-breakpoint-up(lg) {
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+}
+
+.navbar-brand {
+  margin-left: 5%;
+  font-size: 1.8rem;
+  color: var(--cor-secundaria) !important;
+  width: 104px;
+  height: 90px;
+}
+
+.nav-link {
+  color: var(--preto) !important;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar .container-fluid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#btn-carrinho .nav-link {
+  padding: 10px 16px;
+  width: auto;
+  height: auto;
+  background-color: var(--cor-primaria);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: var(--cor-background) !important;
+}
+
+#btn-carrinho i {
+  font-size: 42.25px;
+  color: var(--cor-secundaria);
+  margin-right: 1rem;
+}
+
+
+.barra-progresso {
+  height: auto;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+article#reserva-etapas {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+
+  margin: 30px 0;
+
+  button {
+    height: 43px;
+    aspect-ratio: 1;
+    border: none;
+    background-size: 43px 43px;
+    background-color: transparent;
+  }
+
+  button:hover {
+    transform: none;
+    border: none;
+  }
+
+  button#etapas-prev {
+    background-image: url("/src/assets/carousel_button_left.svg");
+    margin-right: 50px;
+  }
+
+  button#etapas-next {
+    background-image: url("/src/assets/carousel_button_right.svg");
+    margin-left: 78px;
+  }
+
+  .etapa {
+    margin: 0 -32px;
+    width: 300px;
+    height: 43px;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    h2 {
+      font-size: 1.8em;
+      font-weight: bold;
+    }
+  }
+
+  .etapa#etapa-data {
+    z-index: 3;
+
+    h2 {
+      margin-right: 16px;
+    }
+  }
+
+  .etapa#etapa-quarto {
+    z-index: 2;
+  }
+
+  .etapa#etapa-hospedes {
+    z-index: 1;
+    display: none;
+  }
+
+  .etapa#etapa-pagamento {
+    margin: 0 -60px;
+    z-index: 0;
+
+    h2 {
+      margin-left: 70px;
+    }
+  }
+}
+
+article#reserva-mini-etapas {
+  background-image: url("/src/assets/mini_etapa.svg");
+  background-size: 240px 50px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 240px;
+  height: 50px;
+  margin: 30px auto;
+
+  color: var(--branco);
+}
+
+footer.wave {
+  width: 100vw;
+  height: 148px;
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
+
+  background-image: url("/src/assets/FooterWave.png");
+  background-size: max(100vw, 800px) 148px;
+  background-repeat: no-repeat;
+}
