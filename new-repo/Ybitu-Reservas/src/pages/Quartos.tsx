@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
 // Import just what we need from bootstrap
 import 'bootstrap/js/dist/button';
@@ -50,7 +50,6 @@ function AbaContador(prop: {limit: number}) {
   };
   
   return (
-    <>
       <div className="aba-contador">
         <p>Quantidade de reservas:</p>
         <div className="aba-mostrador">
@@ -59,9 +58,61 @@ function AbaContador(prop: {limit: number}) {
           <button onClick={() => add(count)} >+</button>
         </div>
       </div>
-    </>
   )
 }
+
+// if you change the number of steps, change etapa_position if statement
+function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
+  type status = "done" | "on-going" | "not-yet"
+  const steps_list: string[] = ["Data", "Quartos", "Pagamento"];
+  
+  const steps_divs: JSX.Element[] = steps_list.map((step_name, i) => {
+    let etapa_status: status = "done";
+    if (i == prop.step) {
+      etapa_status = "on-going";
+    }
+    if (i > prop.step) {
+      etapa_status = "not-yet";
+    }
+
+    let etapa_position: "" | "first" | "last" = "";
+    if (i == 0) {
+      etapa_position = "first";
+    }
+    if (i == 2) {
+      etapa_position = "last";
+    }
+
+    return (
+      <div key={step_name} className={`etapa ${etapa_status} ${etapa_position}`}>
+        <h2>{step_name}</h2>
+      </div>)
+  });
+
+    
+  return (
+      <div className="barra-progresso">
+
+        <h1>Reserva em andamento</h1>
+
+        <article id="reserva-etapas" className="d-none d-lg-flex">
+          <button id="etapas-prev" onClick={() => {window.location.href=steps_list[prop.step - 1]}}></button>
+
+          {steps_divs}
+
+          <button id="etapas-next" onClick={() => {window.location.href=steps_list[prop.step + 1]}}></button>
+        </article>
+
+        <article id="reserva-mini-etapas" className="d-lg-none">
+          <h2>Quartos</h2>
+        </article>
+      </div>
+  )
+}
+// <div id="etapa-pagamento" className="etapa">
+//   <h2>Pagamento</h2>
+// </div>
+
 
 export default function Quartos() {
   let splide_config: SplideProps = {
@@ -126,33 +177,7 @@ export default function Quartos() {
           </nav>
         </header>
 
-        <div className="barra-progresso">
-
-          <h1>Reserva em andamento</h1>
-
-          <article id="reserva-etapas" className="d-none d-lg-flex">
-            <button id="etapas-prev"></button>
-
-            <div id="etapa-data" className="etapa">
-              <h2>Data</h2>
-            </div>
-            <div id="etapa-quarto" className="etapa">
-              <h2>Quartos</h2>
-            </div>
-            <div id="etapa-hospedes" className="etapa">
-              <h2>Hóspedes</h2>
-            </div>
-            <div id="etapa-pagamento" className="etapa">
-              <h2>Pagamento</h2>
-            </div>
-
-            <button id="etapas-next"></button>
-          </article>
-
-          <article id="reserva-mini-etapas" className="d-lg-none">
-            <h2>Quartos</h2>
-          </article>
-        </div>
+        <BarraProgresso step={1}/>
 
         <h2>Escolha os quartos e a quantidade que serão reservados:</h2>
 

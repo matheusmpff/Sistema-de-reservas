@@ -1,14 +1,14 @@
 @import './style.scss';
 
-.etapa#etapa-data {
+.etapa.done {
   background-image: url("/src/assets/seta_data_verde.svg");
 }
 
-.etapa#etapa-quarto {
+.etapa.on-going {
   background-image: url("/src/assets/seta_data_amarelo.svg");
 }
 
-.etapa#etapa-pagamento {
+.etapa.not-yet {
   background-image: url("/src/assets/seta_pagamento_cinza.svg");
 }
 
