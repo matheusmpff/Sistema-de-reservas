@@ -38,13 +38,16 @@ function AbaContador(prop: {limit: number}) {
 export default function Quartos() {
   let splide_config: SplideProps = {
     options: {
-      perPage: 2,
+      perPage: 3,
       perMove: 1,
       i18n: {
         prev: "Aba anterior",
         next: "Próxima aba",
       },
       breakpoints: {
+        2150: {
+          perPage: 2,
+        },
         1200: {
           perPage: 1,
         },
