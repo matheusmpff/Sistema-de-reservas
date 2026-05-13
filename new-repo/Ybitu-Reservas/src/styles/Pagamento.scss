@@ -132,20 +132,6 @@ main {
   }
 }
 
-footer {
-  width: 100vw;
-  height: 148px;
-  position: fixed;
-  bottom: 0;
-  z-index: -1;
-
-  background-image: url("images/FooterWave.png");
-  background-size: 100vw 148px;
-  background-repeat: no-repeat;
-}
-
-
-
 @media (max-width:990px) {
   main {
     display: flex;
