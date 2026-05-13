@@ -5,12 +5,14 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Quartos from "./pages/Quartos.tsx";
 import Pagamento from "./pages/Pagamento.tsx";
 import Feedback from "./pages/Feedback.tsx";
+import Header from "./components/Header.tsx";
 
 import "./styles/style.scss"
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route index element={<Quartos />} />
         <Route path="Quartos" element={<Quartos />} />

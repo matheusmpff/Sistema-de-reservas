@@ -78,13 +78,16 @@ h1 {
 }
 
 .form-part {
-  margin-top: 12px;
+  margin-top: 6px;
   display: flex;
 
+  & label {
+    margin-bottom: -18px;
+  }
 
   & input {
     width: 100%;
-    height: 40px;
+    height: 30px;
     padding-left: 10px;
     border-radius: 100px;
   }
@@ -93,11 +96,11 @@ h1 {
     resize: none;
     padding: 10px;
     border-radius: 20px;
-    height: 156px;
+    height: 116px;
   }
 
   & .left {
-    margin-left: 20px;
+    margin-left: 10px;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -118,8 +121,12 @@ form {
 .envio {
   align-self: center;
   background-color: #272623;
+<<<<<<< HEAD:src/styles/feedback.scss
   margin-top: 16px;
   margin-bottom: 10px;
+=======
+  margin-top: 5px;
+>>>>>>> 7783312 (salvando mudanças feitas em aula):src/css/feedback.scss
   background-color: var(--cor-primaria);
   color: var(--cor-background);
   padding: 10px 16px;
@@ -203,7 +210,14 @@ footer img {
     display: flex;
     font-size: 1.0rem;
 
+<<<<<<< HEAD:src/styles/feedback.scss
     & label {}
+=======
+    & label {
+      margin-bottom: -18px;
+      font-size: 11px;
+    }
+>>>>>>> 7783312 (salvando mudanças feitas em aula):src/css/feedback.scss
 
     & input {
       width: 232px;
@@ -301,7 +315,12 @@ footer img {
     display: flex;
 
     & label {
+<<<<<<< HEAD:src/styles/feedback.scss
       font-size: 1.0rem;
+=======
+      margin-bottom: -18px;
+      font-size: 10px;
+>>>>>>> 7783312 (salvando mudanças feitas em aula):src/css/feedback.scss
     }
 
     & input {
