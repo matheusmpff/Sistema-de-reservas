@@ -49,11 +49,11 @@ export default function BarraProgresso(prop: {step: 0 | 1 | 2 }) {
       <div id="progresso">
         {prop.step != 0 && <button id="etapas-prev" onClick={() => move_page("prev")} />}
 
-        <article id="barra" className="d-none d-lg-flex">
+        <article id="barra" className="hidden lg:flex">
           {steps_divs}
         </article>
 
-        <article id="mini" className="d-lg-none">
+        <article id="mini" className="flex lg:hidden">
           <h2>{steps_list[prop.step]}</h2>
         </article>
 

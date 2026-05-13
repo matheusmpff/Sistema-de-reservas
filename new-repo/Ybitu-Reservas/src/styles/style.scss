@@ -7,15 +7,14 @@
   $inter-font-path: 'inter-ui/variable'
 );
 
-@include default.all;
-@include variable.all;
-
-@import "bootstrap/scss/bootstrap.scss";
-@import "bootstrap-icons/font/bootstrap-icons.css";
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "tailwindcss";
+@import "bootstrap-icons/font/bootstrap-icons";
 
 $cor-background: #F5F0E6;
 $branco: #ffffff;
 $preto: #000000;
+$cinza: #BCBCBC;
 $cor-primaria: #1f6f50;
 $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
@@ -61,14 +60,14 @@ header {
   width: 100%;
 }
 
-@include media-breakpoint-up(lg) {
-  .navbar-nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-}
+/* @include media-breakpoint-up(lg) { */
+/* .navbar-nav { */
+/* display: flex; */
+/* flex-direction: row; */
+/* justify-content: space-evenly; */
+/* align-items: center; */
+/* } */
+/* } */
 
 .navbar-brand {
   margin-left: 5%;

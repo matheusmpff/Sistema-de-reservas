@@ -66,42 +66,6 @@ export default function Quartos() {
 
   return (
     <>
-      <header>
-        <nav className="navbar navbar-expand-lg">
-          <div className="container-fluid">
-
-            <a className="navbar-brand" href="https://pousadaybitu.com.br/">
-              <img src="src/assets/logo.png" alt="Logo" height="90" width="104"/>
-            </a>
-
-            {/* Botão hamburguer para mobile */}
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-              <span className="navbar-toggler-icon"></span>
-            </button>
-
-            <div className="collapse navbar-collapse" id="menu">
-              <ul className="navbar-nav">
-                <li className="nav-item"><a className="nav-link" href="https://pousadaybitu.com.br/">HOME</a></li>
-                <li className="nav-item"><a className="nav-link" href="https://pousadaybitu.com.br/quem-somos/">POUSADA YBITU</a>
-                </li>
-                <li className="nav-item"><a className="nav-link" href="https://pousadaybitu.com.br/passeios-e-eventos/">PASSEIOS E
-                    EVENTOS</a></li>
-                <li className="nav-item"><a className="nav-link" href="https://pousadaybitu.com.br/contato/">CONTATO</a></li>
-                <li id="btn-carrinho" className="nav-item">
-                  <button className="nav-link">
-                    <div className="square">
-                      <i className="bi bi-arrow-up-right-square-fill"></i>
-                    </div>
-                    VER CARRINHO
-                  </button>
-                </li>
-              </ul>
-            </div>
-
-          </div>
-        </nav>
-      </header>
-
       <BarraProgresso step={1}/>
 
       <h2>Escolha os quartos e a quantidade que serão reservados:</h2>

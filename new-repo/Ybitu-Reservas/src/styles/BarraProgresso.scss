@@ -28,7 +28,6 @@
   }
 
   article#barra {
-    display: flex;
     justify-content: center;
 
     .etapa {
@@ -61,7 +60,7 @@
 
     .etapa.last {
       margin-right: 20px;
-      border: var(--preto) solid 1.8px;
+      border: style.$preto solid 1.8px;
 
       h2 {
         padding-left: 42px;
@@ -83,7 +82,7 @@
 
     .etapa.last.not-yet {
       background-image: none;
-      background-color: #BCBCBC;
+      background-color: style.$cinza;
     }
 
     .etapa.last.on-going {
@@ -93,7 +92,6 @@
   }
 
   article#mini {
-    display: flex;
     justify-content: center;
 
     width: 240px;
