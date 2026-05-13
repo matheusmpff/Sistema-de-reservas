@@ -1,19 +1,22 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-// Import just what we need from bootstrap
-import 'bootstrap/js/dist/button';
-import 'bootstrap/js/dist/collapse';
-import 'bootstrap/js/dist/dropdown';
-import 'bootstrap/js/dist/tab';
+import { StrictMode } from "react"
+import { createRoot } from "react-dom/client"
+import { BrowserRouter, Route, Routes } from "react-router";
 
-import Quartos from './pages/Quartos.tsx'
+import Quartos from "./pages/Quartos.tsx";
+import Pagamento from "./pages/Pagamento.tsx";
+import Feedback from "./pages/Feedback.tsx";
 
-import './styles/style.scss'
-import Feedback from './pages/Feedback.tsx';
-// import App from './App.tsx'
+import "./styles/style.scss"
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Feedback />
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<Quartos />} />
+        <Route path="Quartos" element={<Quartos />} />
+        <Route path="Pagamento" element={<Pagamento />} />
+        <Route path="feedback" element={<Feedback />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 )
