@@ -7,6 +7,7 @@ import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/tab';
 
 import Quartos from './pages/Quartos.tsx'
+import Cadastro from './pages/Cadastro.tsx'
 
 import './styles/style.scss'
 import Feedback from './pages/Feedback.tsx';
@@ -14,6 +15,6 @@ import Feedback from './pages/Feedback.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Feedback />
+    <Cadastro />
   </StrictMode>,
 )
