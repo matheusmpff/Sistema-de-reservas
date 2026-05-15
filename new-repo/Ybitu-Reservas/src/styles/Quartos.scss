@@ -53,16 +53,17 @@ section#quartos-carousel {
     border-radius: 20px;
     padding: 12px 0 18px 0;
 
-    h2 {
-      margin: 0 auto 10px auto;
-      width: fit-content;
-      font-weight: bold;
+    h3 {
+      margin: 0 15px 10px 15px;
+
+      text-align: center;
+      font-weight: 400;
       font-size: 2.0em;
+      line-height: 1.2;
     }
 
     ul {
-      margin-left: 4px;
-      padding-right: 6px;
+      padding: 5px 8px 0 25px;
     }
   }
 
@@ -154,6 +155,7 @@ section#quartos-carousel {
   }
 }
 
+/* 768px */
 @media (width >=48rem) {
   @include aba-vertical-style(450px);
 
@@ -197,6 +199,7 @@ section#quartos-carousel {
   }
 }
 
+/* 1280px */
 @media (width >=80rem) {
   @include aba-vertical-style(360px);
 
@@ -215,6 +218,7 @@ section#quartos-carousel {
   }
 }
 
+/* 1536 */
 @media (width >=96rem) {
   @include aba-vertical-style(450px);
 
