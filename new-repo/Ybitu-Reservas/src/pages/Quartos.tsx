@@ -11,32 +11,45 @@ import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
 import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
 import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 
-function AbaContador(prop: {limit: number}) {
+type stateOp<T> = (c: T) => void;
+function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, add: stateOp<number>}) {
+  return (
+      <>
+        <h3>Quantidade de reservas:</h3>
+        <div className="aba-mostrador">
+          <i className="bi bi-dash mouse-reaction" onClick={() => prop.sub(prop.count)}/> 
+          <p>{prop.count}</p>
+          <i className="bi bi-plus mouse-reaction" onClick={() => prop.add(prop.count)}/>
+        </div>
+      </>
+  );
+};
+
+function AbaSelecao(prop: {limit: number}) {
   let [count, setCount] = useState(0);
 
   const subtract = (c: number) => {
-    if (c != 0) {
-      setCount(c - 1);
-    }
+    setCount(c - 1);
   };
-
   const add = (c: number) => {
     if (c < prop.limit) {
       setCount(c + 1);
     }
   };
-  
+
+  const abrirContador = () => {
+    setCount(1);
+  };
+
   return (
-      <div className="aba-contador">
-        <p>Quantidade de reservas:</p>
-        <div className="aba-mostrador">
-          <button onClick={() => subtract(count)} >-</button>
-          <p>{count}</p>
-          <button onClick={() => add(count)} >+</button>
-        </div>
-      </div>
+    <div className="aba-contador aba-area">
+      {count == 0 && <div className="w-full h-full flex items-center justify-center">
+         <button className="aba-selecionar mouse-reaction" onClick={() => abrirContador()}>Selecionar quarto</button>
+      </div>}
+      {count != 0 && <AbaContador count={count} limit={prop.limit} sub={subtract} add={add} />}
+    </div>
   );
-}
+};
 
 type QuartoData = {
   type: string,
@@ -62,19 +75,19 @@ function AbaQuarto(prop: {data: QuartoData}) {
   return (
     <div className="aba">
       <img src={prop.data.imageSrc} alt={prop.data.imageLabel} />
-      <div className="aba-info">
+      <div className="aba-info aba-area">
         <h3>{prop.data.title}</h3>
         <ul className="list-outside list-disc leading-[1.2]">
           {itemList}
         </ul>
       </div>
-      <div className="aba-numerador">
-        <p>Quantidade disponível:</p>
+      <div className="aba-numerador aba-area">
+        <h3>Quantidade disponível:</h3>
         <div className="aba-mostrador">
           <p>{prop.data.quantity}</p>
         </div>
       </div>
-      <AbaContador limit={prop.data.quantity}/>
+      <AbaSelecao limit={prop.data.quantity}/>
     </div>
   );
 }

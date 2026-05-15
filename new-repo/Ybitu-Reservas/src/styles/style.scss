@@ -16,6 +16,7 @@ $branco: #ffffff;
 $preto: #000000;
 $cinza: #BCBCBC;
 $cor-primaria: #1f6f50;
+$cor-primaria-leve: #36A366;
 $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
 
@@ -57,6 +58,12 @@ header {
 
 button {
   cursor: pointer;
+}
+
+/* for all elements that should react from hovering */
+.mouse-reaction:hover {
+  transform: scale(1.08);
+  transition-duration: 0.2s;
 }
 
 .navbar {
