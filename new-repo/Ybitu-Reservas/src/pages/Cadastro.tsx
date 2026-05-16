@@ -5,44 +5,44 @@ export default function Cadastro() {
     return (
 
         <div className="flex flex-col min-h-screen justify-between">
-            <div className="container mx-auto flex flex-col justify-center items-center bg-[#F5F0E6] lg:flex-row lg:justify-around lg:gap-12 xl:gap-0">
-                <div className="md:text-xl mt-6 pt-72 flex flex-col items-center  bg-[url('src/assets/cadastro/pousadas.png')] min-w-100 min-h-140 bg-cover bg-center rounded md:min-h-160 md:min-w-120 ">
+            <div className="main_container">
+                <div className="esquerda">
                     <h2 className="text-white bg-[#1F6F50] px-2 py-0.5">CRIE A SUA CONTA</h2>
                     <p className=" mt-5 mb-3 text-white ">Registre-se agora para garantir:</p>
                     <ol className="list-decimal">
-                        <li className="px-1 py-0.5 text-white bg-[#1F6F50]">Acesso completo as possíveis reservas</li>
-                        <li className=" px-1 py-0.5 mt-2 text-white bg-[#1F6F50]">Escolha personalizada dos quartos</li>
-                        <li className="px-1 py-0.5 mt-2 text-white bg-[#1F6F50]">Gerenciamento total das reservas</li>
+                        <li className="li_style">Acesso completo as possíveis reservas</li>
+                        <li className="li_style mt-2">Escolha personalizada dos quartos</li>
+                        <li className="li_style mt-2">Gerenciamento total das reservas</li>
                     </ol>
                 </div>
                 <div>
-                    <div className="mt-8 flex items-center justify-center flex-col ">
+                    <div className="titulo ">
                         <div className="font-bold text-4xl">FAZER CADASTRO</div>
                         <p className=" mt-4 max-w-100 md:max-w-120 lg:mt-8">Realize seu cadastro para tirar proveito de todos os benefícios de nosso sistema de reserva. </p>
                         <p className=" mt-3 mb-9 max-w-100 md:max-w-120">Para isso basta indicar as informações no formulário abaixo:</p>
                     </div>
-                    <div className="bg-[#272623] rounded py-6 px-8 min-w-100">
+                    <div className="formulario">
                         <div><img src="src/assets/logo_branca.png" alt="" width="40" /></div>
-                        <form className="grid grid-cols-1 gap-2 mt-4 md:grid-cols-2" action="">
+                        <form className="form_grid" action="">
 
-                            <div className="flex flex-col gap-y-2">
-                                <label className="text-[#F5F0E6] text-sm font-bold" htmlFor="name">Nome:</label>
-                                <input className="bg-[#F5F0E6] rounded py-2 px-2" type="text" id="name" placeholder="Insira seu nome..." />
+                            <div className="grid_element">
+                                <label className="label_style" htmlFor="name">Nome:</label>
+                                <input className="input_style" type="text" id="name" placeholder="Insira seu nome..." />
                             </div>
-                            <div className="flex flex-col gap-y-2">
-                                <label className="text-[#F5F0E6] text-sm font-bold" htmlFor="surname">Sobrenome</label>
-                                <input className="bg-[#F5F0E6] rounded py-2 px-2" type="text" id="surname" placeholder="Insira seu sobrenome..." />
+                            <div className="grid_element">
+                                <label className="label_style" htmlFor="surname">Sobrenome</label>
+                                <input className="input_style" type="text" id="surname" placeholder="Insira seu sobrenome..." />
                             </div>
-                            <div className=" flex flex-col gap-y-2 md:col-span-2">
-                                <label className="text-[#F5F0E6] text-sm font-bold" htmlFor="Email">E-mail:</label>
-                                <input className="bg-[#F5F0E6] rounded py-2 px-2" type="email" id="Email" placeholder="Insira seu e-mail" />
+                            <div className=" grid_element md:col-span-2">
+                                <label className="label_style" htmlFor="Email">E-mail:</label>
+                                <input className="input_style" type="email" id="Email" placeholder="Insira seu e-mail" />
                             </div>
-                            <div className=" flex flex-col gap-y-2 md:col-span-2">
-                                <label className="text-[#F5F0E6] text-sm font-bold" htmlFor="senha">Senha:</label>
-                                <input className="bg-[#F5F0E6] rounded py-2 px-2" type="password" id="senha" placeholder="Insira sua senha" />
+                            <div className=" grid_element md:col-span-2">
+                                <label className="label_style" htmlFor="senha">Senha:</label>
+                                <input className="input_style" type="password" id="senha" placeholder="Insira sua senha" />
                             </div>
 
-                            <button className="mt-4 bg-[#1F6F50] rounded text-white p-2 min-w-80 md:col-span-2">FAZER CADASTRO</button>
+                            <button className="btn_style">FAZER CADASTRO</button>
                         </form>
                     </div>
                 </div>

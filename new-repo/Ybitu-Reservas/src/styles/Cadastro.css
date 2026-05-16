@@ -1,1 +1,47 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+.li_style{
+    @apply px-1 py-0.5 text-white bg-[#1F6F50];
+}
+
+.main_container{
+    @apply container mx-auto flex flex-col justify-center items-center bg-[#F5F0E6];
+    @apply lg:flex-row lg:justify-around lg:gap-12;
+    @apply xl:gap-0;
+}
+
+.esquerda{
+    @apply mt-6 pt-72 flex flex-col items-center bg-[url('src/assets/cadastro/pousadas.png')] 
+    min-w-100 min-h-140 bg-cover bg-center rounded;
+    @apply md:text-xl md:min-h-160 md:min-w-120;
+
+}
+
+.titulo{
+    @apply mt-8 flex items-center justify-center flex-col;
+}
+
+.formulario{
+    @apply bg-[#272623] rounded py-6 px-8 min-w-100;
+}
+
+.form_grid{
+    @apply grid grid-cols-1 gap-2 mt-4 md:grid-cols-2;
+}
+
+.grid_element{
+    @apply flex flex-col gap-y-2;
+}
+
+.label_style{
+    @apply text-[#F5F0E6] text-sm font-bold;
+}
+
+.input_style{
+    @apply bg-[#F5F0E6] rounded py-2 px-2;
+}
+
+.btn_style{
+    @apply mt-4 bg-[#1F6F50] rounded text-white p-2 min-w-80;
+    @apply md:col-span-2;
+}
