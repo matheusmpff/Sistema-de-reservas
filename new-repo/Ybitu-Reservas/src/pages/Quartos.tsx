@@ -162,7 +162,7 @@ export default function Quartos() {
         }
       </Splide>
 
-      <footer className="bg-wave" />
+      
     </>
   );
 }

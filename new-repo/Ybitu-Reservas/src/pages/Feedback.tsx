@@ -1,5 +1,4 @@
 import "../styles/Feedback.css";
-import Footer from "../components/Footer.tsx"
 
 export default function Feedback() {
     return (
@@ -43,7 +42,6 @@ export default function Feedback() {
                 </div>
             </div>
 
-            <Footer></Footer>
         </>
 
 

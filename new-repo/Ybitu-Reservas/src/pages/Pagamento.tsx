@@ -107,7 +107,7 @@ export default function Pagamento() {
     </main>
 
 
-    <footer className="bg-wave" />
+    
   </ >
   );
 }

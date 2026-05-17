@@ -1,10 +1,10 @@
 import "../styles/Cadastro.css";
-import Footer from "../components/Footer.tsx"
+
 
 export default function Cadastro() {
     return (
 
-        <div className="flex flex-col min-h-screen justify-between">
+        <div className="flex flex-col">
             <div className="main_container">
                 <div className="esquerda">
                     <h2 className="text-white bg-[var(--cor-primaria)] px-2 py-0.5">CRIE A SUA CONTA</h2>
@@ -47,7 +47,6 @@ export default function Cadastro() {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
         </div>
 
 
