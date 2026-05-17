@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+
+
+.grid_element{
+    @apply rounded bg-cover bg-center  w-full h-full;
+}
+
+.img1_position{
+    @apply col-start-1 col-end-3 row-start-3 row-end-5;
+}
+.img2_position{
+    @apply col-start-3 col-end-5 row-start-2 row-end-4;
+}
+.img3_position{
+    @apply col-start-3 col-end-5 row-start-4 row-end-6;
+}
+.img4_position{
+    @apply  col-start-5 col-end-7 row-start-3 row-end-5;
+    @apply lg:row-start-1 lg:row-end-3;
+}
+.img5_position{
+    @apply col-start-5 col-end-7 row-start-5 row-end-7;
+    @apply lg:row-start-3 lg:row-end-5;
+}
+
+.grid_div{
+    @apply mx-auto grid gap-3 grid-rows-[repeat(6,70px)]  grid-cols-[repeat(6,70px)];
+    @apply md:grid-rows-[repeat(6,90px)]  md:grid-cols-[repeat(6,90px)];
+    @apply lg:mr-0 lg:ml-auto lg:grid-rows-[repeat(6,80px)]  lg:grid-cols-[repeat(6,80px)];
+    @apply xl:grid-rows-[repeat(6,100px)]  xl:grid-cols-[repeat(6,100px)];
+}
+
+.topics{
+    @apply flex bg-[var(--cor-terciaria)] py-2 px-3 rounded mt-2;
+}
+
+.icons{
+    @apply text-[var(--cor-secundaria)] mr-2 ;
+}
+
+.icon_text{
+    @apply font-semibold text-[var(--cor-background)];
+}
