@@ -8,8 +8,6 @@
 );
 
 @use "tailwindcss";
-@use "bootstrap-icons/font/bootstrap-icons" with ($bootstrap-icons-font-dir: "bootstrap-icons/font/fonts"
-);
 
 $branco: #ffffff;
 $preto: #000000;
@@ -19,6 +17,7 @@ $cor-primaria-leve: #36A366;
 $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
 $cor-background: #F5F0E6;
+$shadow-color: rgba(0, 0, 0, 0.342);
 
 :root {
   --cor-background: #F5F0E6;

@@ -1,9 +1,12 @@
+// project components
 import BarraProgresso from "../components/BarraProgresso";
-
-import "../styles/Pagamento.scss";
-
 import { type ResumoData, type stateOp } from "../types.ts";
+// external libraries
 import { useState } from "react";
+import { Pencil, Trash } from "lucide-react";
+
+// imrt styles
+import "../styles/Pagamento.scss";
 
 function ReservaResumo(prop: { data: ResumoData, delFn: stateOp<string> }) {
 
@@ -17,17 +20,18 @@ function ReservaResumo(prop: { data: ResumoData, delFn: stateOp<string> }) {
   );
    
   return (
-    <div className="opcao-reserva">
-      <div className="reserva-titulo">
+    <div className="opcao-reserva pl-4">
+      <div className="reserva-titulo pt-4 pr-4">
         <h3>{prop.data.title}</h3>
         <div className="flex gap-1">
-          <i className="bi bi-pencil-fill mouse-reaction"></i>
-          <i className="bi bi-trash-fill mouse-reaction" onClick={() => prop.delFn(prop.data.key)}></i>
+          <Pencil className="mouse-reaction" />
+          <Trash className="mouse-reaction" onClick={() => prop.delFn(prop.data.key)} />
         </div>
       </div>
 
-      <div className="flex flex-col items-center mt-4">
-        <p className="reserva-data">{prop.data.date_in} &#x2192; {prop.data.date_out}</p>
+      <div className="flex flex-col items-left">
+        <p className="reserva-data">Data: {prop.data.date_in} &#x2192; {prop.data.date_out}</p>
+        <p>Items:</p>
         <ul className="reserva-quarto">
           {reservaList}
         </ul>
@@ -72,20 +76,20 @@ export default function Pagamento() {
       <section>
         <h2>Como concluir a reserva</h2>
         <p>
-          Ao lado, é possível ver a quantidade e as opções de quarto adicionados ao carrinho.Foram realizadas
+          Ao lado, é possível ver a quantidade e as opções de quarto adicionados ao carrinho. Foram realizadas
           2 reservas, totalizando 6 quartos.
         </p>
         <p>
           Caso deseje editar suas escolhas, clique no ícone do
           lápis para voltar à primeira etapa. Caso deseje excluir
-          alguma reserve, clique no ícone da lixeira.
+          alguma reserva, clique no ícone de lixeira.
         </p>
         <p>
           Para concluir a sua reserva, clique no botão "Concluir
           reserva", que irá direcioná-lo para um de nossos
           atendentes no WhatsApp.
         </p>
-        <p>Caso queira adicionar mais quartos clique no botão abaixo</p>
+        <p>Caso queira adicionar mais quartos clique no botão abaixo:</p>
 
         <a href="Quartos" id="maisquartos" className="mouse-reaction">Adicionar mais quartos</a>
       </section>
@@ -102,7 +106,7 @@ export default function Pagamento() {
             <ReservaResumo key={resumo.key} data={resumo} delFn={deleteResumo}/>)
           }
         </div>
-        <a id="reserva-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
+        <a id="pagamento-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
       </aside>
     </main>
 

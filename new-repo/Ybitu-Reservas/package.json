@@ -13,7 +13,6 @@
     "@popperjs/core": "^2.11.8",
     "@tailwindcss/vite": "^4.3.0",
     "@trg69/react-splide": "^0.7.14",
-    "bootstrap-icons": "^1.13.1",
     "framer-motion": "^12.38.0",
     "i": "^0.3.7",
     "inter-ui": "^4.1.1",

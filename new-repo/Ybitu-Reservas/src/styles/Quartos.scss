@@ -7,7 +7,7 @@ section#quartos-carousel {
 
 .aba {
   $img-height: 240px;
-  $aba-width: $img-height * (4/3);
+  $aba-width: calc($img-height * (4/3));
 
   $box-color: #D9D9D9;
 
@@ -27,7 +27,7 @@ section#quartos-carousel {
 
   border-radius: 20px;
   background-color: style.$cor-background;
-  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.35);
+  box-shadow: 4px 4px 12px style.$shadow-cor;
 
   img {
     grid-area: imagem-quarto;
@@ -120,7 +120,7 @@ section#quartos-carousel {
       font-size: calc($h * 7/8);
     }
 
-    i {
+    svg.contador-click {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -135,21 +135,19 @@ section#quartos-carousel {
       background-color: transparent;
     }
 
-    i:hover {
+    svg.contador-click:hover {
       /* color: style.$cor-primaria; */
       background-color: color-mix(in srgb, style.$cor-primaria-leve 35%, transparent 65%);
-      transform: scale(1.1);
-      transition-duration: 0.2s;
     }
   }
 }
 
 @mixin aba-vertical-style($img-height) {
   .aba {
-    $aba-width: $img-height * (4/3);
+    $aba-width: calc($img-height * (4/3));
 
     grid-template-columns: calc($aba-width * (8/14)) calc($aba-width * (6/14));
-    grid-template-rows: $img-height $img-height/2 $img-height/2;
+    grid-template-rows: $img-height calc($img-height/2) calc($img-height/2);
     margin: 40px auto;
     padding: 30px 30px;
     max-width: calc($aba-width + (2 * 30px));

@@ -2,6 +2,7 @@ import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
 import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
 import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
+import { Minus, Plus } from "lucide-react";
 import BarraProgresso from "../components/BarraProgresso";
 
 // import css
@@ -16,9 +17,9 @@ function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, 
       <>
         <h3>Quantidade de reservas:</h3>
         <div className="aba-mostrador">
-          <i className="bi bi-dash mouse-reaction" onClick={() => prop.sub(prop.count)}/> 
+          <Minus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.sub(prop.count)} />
           <p>{prop.count}</p>
-          <i className="bi bi-plus mouse-reaction" onClick={() => prop.add(prop.count)}/>
+            <Plus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.add(prop.count)}/>
         </div>
       </>
   );
