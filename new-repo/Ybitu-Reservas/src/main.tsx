@@ -15,10 +15,7 @@ import "./styles/style.scss"
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col justify-between">
-
         <Header />
-
 
         <Routes>
           <Route index element={<Quartos />} />
@@ -28,11 +25,8 @@ createRoot(document.getElementById("root")!).render(
           <Route path="Pagamento" element={<Pagamento />} />
           <Route path="feedback" element={<Feedback />} />
         </Routes>
-
-
+        
         <Footer />
-
-      </div>
     </BrowserRouter>
   </StrictMode>,
 )
