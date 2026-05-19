@@ -20,8 +20,8 @@ function ReservaResumo(prop: { data: ResumoData, delFn: stateOp<string> }) {
   );
    
   return (
-    <div className="opcao-reserva pl-4">
-      <div className="reserva-titulo pt-4 pr-4">
+    <div className="opcao-reserva">
+      <div className="reserva-titulo">
         <h3>{prop.data.title}</h3>
         <div className="flex gap-1">
           <Pencil className="mouse-reaction" />
@@ -109,9 +109,6 @@ export default function Pagamento() {
         <a id="pagamento-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
       </aside>
     </main>
-
-
-    
   </ >
   );
 }

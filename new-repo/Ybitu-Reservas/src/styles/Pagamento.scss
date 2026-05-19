@@ -29,17 +29,7 @@
 /* } */
 /* } */
 
-/* @media (max-width:px) { */
-/* main { */
-/* section { */
-/* p { */
-/* width: 308px; */
-/* margin-top: 12px; */
-/* } */
-/* } */
-/* } */
-/* } */
-
+$base-pad: 4;
 
 main {
   display: flex;
@@ -59,7 +49,7 @@ main {
     width: 100%;
     padding: 10px 20px 18px;
 
-    border-radius: 5%;
+    border-radius: 20px;
     background-color: style.$cor-background;
     box-shadow: 2px 2px 10px style.$shadow-color;
 
@@ -100,7 +90,6 @@ main {
     }
 
     $linha-cor: rgba(255, 255, 255, 0.253);
-    $base-pad: 4;
 
     div#pagamento-lista {
       border-top: solid 1px $linha-cor;
@@ -145,6 +134,88 @@ main {
       font-weight: 600;
       background-color: style.$cor-secundaria;
       border-radius: 10px;
+    }
+  }
+}
+
+/* 768px */
+@media (width >=48rem) {
+  main {
+    section {
+      a {
+        $h: 80px;
+        width: 320px;
+        height: $h;
+        margin-top: 20px;
+
+        font-size: 1.4rem;
+        line-height: $h;
+      }
+    }
+
+    aside {
+      width: 440px;
+
+      h2 {
+        margin-top: 18px;
+      }
+
+      $linha-cor: rgba(255, 255, 255, 0.253);
+      $linha-stroke: 2px;
+
+      div#pagamento-lista {
+        border-top: solid $linha-stroke $linha-cor;
+
+        .opcao-reserva {
+          border-bottom: solid $linha-stroke $linha-cor;
+
+          div.reserva-titulo {
+            h3 {
+              font-size: 1.3rem;
+            }
+          }
+        }
+      }
+
+      #pagamento-botao {
+        padding: 12px 12px;
+        margin-bottom: calc(var(--spacing) * 1.5 * $base-pad);
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+
+/* 1024px */
+@media (width >=64rem) {
+  main {
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-evenly;
+
+    margin: 80px 0;
+
+    section {
+      max-width: 50%;
+      margin: 0;
+
+      a {
+        $h: 72px;
+        width: 240px;
+        height: $h;
+        font-size: 1.2rem;
+        line-height: $h;
+      }
+    }
+
+    aside {
+      width: 360px;
+
+      #pagamento-botao {
+        padding: 8px 8px;
+        margin-bottom: calc(var(--spacing) * $base-pad);
+        font-size: 1.0rem;
+      }
     }
   }
 }
