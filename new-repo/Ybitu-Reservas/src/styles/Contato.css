@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+.main_img{
+    @apply w-full bg-[url('src/assets/contato/background.png')] min-h-80 bg-cover bg-center rounded-xl  mx-auto;
+    @apply lg:min-h-100;
+    @apply 2xl:w-9/11;
+}
+
+.adjust_items{
+    @apply flex justify-center items-center flex-col;
+    @apply text-[var(--cor-background)];
+}
+
+.grid_element_contato{
+    @apply flex flex-col items-center mx-auto justify-center min-h-80 w-80 px-8 text-center rounded-xl text-[var(--cor-secundaria)] bg-[var(--cor-terciaria)];
+}
+
+.form_contato{
+    @apply grid grid-cols-1 w-9/12 mx-auto p-6 gap-3 rounded bg-[var(--cor-terciaria)] text-[var(--cor-background)] ;
+    @apply lg:grid-cols-2 ;
+    
+}
+
+.textarea_contato{
+    @apply mt-3 resize-y rounded bg-[var(--cor-background)] min-h-70 text-black px-3 py-4;
+    resize: none;
+}
+
+.form_element_contato{
+    @apply flex flex-col ;
+}
+
+.input_contato{
+    @apply bg-[var(--cor-background)] py-4 px-3 rounded mt-3 text-black;
+}
