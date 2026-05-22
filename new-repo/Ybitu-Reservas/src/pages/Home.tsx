@@ -6,7 +6,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function Home() {
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto h-screen">
             <div className="overflow-hidden flex flex-col lg:flex-row relative mt-12">
                 <div className="xl:ml-20 2xl:ml-30 flex flex-col justify-center items-center p-6 md:p-12">
                     <div className="text-6xl text-center text-[var(--cor-terciaria)]">Pousada</div>

@@ -7,6 +7,7 @@ import seta from '../assets/seta_carrinho.svg'
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false)
+    //const [isLoggedIn, setIsLoggedIn] = useState(false)  Vamos usar na implementação do backend, mas por enquanto não tem funçãos
 
     const animatedLink = "relative hover:cursor-pointer after:content-[''] after:absolute after:w-full after:h-[2px] after:bg-green-800 after:left-0 after:-bottom-1 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform after:duration-300"
 
@@ -18,10 +19,12 @@ export default function Header() {
         { to: "/Pousada", label: "Pousada" },
         { to: "/Passeios", label: "Passeios" },
         { to: "/Contato", label: "Contato" }, 
+        { to : "/Login", label: "Login"},
+        { to: "/Cadastro", label: "Cadastro"}
     ];
 
     return (
-        <header className="flex items-center justify-between p-4 mt-4 relative">
+        <header className="fixed top-0 left-0 w-full z-50 flex items-center justify-between p-4 bg-[var(--cor-background)] shadow-sm">
             <div className="ml-8">
                 <img src={logo} alt="Logo da Pousada Ybitu" />
             </div>
