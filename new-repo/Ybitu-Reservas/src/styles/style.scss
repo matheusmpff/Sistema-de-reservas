@@ -18,6 +18,7 @@ $cor-secundaria: #f4c430;
 $cor-terciaria: #272623;
 $cor-background: #F5F0E6;
 $shadow-color: rgba(0, 0, 0, 0.342);
+$base-pad: 4;
 
 :root {
   --cor-background: #F5F0E6;
@@ -63,6 +64,34 @@ header {
 .mouse-reaction:hover {
   transform: scale(1.08);
   transition-duration: 0.2s;
+}
+
+.secondary-button {
+  padding: 8px 8px;
+  margin-bottom: calc(var(--spacing) * $base-pad);
+
+  color: $preto;
+  font-weight: 600;
+  background-color: $cor-secundaria;
+  border-radius: 10px;
+}
+
+/* 768px */
+@media (width >=48rem) {
+  .secondary-button {
+    padding: 12px 12px;
+    margin-bottom: calc(var(--spacing) * 1.5 * $base-pad);
+    font-size: 1.2rem;
+  }
+}
+
+/* 1024px */
+@media (width >=64rem) {
+  .secondary-button {
+    padding: 8px 8px;
+    margin-bottom: calc(var(--spacing) * $base-pad);
+    font-size: 1.0rem;
+  }
 }
 
 .navbar {

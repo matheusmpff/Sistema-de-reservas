@@ -125,23 +125,27 @@ export default function Pagamento() {
             <ReservaResumo key={resumo.key} data={resumo} editFn={setPopEdit} delFn={setPopDelete}/>)
           }
         </div>
-        <a id="pagamento-botao" className="mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
+        <a className="secondary-button mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
       </aside>
 
       <PopUp modalState={popDelete.open}>
         <div className="pop-confirm">
           <h2>Você realmente deseja deletar esta reserva?</h2>
-          <p>Essa ação não poderá ser desfeita.</p>
-          <button className="mouse-reaction" onClick={() => deleteResumo(true)}>Deletar</button>
-          <button className="mouse-reaction" onClick={() => deleteResumo(false)}>Não deletar</button>
+          <p className="mb-2">Essa ação não poderá ser desfeita.</p>
+          <div className="flex justify-center gap-4">
+            <button className="mouse-reaction" onClick={() => deleteResumo(true)}>Deletar</button>
+            <button className="mouse-reaction" onClick={() => deleteResumo(false)}>Não deletar</button>
+          </div>
         </div>
       </PopUp>
       <PopUp modalState={popEdit.open}>
         <div className="pop-confirm">
           <h2>Você deseja editar esta reserva?</h2>
           <p>O site voltará a página de data, com seus dados salvos</p>
-          <button className="mouse-reaction" onClick={() => editResumo(true)}>Editar</button>
-          <button className="mouse-reaction" onClick={() => editResumo(false)}>Fechar</button>
+          <div className="flex justify-center gap-4">
+            <button className="mouse-reaction" onClick={() => editResumo(true)}>Editar</button>
+            <button className="mouse-reaction" onClick={() => editResumo(false)}>Fechar</button>
+          </div>
         </div>
       </PopUp>
     </main>

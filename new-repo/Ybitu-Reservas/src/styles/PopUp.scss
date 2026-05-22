@@ -15,7 +15,7 @@ dialog.popup:modal {
 /* 768px */
 @media (width >=48rem) {
   dialog.popup:modal {
-    $h: 30vh;
+    $h: 15vw;
     $w: 30vw;
 
     left: calc(50vw - ($w / 2));

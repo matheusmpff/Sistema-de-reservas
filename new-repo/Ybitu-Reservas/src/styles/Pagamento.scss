@@ -1,8 +1,5 @@
 @use "./style.scss";
 
-$base-pad: 4;
-
-
 main {
   display: flex;
   flex-direction: column;
@@ -66,20 +63,20 @@ main {
     div#pagamento-lista {
       border-top: solid 1px $linha-cor;
       width: 100%;
-      margin-bottom: calc(var(--spacing) * $base-pad);
+      margin-bottom: calc(var(--spacing) * style.$base-pad);
 
       .opcao-reserva {
         border-bottom: solid 1px $linha-cor;
-        padding-left: calc(var(--spacing) * $base-pad);
+        padding-left: calc(var(--spacing) * style.$base-pad);
 
         p {
-          padding-left: calc(var(--spacing) * $base-pad);
+          padding-left: calc(var(--spacing) * style.$base-pad);
         }
 
         ul {
           list-style: disc;
-          padding-left: calc(var(--spacing) * 2 * $base-pad);
-          margin-bottom: calc(var(--spacing) * $base-pad);
+          padding-left: calc(var(--spacing) * 2 * style.$base-pad);
+          margin-bottom: calc(var(--spacing) * style.$base-pad);
         }
 
         div.reserva-titulo {
@@ -87,8 +84,8 @@ main {
           display: flex;
           justify-content: space-between;
 
-          padding-top: calc(var(--spacing) * $base-pad);
-          padding-right: calc(var(--spacing) * $base-pad);
+          padding-top: calc(var(--spacing) * style.$base-pad);
+          padding-right: calc(var(--spacing) * style.$base-pad);
 
           h3 {
             font-size: 1.2rem;
@@ -97,34 +94,21 @@ main {
         }
       }
     }
-
-    #pagamento-botao {
-      padding: 8px 8px;
-      margin-bottom: calc(var(--spacing) * $base-pad);
-
-      color: style.$branco;
-      font-weight: 600;
-      background-color: style.$cor-secundaria;
-      border-radius: 10px;
-    }
   }
 }
 
 div.pop-confirm {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-
+  height: 100%;
+  text-align: center;
   background-color: style.$cor-background;
 
   h2 {
-    padding: 0 20px;
+    padding: 10px 20px 0;
   }
 
   button {
-    width: 120px;
     height: 60px;
+    width: 120px;
     background-color: style.$branco;
     border: solid 2px style.$preto
   }
@@ -168,19 +152,12 @@ div.pop-confirm {
           }
         }
       }
-
-      #pagamento-botao {
-        padding: 12px 12px;
-        margin-bottom: calc(var(--spacing) * 1.5 * $base-pad);
-        font-size: 1.2rem;
-      }
     }
   }
 
   div.pop-confirm {
     button {
       width: 40%;
-      height: 30%;
       font-size: 1.2rem;
     }
   }
@@ -210,12 +187,6 @@ div.pop-confirm {
 
     aside {
       width: 360px;
-
-      #pagamento-botao {
-        padding: 8px 8px;
-        margin-bottom: calc(var(--spacing) * $base-pad);
-        font-size: 1.0rem;
-      }
     }
   }
 }
