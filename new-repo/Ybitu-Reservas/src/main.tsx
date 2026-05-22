@@ -10,6 +10,7 @@ import Cadastro from "./pages/Cadastro.tsx";
 import Quartos from "./pages/Quartos.tsx";
 import Pagamento from "./pages/Pagamento.tsx";
 import Feedback from "./pages/Feedback.tsx";
+import Datas from "./pages/Datas.tsx";
 
 import "./styles/style.scss"
 
@@ -27,6 +28,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="Quartos" element={<Quartos />} />
             <Route path="Pagamento" element={<Pagamento />} />
             <Route path="feedback" element={<Feedback />} />
+            <Route path="Datas" element={<Datas />} />
           </Routes>
         </div>
 
