@@ -28,7 +28,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="Contato" element={<Contato />} />
             <Route path="Cadastro" element={<Cadastro />} />
             <Route path="Login" element={<Login />} />
-            <Route path="Datas" element={<Datas />} />
+            <Route path="Data" element={<Datas />} />
             <Route path="Quartos" element={<Quartos />} />
             <Route path="Hóspedes" element={<Hospedes />} />
             <Route path="Pagamento" element={<Pagamento />} />
