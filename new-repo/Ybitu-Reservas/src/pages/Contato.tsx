@@ -2,6 +2,7 @@
 import "../styles/Contato.css";
 import { MapPin } from "lucide-react";
 import { MailOpen } from "lucide-react";
+import ContactForm from "../components/ContactForm";
 
 export default function Contato() {
     return (
@@ -31,32 +32,7 @@ export default function Contato() {
             </div>
 
             <div className="flex flex-col items-center gap-12 mt-20  lg:flex-row min:w-8/10 2xl:w-9/11 mx-auto">
-                <form className="form_contato">
-                    <div className="lg:col-span-2 mb-4"><img src="src/assets/logo_branca.png" alt="" width="50" /></div>
-                    <div className="form_element_contato">
-                        <label htmlFor="">Nome</label>
-                        <input className="input_contato" type="text" placeholder="Insira o nome" />
-                    </div>
-                    <div className="form_element_contato" >
-                        <label htmlFor="">Sobrenome</label>
-                        <input className="input_contato" type="text" placeholder="Insira o sobrenome" />
-                    </div>
-                    <div className="form_element_contato">
-                        <label htmlFor="">Telefone</label>
-                        <input className="input_contato" type="text" placeholder="Insira seu telefone" />
-                    </div>
-                    <div className="form_element_contato">
-                        <label htmlFor="">E-mail</label>
-                        <input className="input_contato" type="text" placeholder="Insira seu e-mail" />
-                    </div>
-                    <div className="form_element_contato lg:col-span-2">
-                        <label htmlFor="">Mensagem</label>
-                        <textarea className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
-                    </div>
-                    <div className="form_element_contato">
-                        <button className="mt-6 p-3 bg-[var(--cor-primaria)] text-[var(--cor-background)] rounded w-fit font-bold">Enviar mensagem</button>
-                    </div>
-                </form>
+                <ContactForm></ContactForm>
                 <iframe className="rounded md:w-150 md:h-112.5" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.889238753968!2d-35.640369899999996!3d-5.1215455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7b40db3d528c1af%3A0x816761b11b5ac5ff!2sPousada%20Ybitu%20RN!5e0!3m2!1spt-BR!2sbr!4v1779457982913!5m2!1spt-BR!2sbr" width="400" height="275"  loading="lazy"></iframe>
             </div>
         </div>
