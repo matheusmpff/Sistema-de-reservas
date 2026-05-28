@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+:root {
+    --cor-primaria-clara: #2f463f;
+    --cor-primaria-escura: #162526;
+    --offwhite: #e0e0e0;
+    --destaque: #4dba93;
+}
