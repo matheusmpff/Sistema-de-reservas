@@ -12,41 +12,114 @@ datasource db {
   provider = "postgresql"
 }
 
+// Tabelas das pessoas, crianças, adultos e users e suas relações. Usei id ao invés do email para que se 
+// a pessoa queira mudar o email não tenha problema nas relações entre as Tabelas
+
 model Pessoa {
-  id      Int      @id @default(autoincrement())
-  nome    String
-  data    DateTime
-  sexo    String
-  adulto  Adulto?
-  crianca Crianca?
+  // Colunas da tabela Pessoa
+  id           Int            @id @default(autoincrement())
+  nome         String
+  data         DateTime
+  sexo         String
+  // Relações com as demais tabelas
+  adulto       Adulto? // Relação 1 - 0..1
+  crianca      Crianca? // Relação 1 - 0..1
+  acompanhante Acompanhante[] // Relação 1 - N
 }
 
 model Adulto {
-  id        Int    @id @default(autoincrement())
-  email     String @unique
-  telefone  String
-  idPessoa  Int    @unique
-  idCrianca Int    @unique
-
-  pessoa  Pessoa   @relation(fields: [idPessoa], references: [id])
-  user    User?
-  crianca Crianca?
+  // Colunas da tabela Adulto
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  telefone String
+  idPessoa Int    @unique
+  // Relação com as demais tabelas
+  pessoa   Pessoa    @relation(fields: [idPessoa], references: [id])
+  user     User? // Relação 1 - 0..1 (Um adulto pode ser um user ou não)
+  criancas Crianca[] // Relação 1 - N (Um adulto pode ser responsável por mais de 1 criança)
 }
 
 model Crianca {
+  // Colunas tabela Criança
   id       Int @id @default(autoincrement())
-  idResp   Int @unique
+  idResp   Int
   idPessoa Int @unique
-
+  // Relação com as demais tabelas
   responsavel Adulto @relation(fields: [idResp], references: [id])
   pessoa      Pessoa @relation(fields: [idPessoa], references: [id])
 }
 
 model User {
+  // Colunas tabela user
   id       Int    @id @default(autoincrement())
   idAdulto Int    @unique
   senha    String
-
+  // Relação com as demais tabelas
   adulto Adulto @relation(fields: [idAdulto], references: [id])
 }
 
+// Tabela de reserva e suas relações as tabelas Feedbackuser e ReservaQuartos não estão completas ainda com
+// todos os campos necessários para elas. Fiz apenas a relação delas com a tabela de reservas
+
+enum TipoStatus {
+  IN
+  OUT
+  EM_ANALISE
+  PAGO
+  CANCELADO
+}
+
+model Reserva {
+  // Campos da tabela reserva
+  idUser      Int
+  dataReserva DateTime
+  checkIn     DateTime
+  checkOut    DateTime
+  numPessoas  Int
+  status      TipoStatus
+  valor       Int
+  //Relações com as outras tabelas
+  acompanhante   Acompanhante[] // Relação 1-N
+  feedbackUser   FeedbackUser? // Relação 1-0..1
+  // Relação 1-0..1(Teria que sempre que criar uma reserva criar junto o reservaQuartos 
+  //para garantir a relação 1-1 desejada)
+  reservaQuartos ReservaQuartos?
+
+  @@id([idUser, dataReserva]) // Identificador da Reserva é o usuário e a data da reserva
+}
+
+model Acompanhante {
+  // Colunas da tabela Acompanhante
+  id          Int      @id @default(autoincrement())
+  reservaUser Int
+  reservaData DateTime
+  idPessoa    Int
+  @@unique([reservaUser, reservaData, idPessoa]) // força que esse trio seja unico para evitar duplicação de acompanhante
+  // Relações com as demais tabelas
+  pessoa  Pessoa  @relation(fields: [idPessoa], references: [id])
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+
+  
+}
+
+model FeedbackUser {
+  // Colunas da tabela FeedbackUser(incompleto)
+  reservaUser Int
+  reservaData DateTime
+  @@id([reservaUser, reservaData])// ID é o usuário e a data de reserva
+  // Relação com as demais tabelas
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+
+  
+}
+
+model ReservaQuartos {
+  // Colunas da tabela(Incompleto)
+  reservaUser Int
+  reservaData DateTime
+  @@id([reservaUser, reservaData])// ID é o usuário e a data da reserva
+  // Relação com as demais tabelas
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+
+  
+}
