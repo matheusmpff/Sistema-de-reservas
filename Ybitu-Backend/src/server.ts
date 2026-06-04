@@ -14,6 +14,6 @@ server.use(serverError);
 
 
 server.listen(3000,() => {
-    console.log("Servidor está rodando no link : http://localhost:3000/");
+    console.log("Servidor está rodando em : http://localhost:3000/");
 })
 

@@ -12,15 +12,41 @@ datasource db {
   provider = "postgresql"
 }
 
+model Pessoa {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  data    DateTime
+  sexo    String
+  adulto  Adulto?
+  crianca Crianca?
+}
+
+model Adulto {
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  telefone  String
+  idPessoa  Int    @unique
+  idCrianca Int    @unique
+
+  pessoa  Pessoa   @relation(fields: [idPessoa], references: [id])
+  user    User?
+  crianca Crianca?
+}
+
+model Crianca {
+  id       Int @id @default(autoincrement())
+  idResp   Int @unique
+  idPessoa Int @unique
+
+  responsavel Adulto @relation(fields: [idResp], references: [id])
+  pessoa      Pessoa @relation(fields: [idPessoa], references: [id])
+}
 
 model User {
-  id Int @id @default(autoincrement())
-  name String 
-  email String @unique 
+  id       Int    @id @default(autoincrement())
+  idAdulto Int    @unique
+  senha    String
+
+  adulto Adulto @relation(fields: [idAdulto], references: [id])
 }
 
-model Post {
-  id Int @id @default(autoincrement())
-  author String
-  title String
-}
