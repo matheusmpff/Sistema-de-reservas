@@ -95,9 +95,11 @@ function HospListItem(props: {hType: HospedeType, name: string, selected: boolea
   return(
     <li>
       <div onClick={() => props.click()} className={"hosp-list-item" + sel}>
-        <h3>{hTypeToString(props.hType)}</h3>
-        <p>{props.name}</p>
-        {props.hType != HospedeType.Responsavel && <Trash className="mouse-reaction" onClick={(e) => abc(e)} />}
+        <div>
+          <p className="text-lg font-bold">{hTypeToString(props.hType)}</p>
+          <p className="text-base">{props.name}</p>
+        </div>
+        {props.hType != HospedeType.Responsavel && <Trash className="mouse-reaction" size={35} onClick={(e) => abc(e)} />}
       </div>
     </li>
   )
@@ -121,7 +123,7 @@ export default function Hospedes() {
   const [hospSelected, setHospSelected] = useState(0);
 
   function removeHosp(index: number) {
-    if (hospSelected == index) {
+    if (hospSelected == index || hospSelected == hospList.length - 1) {
       setHospSelected(hospSelected - 1)
     }
 
