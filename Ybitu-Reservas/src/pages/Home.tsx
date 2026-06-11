@@ -3,6 +3,7 @@ import { Award } from "lucide-react";
 import { Star } from "lucide-react";
 import { Infinity } from "lucide-react";
 import { ArrowRight } from "lucide-react";
+import BotaoVerde from "../components/BotaoVerde";
 import { Link } from "react-router";
 import ContactForm from "../components/ContactForm";
 
@@ -11,8 +12,8 @@ export default function Home() {
         <div className="container mx-auto">
             <div className="overflow-hidden flex flex-col lg:flex-row relative mt-12">
                 <div className="xl:ml-20 2xl:ml-30 flex flex-col justify-center items-center p-6 md:p-12">
-                    <div className="text-6xl text-center text-[var(--cor-terciaria)]">Pousada</div>
-                    <div className="text-9xl text-center text-[var(--cor-primaria)]">YBITU</div>
+                    <div className="text-6xl text-center text-(--cor-terciaria)">Pousada</div>
+                    <div className="text-9xl text-center text-(--cor-primaria)">YBITU</div>
                     <p className="mt-12 text-md max-w-120">
                         Localizada em São Miguel do Gostoso, disponibilizamos uma equipe pronta para proporcionar os
                         melhores serviços para sua família
@@ -42,10 +43,9 @@ export default function Home() {
                         <div className="bg-[url('src/assets/home/5.png')] grid_element_home img5_position"></div>
                     </div>
                     <Link to="/Pousada">
-                        <button className="cursor-pointer mt-10 lg:mt-0 font-semibold flex bg-[var(--cor-primaria)] py-5 rounded px-5 text-[var(--cor-background)]">
-                            VENHA CONHECER MAIS
-                            <ArrowRight className="ml-2"></ArrowRight>
-                        </button>
+                        <div className="mt-10">
+                            <BotaoVerde text="VENHA CONHECER MAIS"  icon={<ArrowRight className="ml-2"></ArrowRight>} ></BotaoVerde>
+                        </div>
                     </Link>
                 </div>
 
