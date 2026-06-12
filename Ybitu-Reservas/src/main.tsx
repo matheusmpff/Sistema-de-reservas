@@ -13,6 +13,7 @@ import Pagamento from "./pages/Pagamento.tsx";
 import Feedback from "./pages/Feedback.tsx";
 import Contato from "./pages/Contato.tsx";
 import Datas from "./pages/Datas.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 import "./styles/style.scss"
 
@@ -33,6 +34,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="Hóspedes" element={<Hospedes />} />
             <Route path="Pagamento" element={<Pagamento />} />
             <Route path="Feedback" element={<Feedback />} />
+            <Route path="*" element={<NotFound/>}></Route>
           </Routes>
         </div>
 

@@ -1,5 +1,5 @@
 import "../styles/Contato.css";
-export default function ContactForm() {
+export default function ContactForm() {    
     return (
         <>
             <form className="form_contato">
