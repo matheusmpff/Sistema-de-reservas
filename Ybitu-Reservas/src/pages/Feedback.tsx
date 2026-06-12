@@ -1,5 +1,5 @@
 import "../styles/Feedback.css";
-
+import "../index.css"
 export default function Feedback() {
     return (
 
@@ -36,7 +36,7 @@ export default function Feedback() {
                             </div>
 
 
-                            <button className="btn_style">Enviar</button>
+                            <button className="btn_primary btn_style">Enviar</button>
                         </form>
                     </div>
                 </div>

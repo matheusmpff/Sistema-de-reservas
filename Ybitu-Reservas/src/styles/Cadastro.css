@@ -41,6 +41,6 @@
 }
 
 .btn_style{
-    @apply mt-4 bg-[var(--cor-primaria)] rounded text-white p-2 min-w-80;
+    @apply mt-4  p-2 min-w-80;
     @apply md:col-span-2;
 }

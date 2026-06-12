@@ -1,4 +1,5 @@
 import "../styles/Contato.css";
+import "../index.css"
 export default function ContactForm() {    
     return (
         <>
@@ -25,7 +26,7 @@ export default function ContactForm() {
                     <textarea className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
                 </div>
                 <div className="form_element_contato">
-                    <button className="mt-6 p-3 bg-[var(--cor-primaria)] text-[var(--cor-background)] rounded w-fit font-bold">Enviar mensagem</button>
+                    <button className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
                 </div>
             </form>
         </>

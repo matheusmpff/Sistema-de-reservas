@@ -1,4 +1,5 @@
 import "../styles/Cadastro.css";
+import "../index.css"
 
 
 export default function Cadastro() {
@@ -42,7 +43,7 @@ export default function Cadastro() {
                                 <input className="input_style" type="password" id="senha" placeholder="Insira sua senha" />
                             </div>
 
-                            <button className="btn_style">FAZER CADASTRO</button>
+                            <button className="btn_primary btn_style">FAZER CADASTRO</button>
                         </form>
                     </div>
                 </div>
