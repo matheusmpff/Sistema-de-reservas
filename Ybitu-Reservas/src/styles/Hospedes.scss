@@ -15,15 +15,15 @@
   justify-content: center;
   gap: 15px;
 
-  padding: 25px 0 50px;
+  padding: 18px 0 32px;
   color: style.$branco;
   background-color: style.$preto-leve;
   border-radius: 15px;
   box-shadow: 8px 8px 16px style.$shadow-color;
 
   .hospede-input {
-    width: 70%;
-    font-size: 1.1rem;
+    width: 80%;
+    font-size: 1.2rem;
     font-weight: 500;
 
     input,
@@ -41,7 +41,7 @@
   }
 
   .two-hosp-inputs {
-    width: 70%;
+    width: 80%;
 
     display: flex;
     gap: 25px;
@@ -53,15 +53,16 @@
 }
 
 #hospede-lista {
+  $gap: 20px;
+  $border-rad: 8px;
   grid-area: lista;
 
   display: flex;
   flex-direction: column;
-  $gap: 20px;
   gap: $gap;
 
   list-style: none;
-  padding-left: 20%;
+  padding: $border-rad;
   max-height: calc((80px + $gap) * 5);
   overflow: scroll;
 
@@ -73,17 +74,81 @@
 
     padding: 10px 16px;
     background-color: style.$cinza-leve;
-    border-radius: 8px;
+    border-radius: $border-rad;
     box-shadow: 4px 4px 6px style.$shadow-color;
   }
 }
 
+/* 768px */
+@media (width >=48rem) {
+  #hospede-div {
+    margin: 40px calc(6 * style.$side-margin);
+  }
+
+  .hospede-dados {
+    gap: 15px;
+
+    padding: 25px 0 50px;
+    border-radius: 15px;
+    box-shadow: 8px 8px 16px style.$shadow-color;
+
+    .hospede-input {
+      width: 70%;
+      font-size: 1.1rem;
+      font-weight: 500;
+
+      input,
+      select {
+        $pad: 10px;
+
+        height: 2.6em;
+        padding: calc($pad / 2) calc($pad / 2);
+
+        border-radius: $pad;
+      }
+    }
+
+    .two-hosp-inputs {
+      width: 70%;
+
+      display: flex;
+      gap: 25px;
+
+      .hospede-input {
+        font-size: 1rem;
+      }
+    }
+  }
+}
 
 /* 1024px */
 @media (width >=64rem) {
   #hospede-div {
+    margin: 40px style.$side-margin;
+  }
+
+  #hospede-div {
     display: grid;
 
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas: "formulario formulario lista";
+  }
+
+  #hospede-lista {
+    $border-rad: 8px;
+    grid-area: lista;
+
+    padding: $border-rad $border-rad $border-rad 20%;
+
+    .hosp-list-item {
+      padding: 10px 16px;
+    }
+  }
+}
+
+/* 1280 */
+@media (width >=80rem) {
+  #hospede-div {
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: "vazio formulario lista";
   }
