@@ -101,3 +101,7 @@ footer.wave {
   background-size: max(100vw, 800px) 148px;
   background-repeat: no-repeat;
 }
+
+.btn_primary{
+  @apply rounded cursor-pointer font-semibold bg-[var(--cor-primaria)] text-[var(--cor-background)];
+}
