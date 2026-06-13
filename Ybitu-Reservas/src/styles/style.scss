@@ -76,6 +76,16 @@ header {
   transition-duration: 0.2s;
 }
 
+.btn_primary {
+  border-radius: 0.25rem;
+
+  font-weight: var(--font-weight-semibold);
+  color: $cor-background;
+
+  cursor: pointer;
+  background-color: $cor-primaria;
+}
+
 .secondary-button {
   padding: 8px 8px;
   margin-bottom: calc(var(--spacing) * $base-pad);

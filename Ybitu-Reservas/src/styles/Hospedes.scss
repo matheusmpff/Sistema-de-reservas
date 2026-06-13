@@ -152,4 +152,16 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas: "vazio formulario lista";
   }
+
+  .hospede-dados {
+    padding: 30px 0 90px;
+
+    .hospede-input {
+      width: 80%;
+    }
+
+    .two-hosp-inputs {
+      width: 80%;
+    }
+  }
 }
