@@ -2,8 +2,16 @@
 
 .user_nav_option{
 
-    @apply min-w-fit max-w-4/8 flex gap-3 p-1 border-[var(--cor-primaria)];
+    @apply min-w-fit max-w-4/8 flex gap-3 p-1 pr-3 border-[var(--cor-primaria)];
 }
 .user_option_activate{
     @apply border-b-2 md:border-r-2 md:border-b-0;
+}
+
+.user_form_option{
+    @apply mt-1 rounded bg-gray-300 p-1;
+}
+
+.user_form_div{
+    @apply flex flex-col;
 }
