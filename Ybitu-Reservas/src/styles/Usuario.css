@@ -2,7 +2,7 @@
 
 .user_nav_option{
 
-    @apply min-w-fit max-w-4/8 flex gap-3 p-1 pr-3 border-[var(--cor-primaria)];
+    @apply cursor-pointer min-w-fit max-w-4/8 flex gap-3 p-1 pr-3 border-[var(--cor-primaria)];
 }
 .user_option_activate{
     @apply border-b-2 md:border-r-2 md:border-b-0;
