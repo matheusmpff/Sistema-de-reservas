@@ -1,5 +1,4 @@
 import "../styles/Contato.css";
-import "../index.css"
 export default function ContactForm() {    
     return (
         <>

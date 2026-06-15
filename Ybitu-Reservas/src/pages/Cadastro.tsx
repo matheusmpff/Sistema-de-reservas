@@ -1,6 +1,4 @@
 import "../styles/Cadastro.css";
-import "../index.css"
-
 
 export default function Cadastro() {
     return (
