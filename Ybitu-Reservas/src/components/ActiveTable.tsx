@@ -1,5 +1,3 @@
-import { tr } from "date-fns/locale";
-import { Table } from "lucide-react";
 
 type Reserva = {
     pessoas: number
