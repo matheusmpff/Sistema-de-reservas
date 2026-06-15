@@ -21,16 +21,16 @@ model Pessoa {
   nome         String
   data         DateTime
   sexo         String
+  email    String @unique
   // Relações com as demais tabelas
   adulto       Adulto? // Relação 1 - 0..1
   crianca      Crianca? // Relação 1 - 0..1
   acompanhante Acompanhante[] // Relação 1 - N
 }
-
+  
 model Adulto {
   // Colunas da tabela Adulto
   id       Int    @id @default(autoincrement())
-  email    String @unique
   telefone String
   idPessoa Int    @unique
   // Relação com as demais tabelas
@@ -56,6 +56,7 @@ model User {
   senha    String
   // Relação com as demais tabelas
   adulto Adulto @relation(fields: [idAdulto], references: [id])
+  Reservas Reserva[]
 }
 
 // Tabela de reserva e suas relações as tabelas Feedbackuser e ReservaQuartos não estão completas ainda com
@@ -84,6 +85,7 @@ model Reserva {
   // Relação 1-0..1(Teria que sempre que criar uma reserva criar junto o reservaQuartos 
   //para garantir a relação 1-1 desejada)
   reservaQuartos ReservaQuartos?
+  user User @relation(fields: [idUser],references: [id])
 
   @@id([idUser, dataReserva]) // Identificador da Reserva é o usuário e a data da reserva
 }
@@ -114,12 +116,38 @@ model FeedbackUser {
 }
 
 model ReservaQuartos {
-  // Colunas da tabela(Incompleto)
+  // Colunas da tabela
   reservaUser Int
   reservaData DateTime
+  custo_frigobar Float
+  multa Float
   @@id([reservaUser, reservaData])// ID é o usuário e a data da reserva
   // Relação com as demais tabelas
+  Quartos Quarto[]
   reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
 
   
+}
+
+enum QuartoStatus {
+  OCUPADO
+  MANUTENCAO
+  DISPONIVEL
+}
+enum QuartoTipo {
+  DUPLO
+  TRIPLO
+  QUADRUPLO
+}
+
+model Quarto {
+  // Colunas
+  numero Int @id
+  tipo QuartoTipo
+  capacidade Int
+  status QuartoStatus 
+  // Relação com as demais tabela
+  reservaUser Int?
+  reservaData DateTime?
+  Reserva ReservaQuartos? @relation(fields: [reservaUser,reservaData],references: [reservaUser,reservaData])
 }
