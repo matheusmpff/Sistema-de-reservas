@@ -1,45 +1,8 @@
 import { prisma } from "../libs/prisma.js";
 import { Prisma } from "../generated/prisma/client.js";
-import { isDate } from "node:util/types";
+import type { UserLogin, UserSignup } from "../types.js";
 
-export type UserInput = {
-    nome: string
-    email: string
-    dataNasc: Date
-    sexo: string
-    telefone: string
-    senha: string
-}
-
-export function isUserInput(arg: any): arg is UserInput {
-    // cannot be null
-    if (!arg) {
-        return false;
-    }
-    // needs to have its fields
-    if (!arg.nome || !arg.email || !arg.dataNasc || !arg.sexo || !arg.telefone || !arg.senha) {
-        return false;
-    }
-    if (typeof(arg.nome) != "string" || arg.nome != "") {
-        return false;
-    }
-    if (typeof(arg.email) != "string" || arg.email != "") {
-        return false;
-    }
-    if (isDate(arg.dataNasc)) {
-        return false;
-    }
-    if (typeof(arg.telefone) != "string" || arg.telefone != "") {
-        return false;
-    }
-    if (typeof(arg.senha) != "string" || arg.senha != "") {
-        return false;
-    }
-
-    return true;
-}
-
-export const createUser = async (props: UserInput) => {
+export const createUser = async (props: UserSignup) => {
     const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
@@ -85,12 +48,7 @@ export const createUser = async (props: UserInput) => {
     return false;
 }
 
-export type LoginInput = {
-    email: string,
-    senha: string
-}
-
-export const loginUser = async (props: LoginInput) => {
+export const loginUser = async (props: UserLogin) => {
     const adult = await prisma.adulto.findUnique({
         where: {
             email: props.email
