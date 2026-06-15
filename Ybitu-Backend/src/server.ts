@@ -1,7 +1,9 @@
+import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import MainRouter from "./routes/MainRouter.js";
 import { notDefined, serverError } from "./routes/ErroHandler.js";
+
 
 const server = express();
 server.use(helmet());
