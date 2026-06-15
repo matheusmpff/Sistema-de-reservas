@@ -1,5 +1,5 @@
 import express from "express";
-import { createUser, loginUser } from "../services/User.js";
+import { createUser, loginUser, userData } from "../services/User.js";
 
 const MainRouter = express.Router();
 
@@ -56,4 +56,19 @@ MainRouter.post("/user", async (req, res) => {
         throw err;
     }
 })
+
+MainRouter.get("/user/data", async (req, res) => {
+    const { email } = req.query;
+    console.log("ROTA /user/data FOI CHAMADA");
+    console.log("EMAIL:", req.query.email);
+
+     try {
+        res.json( await userData(email as string))
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({error: "Erro do servidor"});
+    }
+});
+
+
 export default MainRouter;

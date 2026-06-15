@@ -71,7 +71,7 @@ export const createUser = async (props: UserCreateInput) => {
                 senha: props.senha,
                 adulto: {
                     connect: {
-                        id: pessoa.adulto.id
+                        id: pessoa.adulto.idPessoa
                     }
                 }
             }
@@ -109,3 +109,20 @@ export const loginUser = async (props: LoginInput) =>{
         return true
     }
 }
+
+export const userData = async (email: string) =>{
+    const user = await prisma.pessoa.findUnique({
+        where: {
+            email: email
+        },
+        include: {
+            adulto: {
+                include: {
+                    user: true
+                }
+            }
+        }
+    })
+
+    return user;
+} 
