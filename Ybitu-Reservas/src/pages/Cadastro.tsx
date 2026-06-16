@@ -1,7 +1,34 @@
 import "../styles/Cadastro.css";
+import { useState } from "react";
 
 export default function Cadastro() {
+    const [nomeInput, setNomeInput] = useState("");
+    const [emailInput, setEmailInput] = useState("");
+    const [senhaInput, setSenhaInput] = useState("");
+    
+    const [sexoInput, setSexoInput] = useState("");
+    const [dataInput, setDataInput] = useState("");
+    const [telInput, setTelInput] = useState("")
+    
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+
+       const response = await fetch("http://localhost:3000/user",{
+            method: "POST",
+            body:JSON.stringify({
+                nome: nomeInput,
+                email: emailInput,
+                senha: senhaInput,
+                sexo: sexoInput,
+                data: dataInput,
+                telefone: telInput
+            })
+        })
+        console.log(response);
+    }
+
     return (
+
 
         <div className="flex flex-col">
             <div className="main_container">
@@ -25,23 +52,33 @@ export default function Cadastro() {
                         <form className="form_grid" action="">
 
                             <div className="grid_element">
-                                <label className="label_style" htmlFor="name">Nome:</label>
-                                <input className="input_style" type="text" id="name" placeholder="Insira seu nome..." />
+                                <label className="label_style"  htmlFor="name">Nome:</label>
+                                <input className="input_style" onChange={(e)=>{setNomeInput(e.target.value)}} type="text" id="name" placeholder="Insira seu nome..." />
                             </div>
                             <div className="grid_element">
-                                <label className="label_style" htmlFor="surname">Sobrenome</label>
-                                <input className="input_style" type="text" id="surname" placeholder="Insira seu sobrenome..." />
+                                <label className="label_style" htmlFor="datanasc">Data de nascimento:</label>
+                                <input className="input_style" onChange={(e)=>{setDataInput(e.target.value)}} type="date" id="datanasc" placeholder="Insira sua data de nascimento..." />
                             </div>
-                            <div className=" grid_element md:col-span-2">
+                            <div className=" grid_element ">
                                 <label className="label_style" htmlFor="Email">E-mail:</label>
-                                <input className="input_style" type="email" id="Email" placeholder="Insira seu e-mail" />
-                            </div>
-                            <div className=" grid_element md:col-span-2">
-                                <label className="label_style" htmlFor="senha">Senha:</label>
-                                <input className="input_style" type="password" id="senha" placeholder="Insira sua senha" />
+                                <input className="input_style" onChange={(e)=>{setEmailInput(e.target.value)}} type="email" id="Email" placeholder="Insira seu e-mail..." />
                             </div>
 
-                            <button className="btn_primary btn_style">FAZER CADASTRO</button>
+                            <div className=" grid_element ">
+                                <label className="label_style" htmlFor="senha">Senha:</label>
+                                <input className="input_style" onChange={(e)=>{setSenhaInput(e.target.value)}} type="password" id="senha" placeholder="Insira sua senha..." />
+                            </div>
+
+                            <div className=" grid_element ">
+                                <label className="label_style" htmlFor="sexo">Masculino/Feminino:</label>
+                                <input className="input_style" onChange={(e)=>{setSexoInput(e.target.value)}} type="string" id="sexo" placeholder="Insira aqui uma das opções..." />
+                            </div>
+                            <div className=" grid_element ">
+                                <label className="label_style" htmlFor="tel">Telefone:</label>
+                                <input className="input_style" onChange={(e)=>{setTelInput(e.target.value)}} type="string" id="tel" placeholder="Insira seu telefone..." />
+                            </div>
+
+                            <button onClick={handleSubmit} className="btn_primary btn_style">FAZER CADASTRO</button>
                         </form>
                     </div>
                 </div>
