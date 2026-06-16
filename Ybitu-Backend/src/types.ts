@@ -23,19 +23,19 @@ function isSignupInput(arg: any): arg is SignupInput {
     if (!arg.nome || !arg.email || !arg.dataNasc || !arg.sexo || !arg.telefone || !arg.senha) {
         return false;
     }
-    if (typeof(arg.nome) != "string" || arg.nome != "") {
+    if (typeof(arg.nome) !== "string" || arg.nome === "") {
         return false;
     }
-    if (typeof(arg.email) != "string" || arg.email != "") {
+    if (typeof(arg.email) !== "string" || arg.email === "") {
         return false;
     }
-    if (isDate(arg.dataNasc)) {
+    if (isNaN(new Date(arg.dataNasc).getTime())) {
         return false;
     }
-    if (typeof(arg.telefone) != "string" || arg.telefone != "") {
+    if (typeof(arg.telefone) !== "string" || arg.telefone === "") {
         return false;
     }
-    if (typeof(arg.senha) != "string" || arg.senha != "") {
+    if (typeof(arg.senha) !== "string" || arg.senha === "") {
         return false;
     }
 

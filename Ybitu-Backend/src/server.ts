@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import helmet from "helmet";
 import MainRouter from "./routes/MainRouter.js";
-import { notDefined, serverError } from "./routes/ErroHandler.js";
+import { notDefined, serverError } from "./routes/ErrorHandler.js";
 import cors from "cors";
 
 const server = express();
