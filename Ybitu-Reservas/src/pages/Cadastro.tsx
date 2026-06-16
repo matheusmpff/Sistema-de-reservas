@@ -9,7 +9,6 @@ export default function Cadastro() {
     const [sexoInput, setSexoInput] = useState("");
     const [dataInput, setDataInput] = useState("");
     const [telInput, setTelInput] = useState("")
-    const [alerta,setAlerta] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
