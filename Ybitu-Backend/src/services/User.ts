@@ -1,5 +1,4 @@
 import { prisma } from "../libs/prisma.js";
-import { Prisma } from "../generated/prisma/client.js";
 import type { LoginInput, SignupInput } from "../types.js";
 
 export const createUser = async (props: SignupInput) => {
@@ -17,7 +16,7 @@ export const createUser = async (props: SignupInput) => {
         const user = await prisma.pessoa.create({
             data: {
                 nome: props.nome,
-                dataNasc: props.dataNasc,
+                dataNasc: new Date(props.dataNasc),
                 sexo: props.sexo,
                 adulto: {
                     create: {
