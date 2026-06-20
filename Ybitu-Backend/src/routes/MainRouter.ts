@@ -1,10 +1,18 @@
 import express from "express";
 import { createUser, loginUser, userData } from "../services/User.js";
+import { Auth } from "../middlewares/Auth.js";
+import jwt from "jsonwebtoken";
 import { type LoginInput, isSignupInput } from "../types.js";
+
+const secret = process.env.JWT_SECRET_KEY;
+console.log(secret)
+if (!secret) {
+  throw new Error("JWT_SECRET não configurado");
+}
 
 const MainRouter = express.Router();
 
-MainRouter.get("/", (_req, res) => {
+MainRouter.get("/",Auth.private, (_req, res) => {
     res.json({ msg: "Oiii" });
 });
 
@@ -16,7 +24,8 @@ MainRouter.post("/user/login", async (req: {body: LoginInput} , res) => {
         const user = await loginUser(login_input);
 
         if (user) {
-            return res.json({ msg: "Login realizado com sucesso" });
+            const token = jwt.sign({email: req.body.email}, secret, {expiresIn: "1h"});
+            return res.json({ msg: "Login realizado com sucesso", token });
         }
         return res.json({ msg: "Dados inválidos"});
 
