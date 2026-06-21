@@ -73,7 +73,6 @@ router.get("/data", async (req: {query: {email: string}}, res) => {
 
 router.post("/feedback", upload.array("photos", 3), (req, res, next) => {
   console.log(req.files)
-  console.log(req.body)
   res.json({msg: "Comentario salvo no banco de dados"})
 })
 
