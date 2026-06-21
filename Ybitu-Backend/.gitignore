@@ -4,3 +4,7 @@ dist
 .env
 
 /src/generated/prisma
+
+# The upload paste goes to github but the images don`t
+uploads/*
+!uploads/.gitkeep
