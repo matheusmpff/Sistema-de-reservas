@@ -2,6 +2,10 @@ import { Router } from "express";
 import { createUser, loginUser, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
 import jwt from "jsonwebtoken";
+import multer from "multer"
+import path from "path"
+
+const upload = multer({ dest: path.resolve("uploads") });
 
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
@@ -66,5 +70,11 @@ router.get("/data", async (req: {query: {email: string}}, res) => {
         return res.status(500).json({error: "Erro do servidor"});
     }
 });
+
+router.post("/feedback", upload.array("photos", 3), (req, res, next) => {
+  console.log(req.files)
+  console.log(req.body)
+  res.json({msg: "Comentario salvo no banco de dados"})
+})
 
 export default router;
