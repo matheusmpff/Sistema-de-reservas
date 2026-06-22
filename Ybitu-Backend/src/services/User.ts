@@ -1,6 +1,6 @@
 import { prisma } from "../libs/prisma.js";
 import type { LoginInput, SignupInput } from "../types.js";
-
+import { Prisma } from "../generated/prisma/client.js";
 export const createUser = async (props: SignupInput) => {
     const adult = await prisma.adulto.findUnique({
         where: {
@@ -62,7 +62,7 @@ export const loginUser = async (props: LoginInput) => {
         }
     });
 
-    if(adult?.user?.senha === props.senha){
+    if (adult?.user?.senha === props.senha) {
         return true
     }
 
@@ -81,4 +81,104 @@ export const userData = async (email: string) => {
     })
 
     return user;
-} 
+}
+
+export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {
+    // Procura por um adulto com o email
+    const adulto = await prisma.adulto.findUnique({
+        where: {
+            email
+        },
+        include: {
+            pessoa: true,
+            user: true
+        }
+    })
+
+    if (!adulto) {
+        return false;
+    }
+
+    if (adulto.user) {// logica se o adulto foi o usuário que fez a reserva
+        const reservas = await prisma.reserva.findMany({
+            where: {
+                idUser: adulto.user.idAdulto,
+                checkIn,
+                checkOut
+            },
+            include: {
+                feedbackUser: true
+            }
+        })
+        if (reservas.length != 0 ) { 
+            for (let reserva of reservas) {
+                // Se ja tem feedback retorna
+                if (reserva.feedbackUser) {
+                    return false;
+                }
+                //Cria o feedback do usuário
+                let feedback: Prisma.FeedbackUserCreateInput = {
+                    comentario,
+                    fotos,
+                    reserva: {
+                        connect: {
+                            idUser_dataReserva: {
+                                idUser: reserva.idUser,
+                                dataReserva: reserva.dataReserva
+                            }
+                        }
+                    }
+                }
+                await prisma.feedbackUser.create({ data: feedback })
+            }
+            return true;
+        }
+
+    }
+    // Caso ele não seja usuário verificar se é acompanhante
+    const acompanhantes = await prisma.acompanhante.findMany({
+        where: {
+            pessoa: adulto.pessoa
+        },
+        include: {
+            reserva: true,
+            feedback: true
+        }
+    })
+    // Se não for acompanhante retorna
+    if(acompanhantes.length == 0){ 
+        return false;
+    }
+
+    let flag = 0;
+    for (const acompanhante of acompanhantes) {
+        if (acompanhante.reserva.checkIn.getTime() === checkIn.getTime() && acompanhante.reserva.checkOut.getTime() === checkOut.getTime()) {
+            flag =1;
+            if (acompanhante.feedback) {
+                return false;
+            }
+            // Cria feedback do acompanhante
+            let feedback: Prisma.FeedbackAcompanhanteCreateInput = {
+                comentario,
+                fotos,
+                acompanhante: {
+                    connect: {
+                        reservaUser_reservaData_idPessoa: {
+                            reservaUser: acompanhante.reservaUser,
+                            reservaData: acompanhante.reservaData,
+                            idPessoa: acompanhante.idPessoa
+                        }
+                    }
+                }
+            }
+            await prisma.feedbackAcompanhante.create({ data: feedback })
+        }
+    }
+
+    // Se não encontrou reserva que foi acompanhante
+    if(flag == 0){
+        return false;
+    }
+    return true;
+
+}

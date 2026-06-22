@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, loginUser, userData } from "../services/User.js";
+import { createUser, feedback, loginUser, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
 import jwt from "jsonwebtoken";
 import multer from "multer"
@@ -10,23 +10,23 @@ const upload = multer({ dest: path.resolve("uploads") });
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
 if (!secret) {
-  throw new Error("JWT_SECRET não configurado");
+    throw new Error("JWT_SECRET não configurado");
 }
 
 const router = Router();
 
 // User tries to login
-router.post("/login", async (req: {body: LoginInput} , res) => {
+router.post("/login", async (req: { body: LoginInput }, res) => {
     const login_input = req.body;
 
-     try {
+    try {
         const user = await loginUser(login_input);
 
         if (user) {
-            const token = jwt.sign({email: req.body.email}, secret, {expiresIn: "1h"});
+            const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: "1h" });
             return res.json({ msg: "Login realizado com sucesso", token });
         }
-        return res.json({ msg: "Dados inválidos"});
+        return res.json({ msg: "Dados inválidos" });
 
     } catch (err) {
         console.error(JSON.stringify(err, null, 2));
@@ -58,22 +58,36 @@ router.post("/", async (req, res) => {
 })
 
 // Client wants the data for a user with requested email
-router.get("/data", async (req: {query: {email: string}}, res) => {
+router.get("/data", async (req: { query: { email: string } }, res) => {
     const email = req.query.email;
     console.log("ROTA /user/data FOI CHAMADA");
     console.log("EMAIL:", email);
 
-     try {
-        res.json( await userData(email));
+    try {
+        res.json(await userData(email));
     } catch (err) {
         console.log(err);
-        return res.status(500).json({error: "Erro do servidor"});
+        return res.status(500).json({ error: "Erro do servidor" });
     }
 });
 
-router.post("/feedback", upload.array("photos", 3), (req, res, next) => {
-  console.log(req.files)
-  res.json({msg: "Comentario salvo no banco de dados"})
+router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
+    const checkIn = new Date(req.body.checkIn);
+    const checkOut = new Date(req.body.checkOut);
+    console.log(checkIn, checkOut)
+    try {
+        const resposta = await feedback(req.body.email, req.body.comentario, ["123"], checkIn, checkOut);
+        
+        if(resposta){
+            res.status(201).json({msg: "Feedback cadastrado"})
+        }
+        else{
+            res.status(400).json({error: "Erro, já existe feedback e\ou dados invalidos"})
+        }
+    }
+    catch { 
+        res.json({msg: "Erro no servidor"})
+    }
 })
 
 export default router;
