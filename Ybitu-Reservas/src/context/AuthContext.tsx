@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     function logout() {
-        console.trace("Logout chamado");
+        
         const logoutHandler = async () =>{
             const response = await fetch(`http://localhost:3000/logout`,{credentials:"include"})
             const data = await response.json()
