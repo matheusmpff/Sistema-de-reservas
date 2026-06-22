@@ -37,6 +37,7 @@ function LoginForm({ checks }: { checks: string[] }) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: 'include',
             body: JSON.stringify({
                 email: emailInput,
                 senha: senhaInput
