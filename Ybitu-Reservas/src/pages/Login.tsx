@@ -48,7 +48,7 @@ function LoginForm({ checks }: { checks: string[] }) {
         console.log(data)
 
         if (data.msg === "Login realizado com sucesso") {
-            login(emailInput)
+            login()
             navigate("/Usuario")
         } else {
             setErro("E-mail ou senha inválidos.")
