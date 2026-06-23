@@ -14,7 +14,7 @@ export default function Usuario() {
     const [mostrar, setMostrar] = useState(true)
     const [user,setUser] = useState({
         email: "",
-        senha: "",
+        dataNasc: "",
         nome:""
     })
     const { isLoggedIn } = useAuth()
@@ -27,10 +27,9 @@ export default function Usuario() {
                 const data = await response.json()
                 setUser({
                     email: data.email,
-                    senha: data.user.senha,
+                    dataNasc: data.pessoa.dataNasc.slice(0,10),
                     nome: data.pessoa.nome
                 })
-                console.log(data)
             }
             else{
                 navigate("/login");
@@ -40,9 +39,6 @@ export default function Usuario() {
         profileHandler();
     }, [])
 
-    const alterDataHandler = async () =>{
-        await fetch("http://localhost:3000/user/alterData",{credentials:"include"});   
-    }
 
     console.log(isLoggedIn);
     return (
