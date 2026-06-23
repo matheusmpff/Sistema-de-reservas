@@ -11,22 +11,20 @@ export default function Login() {
     const [erro, setErro] = useState("");
 
     const handleLogin = async (e) => {
+        // Impede o recarregamento da página
         e.preventDefault();
         setErro("");
         setLoading(true);
 
         try {
-            // Endpoint correto: POST /user/login
-            // Campos esperados pelo backend: { email, senha }
-            const res = await api.post("/user/login", { email, senha });
+            const res = await api.post("/login", { userEmail: email, userSenha: senha });
             const data = await res.json();
 
             if (data.token) {
                 localStorage.setItem("token", data.token);
                 window.location.href = "/home";
             } else {
-                // Backend retorna { msg: "Dados inválidos" } quando credenciais erradas
-                setErro(data.msg || "Email ou senha inválidos");
+                setErro("Email ou Senha inválidos");
             }
         } catch (err) {
             setErro("Erro ao conectar com o servidor. Tente novamente.");

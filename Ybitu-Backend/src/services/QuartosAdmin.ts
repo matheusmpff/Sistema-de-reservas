@@ -1,32 +1,24 @@
 import { prisma } from "../libs/prisma.js";
-import { QuartoStatus, QuartoTipo } from "../generated/prisma/client.js";
-
-export { QuartoStatus, QuartoTipo };
+import type { QuartoStatus } from "../generated/prisma/enums.js";
 
 export const listarQuartos = async () => {
-    return prisma.quarto.findMany({ orderBy: { numero: "asc" } });
-};
-
-export const criarQuarto = async (data: {
-    numero: number;
-    tipo: QuartoTipo;
-    capacidade: number;
-    status: QuartoStatus;
-}) => {
-    return prisma.quarto.create({ data });
-};
+    return prisma.quarto.findMany();
+}
 
 export const setQuartoStatus = async (numero: number, status: QuartoStatus) => {
+    // Montamos o objeto de atualização básico
     const dadosAtualizacao: any = { status };
 
+    // Se o novo status for DISPONIVEL, limpamos as informações de reservas antigas
     if (status === "DISPONIVEL") {
         dadosAtualizacao.reservaUser = null;
         dadosAtualizacao.reservaData = null;
     }
 
-    return prisma.quarto.update({ where: { numero }, data: dadosAtualizacao });
-};
-
-export const deletarQuarto = async (numero: number) => {
-    return prisma.quarto.delete({ where: { numero } });
-};
+    return prisma.quarto.update({
+        where: {
+            numero: numero
+        },
+        data: dadosAtualizacao
+    });
+}

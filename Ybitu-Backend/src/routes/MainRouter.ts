@@ -8,8 +8,9 @@ import feedbackRouter from "./Feedback.js";
 import nodemailer from "nodemailer";
 
 const secret = process.env.JWT_SECRET_KEY;
+console.log(secret)
 if (!secret) {
-    throw new Error("JWT_SECRET_KEY não configurado no .env");
+  throw new Error("JWT_SECRET não configurado");
 }
 
 const transporter = nodemailer.createTransport({
@@ -23,17 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const MainRouter = express.Router();
-
 MainRouter.use("/user", userRouter);
-MainRouter.use("/quartos", quartosRouter);
-MainRouter.use("/pessoas", pessoaRouter);
-MainRouter.use("/reservas", reservaRouter);
-MainRouter.use("/feedbacks", feedbackRouter);
-
-// Rota de health-check (pública)
-MainRouter.get("/", (_req, res) => {
-    res.json({ msg: "Ybitu API online" });
-});
 
 MainRouter.get("/", (req, res) => {
   res.json({ msg: "Oiii" });

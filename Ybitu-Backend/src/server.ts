@@ -4,10 +4,16 @@ import helmet from "helmet";
 import MainRouter from "./routes/MainRouter.js";
 import { notDefined, serverError } from "./routes/ErrorHandler.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 const server = express();
 
-server.use(cors())
+
+server.use(cors({
+  origin: 'http://localhost:5173', // endereço do React
+  credentials: true
+}))
+server.use(cookieParser())
 server.use(helmet());
 server.use(express.json());
 
