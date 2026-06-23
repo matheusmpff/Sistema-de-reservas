@@ -6,6 +6,10 @@ type userProps = {
     nome: string
 }
 export default function Profile({user}: {user: userProps}) {
+
+    const alterDataHandler = async () =>{
+        await fetch("http://localhost:3000/user/alterData",{method:"POST",credentials:"include"});   
+    }
    
     return (
         <>
@@ -19,7 +23,7 @@ export default function Profile({user}: {user: userProps}) {
                         </div>
 
                     </div>
-                    <button className="cursor-pointer p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
+                    <button  className="cursor-pointer p-2 w-fit h-fit rounded bg-red-500 font-bold text-[var(--cor-background)] ">Apagar conta</button>
                 </div>
             </div>
             <form className="mt-10 grid grid-cols-2 max-w-fit gap-10  mx-auto" action="">
@@ -38,7 +42,7 @@ export default function Profile({user}: {user: userProps}) {
             </form>
 
             <div className="mt-10 flex items-center justify-center">
-                <button className=" p-2 btn_primary">Alterar Dados</button>
+                <button onClick={alterDataHandler} className=" p-2 btn_primary">Alterar Dados</button>
 
             </div>
         </>

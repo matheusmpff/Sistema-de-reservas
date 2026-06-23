@@ -40,6 +40,10 @@ export default function Usuario() {
         profileHandler();
     }, [])
 
+    const alterDataHandler = async () =>{
+        await fetch("http://localhost:3000/user/alterData",{credentials:"include"});   
+    }
+
     console.log(isLoggedIn);
     return (
         <div className="container mx-auto mt-20 flex flex-col md:flex-row min-h-[70vh]">
