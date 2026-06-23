@@ -1,8 +1,25 @@
 @import "tailwindcss";
 
-:root {
-    --cor-primaria-clara: #2f463f;
-    --cor-primaria-escura: #162526;
-    --offwhite: #e0e0e0;
-    --destaque: #4dba93;
+@theme {
+    --color-cor-escura-gradiente: #130F1A;
+    --color-cor-primaria-clara: #2f463f;
+    --color-cor-primaria-escura: #162526;
+    --color-offwhite: #e0e0e0;
+    --color-destaque: #4dba93;
+    --color-verde-destaque: #4CB791;
+}
+
+/* Configurações globais da estrutura */
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color-scheme: dark;
+}
+
+/* Aplicando o gradiente por padrão no body */
+body {
+    @apply bg-linear-to-br from-cor-escura-gradiente via-cor-primaria-escura to-cor-primaria-clara bg-no-repeat bg-fixed;
 }
