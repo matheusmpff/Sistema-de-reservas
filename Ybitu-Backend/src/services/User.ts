@@ -69,14 +69,14 @@ export const loginUser = async (props: LoginInput) => {
     });
 
     if (!adult?.user?.senha) {
-        return false;
+        return null;
     }
 
     if (bcrypt.compareSync(props.senha, adult?.user?.senha)) {
-        return true
+        return [adult.idPessoa, adult.user.admin]
     }
 
-    return false;
+    return null;
 }
 
 export const userData = async (email: string) => {

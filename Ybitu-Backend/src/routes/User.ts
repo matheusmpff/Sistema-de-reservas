@@ -21,10 +21,10 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
     const login_input = req.body;
 
     try {
-        const user = await loginUser(login_input);
+        const arr = await loginUser(login_input);
 
-        if (user) {
-            const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: "30m" });
+        if (arr) {
+            const token = jwt.sign({ email: req.body.email, id: arr[0], admin:arr[1] }, secret, { expiresIn: "30m" });
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,

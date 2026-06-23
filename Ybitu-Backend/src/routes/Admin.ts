@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response} from "express";
-import { listarQuartos, setQuartoStatus } from "../services/QuartosAdmin.js";
+import { listarQuartos, setQuartoStatus } from "../services/Admin.js";
 import type { QuartoStatus } from "../generated/prisma/enums.js";
 
 

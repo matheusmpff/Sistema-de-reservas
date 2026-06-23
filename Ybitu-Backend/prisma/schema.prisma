@@ -106,6 +106,7 @@ model FeedbackUser {
   reservaData DateTime
   comentario String
   fotos String[]
+  nota Int
   @@id([reservaUser, reservaData])// ID é o usuário e a data de reserva
   // Relação com as demais tabelas
   reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
@@ -118,6 +119,7 @@ model FeedbackAcompanhante {
   idPessoa Int
   comentario String
   fotos String[]
+  nota Int
   @@id([reservaUser, reservaData, idPessoa])// ID é o usuário e a data de reserva
   // Relação com as demais tabelas
   acompanhante Acompanhante @relation(fields: [reservaUser,reservaData,idPessoa], references: [reservaUser,reservaData,idPessoa])
