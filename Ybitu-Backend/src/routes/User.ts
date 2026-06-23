@@ -25,11 +25,11 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
 
         if (user) {
             const token = jwt.sign({ email: req.body.email }, secret, { expiresIn: "30m" });
-            res.cookie("token",token,{
+            res.cookie("token", token, {
                 httpOnly: true,
-                secure:true,
-                sameSite:"strict",
-                maxAge: 30*60*1000
+                secure: true,
+                sameSite: "strict",
+                maxAge: 30 * 60 * 1000
             })
             return res.json({ msg: "Login realizado com sucesso" });
         }
@@ -65,7 +65,7 @@ router.post("/", async (req, res) => {
 })
 
 // Client wants the data for a user with requested email
-router.get("/data",Auth.private, async (req, res) => {
+router.get("/data", Auth.private, async (req, res) => {
     const token = req.cookies.token;
     const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
     console.log("ROTA /user/data FOI CHAMADA");
@@ -79,7 +79,7 @@ router.get("/data",Auth.private, async (req, res) => {
     }
 });
 
-router.get("/booking",Auth.private, async (req, res) => {
+router.get("/booking", Auth.private, async (req, res) => {
     try {
         const token = req.cookies.token;
         const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
@@ -94,11 +94,21 @@ router.get("/booking",Auth.private, async (req, res) => {
 })
 
 router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
+    const files = req.files as Express.Multer.File[];
     const checkIn = new Date(req.body.checkIn);
     const checkOut = new Date(req.body.checkOut);
     console.log(checkIn, checkOut)
+    let urls: string[] = []
+
+    if (req.files != undefined) {
+        for (let photo of files) {
+            urls.push(photo.path)
+        }
+    }
+    console.log(urls)
+
     try {
-        const resposta = await feedback(req.body.email, req.body.comentario, ["123"], checkIn, checkOut);
+        const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut);
 
         if (resposta) {
             res.status(201).json({ msg: "Feedback cadastrado" })
