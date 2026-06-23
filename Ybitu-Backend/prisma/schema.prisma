@@ -103,8 +103,10 @@ model FeedbackUser {
   // Colunas da tabela
   reservaUser Int
   reservaData DateTime
-  comentario String
-  fotos String[]
+  nota        Int      // 1 a 5
+  comentario  String
+  fotos       String[]
+  createdAt   DateTime @default(now())
   @@id([reservaUser, reservaData])// ID é o usuário e a data de reserva
   // Relação com as demais tabelas
   reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
