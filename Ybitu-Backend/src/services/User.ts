@@ -125,6 +125,17 @@ export const userBooking = async (email: string) => {
     return reservas;
 }
 
+type dataType = {
+    email: string
+    senha: string
+    nome: string
+    dataNasc: string
+}
+
+export const alterData = async (id:number,newData:dataType)=>{
+
+}
+
 export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {
     // Procura por um adulto com o email
     const adulto = await prisma.adulto.findUnique({

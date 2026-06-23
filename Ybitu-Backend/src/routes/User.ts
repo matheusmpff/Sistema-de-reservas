@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
+import { alterData, createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import multer from "multer"
@@ -120,6 +120,12 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     catch {
         res.json({ msg: "Erro no servidor" })
     }
+})
+
+router.post("/alterData",Auth.private,async (req,res)=>{
+    const token = req.cookies.token;
+    const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
+    alterData(content.id);
 })
 
 export default router;
