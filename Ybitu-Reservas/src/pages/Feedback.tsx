@@ -72,7 +72,16 @@ export default function Feedback() {
                             </div>
                             <div className="grid_element">
                                 <label htmlFor="comentario">Adicione arquivos:</label>
-                                <input className="image_button" type="file" onChange={(e) => { SetFile(e.target.files); }} accept="image/*" multiple />
+                                <input className="image_button" type="file" onChange={(e) => { 
+                                    if(e.target.files.length>3){
+                                        alert("Só é possível mandar até 3 imagens");
+                                        e.target.value = ""
+                                    }
+                                    else{
+                                        SetFile(e.target.files); 
+                                    }
+                                    
+                                    }} accept="image/*" multiple />
                             </div>
 
 

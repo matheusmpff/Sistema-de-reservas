@@ -1,9 +1,8 @@
-import { createContext, useContext, useState, ReactNode } from "react"
+import { createContext, useContext, useState, ReactNode, use, useEffect } from "react"
 
 type AuthContextType = {
     isLoggedIn: boolean
-    userEmail: string
-    login: (email:string) => void
+    login: () => void
     logout: () => void
 }
 
@@ -13,22 +12,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoggedIn, setIsLoggedIn] = useState(
         () => localStorage.getItem("loggedIn") === "true"
     )
-    const [userEmail,setUserEmail] = useState(()=>{ return ""});
+    useEffect( ()=>{
 
-    function login(email:string) {
-        localStorage.setItem("loggedIn", "true")
-        setUserEmail(email)
+        const loggedHandler = async ()=>{
+            const response = await fetch(`http://localhost:3000/auth`,{credentials:"include"})
+            const data = await response.json()
+            
+            if(data.logged){
+                localStorage.setItem("loggedIn", "true")
+                setIsLoggedIn(true);
+            }
+            else{
+                localStorage.setItem("loggedIn", "false")
+                setIsLoggedIn(false)
+            }
+        }
+        
+        loggedHandler()
+    });
+
+    function login() {
         setIsLoggedIn(true)
     }
 
     function logout() {
+        
+        const logoutHandler = async () =>{
+            const response = await fetch(`http://localhost:3000/logout`,{credentials:"include"})
+            const data = await response.json()
+
+            if(!data.logged){
+                localStorage.removeItem("loggedIn");
+                setIsLoggedIn(false);
+            }
+        }
+        logoutHandler()
         localStorage.removeItem("loggedIn")
         setIsLoggedIn(false)
-        setUserEmail("")
     }
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout, userEmail }}>
+        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
             {children}
         </AuthContext.Provider>
     )

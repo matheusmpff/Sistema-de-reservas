@@ -1,9 +1,9 @@
 
 type Reserva = {
-    pessoas: number
+    numPessoas: number
     checkIn: string
     checkOut: string
-    pagamento: boolean
+    status: string
 
 }
 
@@ -26,10 +26,10 @@ export default function ActiveTable({listaReserva }: Props) {
                 {listaReserva.map(reserva => {
                     return(
                         <tr className="bg-gray-400 border-b border-gray-600" >
-                            <td className="p-2">{reserva.pessoas}</td>
-                            <td>{reserva.checkIn}</td>
-                            <td>{reserva.checkOut}</td>
-                            <td > {reserva.pagamento ? <div className=" text-[var(--cor-background)] rounded flex items-center justify-center p-1 w-11/12 bg-[var(--cor-primaria)]">Confirmado</div>: <div className="text-[var(--cor-background)] rounded flex items-center justify-center p-1 w-11/12 bg-red-600">Pendente</div>}</td>
+                            <td className="p-2">{reserva.numPessoas}</td>
+                            <td>{new Date(reserva.checkIn).toLocaleDateString("pt-BR")}</td>
+                            <td>{new Date (reserva.checkOut).toLocaleDateString("pt-BR")}</td>
+                            <td > {reserva.status ==="PAGO" ? <div className=" text-[var(--cor-background)] rounded flex items-center justify-center p-1 w-11/12 bg-[var(--cor-primaria)]">Confirmado</div>: <div className="text-[var(--cor-background)] rounded flex items-center justify-center p-1 w-11/12 bg-red-600">Pendente</div>}</td>
                         </tr>
                     );
                 })}               

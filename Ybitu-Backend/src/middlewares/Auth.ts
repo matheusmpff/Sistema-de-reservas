@@ -5,19 +5,16 @@ export const Auth = {
     private: (req: Request, res: Response, next: NextFunction) => {
         let success = false;
 
-        if (req.headers.authorization) {
-            const token = req.headers.authorization.split(" ");
+        const token = req.cookies.token;
 
+        if (token) {
             try {
-                if (token[0] === "Bearer" && token[1] !== undefined) {
-                    const verification = jwt.verify(token[1], process.env.JWT_SECRET_KEY as string)
-                    success = true;
-                }
+                jwt.verify(token, process.env.JWT_SECRET_KEY as string)
+                success = true;
             }
-            catch(err){
-                
+            catch (err) {
+                console.log(err);
             }
-
         }
 
         if (success) {

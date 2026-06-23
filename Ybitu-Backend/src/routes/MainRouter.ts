@@ -15,5 +15,18 @@ MainRouter.get("/", Auth.private, (req, res) => {
   res.json({ msg: "Oiii" });
 });
 
+MainRouter.get("/auth", Auth.private,(req,res)=>{
+  res.status(201).json({
+    logged: true,
+  })
+})
+
+MainRouter.get("/logout", Auth.private,(req,res)=>{
+  res.clearCookie("token")
+  res.status(201).json({
+    logged: false
+  })
+})
+
 
 export default MainRouter;

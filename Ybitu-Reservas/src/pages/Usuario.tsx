@@ -17,13 +17,13 @@ export default function Usuario() {
         senha: "",
         nome:""
     })
-    const { logout, userEmail } = useAuth()
+    const { isLoggedIn } = useAuth()
     const navigate = useNavigate();
 
     useEffect(() => {
         const profileHandler = async () => {
-            if (userEmail != "") {
-                const response = await fetch(`http://localhost:3000/user/data?email=${userEmail}`);
+            if (isLoggedIn == true) {
+                const response = await fetch(`http://localhost:3000/user/data`,{credentials:"include"});
                 const data = await response.json()
                 setUser({
                     email: data.email,
@@ -33,15 +33,14 @@ export default function Usuario() {
                 console.log(data)
             }
             else{
-                logout();
                 navigate("/login");
             }
 
         }
         profileHandler();
-    }, [userEmail])
+    }, [])
 
-    console.log(userEmail);
+    console.log(isLoggedIn);
     return (
         <div className="container mx-auto mt-20 flex flex-col md:flex-row min-h-[70vh]">
             <aside className=" min-w-fit flex flex-col items-center" >
