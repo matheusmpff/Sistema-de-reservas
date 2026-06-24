@@ -1,7 +1,8 @@
 import express from "express";
 import { Auth } from "../middlewares/Auth.js";
 import nodemailer from "nodemailer";
-import * as zod from "zod"
+import * as zod from "zod";
+import adminRouter from "./Admin.js";
 
 import userRouter from "./User.js";
 
@@ -23,6 +24,7 @@ const transporter = nodemailer.createTransport({
 
 const MainRouter = express.Router();
 MainRouter.use("/user", userRouter);
+MainRouter.use("/admin", adminRouter);
 
 MainRouter.get("/", (_req, res) => {
   res.json({ msg: "Oiii" });
@@ -76,7 +78,7 @@ MainRouter.post("/email", (req, res) => {
       res.json({ msg: "Deu merda parceiro" })
     })
   }
-  catch (error){
+  catch (error: any){
     console.log("Erro em MainRouter");
     if (error instanceof zod.ZodError) {
       console.log("Validação do answerData falhou");
