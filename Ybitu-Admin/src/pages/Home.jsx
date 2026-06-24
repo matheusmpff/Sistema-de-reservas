@@ -1,121 +1,260 @@
 "use client"
 
-import {
-    BarChart, Bar, XAxis, YAxis, Tooltip,
-    CartesianGrid, ResponsiveContainer
-} from "recharts"
-
-const reservas = [
-    { nome: "Ana Beatriz Silva", pessoas: 2, checkin: "20/06/2025", checkout: "22/06/2025", status: "confirmado" },
-    { nome: "Carlos Eduardo Ramos", pessoas: 4, checkin: "20/06/2025", checkout: "25/06/2025", status: "pendente" },
-    { nome: "Fernanda Lima", pessoas: 1, checkin: "20/06/2025", checkout: "21/06/2025", status: "confirmado" },
-    { nome: "João Pedro Costa", pessoas: 3, checkin: "20/06/2025", checkout: "23/06/2025", status: "cancelado" },
-    { nome: "Mariana Oliveira", pessoas: 2, checkin: "20/06/2025", checkout: "24/06/2025", status: "pendente" },
-    { nome: "Rafael Souza", pessoas: 5, checkin: "20/06/2025", checkout: "27/06/2025", status: "confirmado" },
-]
-
-const receitaMensal = [
-    { mes: "Jul", valor: 18400 }, { mes: "Ago", valor: 22100 },
-    { mes: "Set", valor: 19800 }, { mes: "Out", valor: 24500 },
-    { mes: "Nov", valor: 21000 }, { mes: "Dez", valor: 28900 },
-    { mes: "Jan", valor: 17500 }, { mes: "Fev", valor: 20300 },
-    { mes: "Mar", valor: 23700 }, { mes: "Abr", valor: 26100 },
-    { mes: "Mai", valor: 22800 }, { mes: "Jun", valor: 31200 },
-]
-
-const reservasPorDia = [
-    { dia: "Seg", qtd: 12 }, { dia: "Ter", qtd: 18 },
-    { dia: "Qua", qtd: 14 }, { dia: "Qui", qtd: 20 },
-    { dia: "Sex", qtd: 28 }, { dia: "Sáb", qtd: 35 },
-    { dia: "Dom", qtd: 22 },
-]
+import { useState, useEffect } from "react"
+import { api } from "../hooks/api"
 
 const statusStyles = {
-    confirmado: "bg-green-500/20 text-green-400 border border-green-500/40",
-    pendente: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40",
-    cancelado: "bg-red-500/20 text-red-400 border border-red-500/40",
+    EM_ANALISE: "bg-yellow-500/20 text-yellow-400 border border-yellow-500/40",
+    PAGO:       "bg-green-500/20 text-green-400 border border-green-500/40",
+    IN:         "bg-blue-500/20 text-blue-400 border border-blue-500/40",
+    OUT:        "bg-slate-500/20 text-slate-400 border border-slate-500/40",
+    CANCELADO:  "bg-red-500/20 text-red-400 border border-red-500/40",
 }
 
-const campos = ["Nome", "Pessoas", "Check-in", "Check-out", "Status"]
+const statusLabel = {
+    EM_ANALISE: "Em análise",
+    PAGO:       "Pago",
+    IN:         "Hospedado",
+    OUT:        "Check-out",
+    CANCELADO:  "Cancelado",
+}
+
+function hojeISO() {
+    return new Date().toISOString().slice(0, 10)
+}
+
+function fmt(d) {
+    return d ? new Date(d).toLocaleDateString("pt-BR") : "—"
+}
+
+const FORM_VAZIO = {
+    idUser: "",
+    numeroQuarto: "",
+    checkIn: "",
+    checkOut: "",
+    numPessoas: 1,
+    valor: "",
+}
 
 export default function Home() {
+    const [reservas,     setReservas]     = useState([])
+    const [hospedes,     setHospedes]     = useState([])
+    const [quartos,      setQuartos]      = useState([])
+    const [loading,      setLoading]      = useState(true)
+    const [erro,         setErro]         = useState("")
+    const [periodo,      setPeriodo]      = useState("hoje")
+    const [modalAberto,  setModalAberto]  = useState(false)
+    const [form,         setForm]         = useState(FORM_VAZIO)
+    const [salvando,     setSalvando]     = useState(false)
+    const [erroModal,    setErroModal]    = useState("")
+
+    async function carregarReservas() {
+        setLoading(true)
+        setErro("")
+        try {
+            setReservas(await api.get("/admin/reservas"))
+        } catch {
+            setErro("Erro ao carregar reservas.")
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    async function abrirModal() {
+        setErroModal("")
+        setForm(FORM_VAZIO)
+        try {
+            const [h, q] = await Promise.all([
+                api.get("/admin/hospedes"),
+                api.get("/admin/quartos"),
+            ])
+            setHospedes(h.filter(p => p.adulto))
+            setQuartos(q.filter(q => q.status === "DISPONIVEL"))
+        } catch {
+            setHospedes([])
+            setQuartos([])
+        }
+        setModalAberto(true)
+    }
+
+    async function criarReserva(e) {
+        e.preventDefault()
+        setSalvando(true)
+        setErroModal("")
+        try {
+            await api.post("/admin/reservas", {
+                idUser:       Number(form.idUser),
+                numeroQuarto: Number(form.numeroQuarto),
+                checkIn:      form.checkIn,
+                checkOut:     form.checkOut,
+                numPessoas:   Number(form.numPessoas),
+                valor:        Number(form.valor),
+            })
+            setModalAberto(false)
+            carregarReservas()
+        } catch (e) {
+            setErroModal(e.message)
+        } finally {
+            setSalvando(false)
+        }
+    }
+
+    useEffect(() => { carregarReservas() }, [])
+
+    const hoje = hojeISO()
+
+    const reservasFiltradas = reservas.filter(r => {
+        const data = r.dataReserva?.slice(0, 10)
+        if (periodo === "hoje") return data === hoje
+        if (periodo === "semana") {
+            const d   = new Date(data)
+            const ini = new Date()
+            ini.setDate(ini.getDate() - ini.getDay())
+            ini.setHours(0, 0, 0, 0)
+            const fim = new Date(ini)
+            fim.setDate(ini.getDate() + 6)
+            fim.setHours(23, 59, 59, 999)
+            return d >= ini && d <= fim
+        }
+        return true
+    })
+
+    const campos = ["Nome", "Pessoas", "Pedido em", "Check-in", "Check-out", "Status"]
+
     return (
         <div className="flex-1 w-full mt-10 bg-cor-primaria-clara p-10 rounded-2xl">
 
-            {/* Cabeçalho */}
             <div className="w-full flex flex-row items-center justify-between mb-4">
-                <p className="text-2xl font-semibold">Pedidos de Reserva de Hoje</p>
-                <button className="px-3 py-1.5 bg-verde-destaque/90 rounded-md flex items-center justify-center font-semibold text-sm">
-                    + Adicionar Reserva
-                </button>
+                <p className="text-2xl font-semibold">Pedidos de Reserva</p>
+                <div className="flex gap-3 items-center">
+                    <select
+                        value={periodo}
+                        onChange={e => setPeriodo(e.target.value)}
+                        className="bg-cor-primaria-escura border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-200 outline-none"
+                    >
+                        <option value="hoje">Pedidos de hoje</option>
+                        <option value="semana">Esta semana</option>
+                        <option value="todos">Todos</option>
+                    </select>
+                    <button
+                        onClick={abrirModal}
+                        className="px-3 py-1.5 bg-verde-destaque/90 rounded-md flex items-center justify-center font-semibold text-sm hover:bg-verde-destaque transition-colors">
+                        + Adicionar Reserva
+                    </button>
+                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            {erro    && <p className="text-red-400 mb-4">{erro}</p>}
+            {loading && <p className="text-slate-400">Carregando...</p>}
 
-                {/* Tabela — ocupa as 2 colunas */}
+            {!loading && (
                 <div className="col-span-2 rounded-2xl overflow-hidden">
-                    {/* Header */}
-                    <div className="grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.2fr] px-5 py-3 bg-cor-primaria-escura text-sm font-semibold text-slate-400 uppercase tracking-wide mb-1">
-                        {campos.map((c) => <span key={c}>{c}</span>)}
+                    <div className="grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.5fr_1.2fr] px-5 py-3 bg-cor-primaria-escura text-sm font-semibold text-slate-400 uppercase tracking-wide mb-1">
+                        {campos.map(c => <span key={c}>{c}</span>)}
                     </div>
 
-                    {/* Linhas */}
-                    {reservas.map((r, i) => (
-                        <div
-                            key={i}
-                            className={`grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.2fr] px-5 py-3 items-center text-sm border-t border-white/5 bg-cor-primaria-escura`}
-                        >
-                            <span className="font-medium">{r.nome}</span>
-                            <span>{r.pessoas} pessoa{r.pessoas > 1 ? "s" : ""}</span>
-                            <span>{r.checkin}</span>
-                            <span>{r.checkout}</span>
+                    {reservasFiltradas.length === 0 && (
+                        <div className="px-5 py-6 text-slate-400 text-sm bg-cor-primaria-escura">
+                            Nenhum pedido encontrado.
+                        </div>
+                    )}
+
+                    {reservasFiltradas.map((r, i) => (
+                        <div key={i}
+                            className="grid grid-cols-[2fr_1fr_1.5fr_1.5fr_1.5fr_1.2fr] px-5 py-3 items-center text-sm border-t border-white/5 bg-cor-primaria-escura">
+                            <span className="font-medium">{r.user?.adulto?.pessoa?.nome ?? "—"}</span>
+                            <span>{r.numPessoas} pessoa{r.numPessoas > 1 ? "s" : ""}</span>
+                            <span>{fmt(r.dataReserva)}</span>
+                            <span>{fmt(r.checkIn)}</span>
+                            <span>{fmt(r.checkOut)}</span>
                             <span>
-                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyles[r.status]}`}>
-                                    {r.status.charAt(0).toUpperCase() + r.status.slice(1)}
+                                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${statusStyles[r.status] ?? ""}`}>
+                                    {statusLabel[r.status] ?? r.status}
                                 </span>
                             </span>
                         </div>
                     ))}
                 </div>
+            )}
 
-                {/* Card — Receita últimos 12 meses */}
-                <div className="bg-cor-primaria-escura rounded-2xl p-5">
-                    <h2 className="font-semibold mb-4">Receita — Últimos 12 meses</h2>
-                    <ResponsiveContainer width="100%" height={200}>
-                        <BarChart data={receitaMensal}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff0f" />
-                            <XAxis dataKey="mes" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                            <YAxis
-                                tick={{ fill: "#94a3b8", fontSize: 11 }}
-                                tickFormatter={(v) => `R$${(v / 1000).toFixed(0)}k`}
-                            />
-                            <Tooltip
-                                formatter={(v) => [`R$ ${v.toLocaleString("pt-BR")}`, "Receita"]}
-                                contentStyle={{ background: "#0f3460", border: "none", borderRadius: 8 }}
-                            />
-                            <Bar dataKey="valor" fill="#22c55e" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
+            {modalAberto && (
+                <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+                    <div className="bg-cor-primaria-escura rounded-2xl p-8 w-full max-w-md">
+                        <h2 className="text-xl font-bold mb-6">Nova Reserva</h2>
+                        <form onSubmit={criarReserva} className="flex flex-col gap-4">
+
+                            <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                Hóspede titular
+                                <select required value={form.idUser}
+                                    onChange={e => setForm({ ...form, idUser: e.target.value })}
+                                    className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none">
+                                    <option value="">Selecione...</option>
+                                    {hospedes.map(p => (
+                                        <option key={p.id} value={p.id}>{p.nome}</option>
+                                    ))}
+                                </select>
+                            </label>
+
+                            <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                Quarto disponível
+                                <select required value={form.numeroQuarto}
+                                    onChange={e => setForm({ ...form, numeroQuarto: e.target.value })}
+                                    className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none">
+                                    <option value="">Selecione...</option>
+                                    {quartos.map(q => (
+                                        <option key={q.numero} value={q.numero}>
+                                            Quarto {q.numero} — {q.tipo}
+                                        </option>
+                                    ))}
+                                </select>
+                            </label>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                    Check-in
+                                    <input type="date" required value={form.checkIn}
+                                        onChange={e => setForm({ ...form, checkIn: e.target.value })}
+                                        className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none" />
+                                </label>
+                                <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                    Check-out
+                                    <input type="date" required value={form.checkOut}
+                                        onChange={e => setForm({ ...form, checkOut: e.target.value })}
+                                        className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none" />
+                                </label>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                    Nº de pessoas
+                                    <input type="number" min={1} required value={form.numPessoas}
+                                        onChange={e => setForm({ ...form, numPessoas: e.target.value })}
+                                        className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none" />
+                                </label>
+                                <label className="flex flex-col gap-1 text-sm text-slate-300">
+                                    Valor total (R$)
+                                    <input type="number" min={0} required value={form.valor}
+                                        onChange={e => setForm({ ...form, valor: e.target.value })}
+                                        className="bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white outline-none" />
+                                </label>
+                            </div>
+
+                            {erroModal && <p className="text-red-400 text-sm">{erroModal}</p>}
+
+                            <div className="flex gap-3 mt-2">
+                                <button type="button" onClick={() => setModalAberto(false)}
+                                    className="flex-1 py-2 rounded-lg border border-white/10 text-slate-300 text-sm hover:bg-white/5">
+                                    Cancelar
+                                </button>
+                                <button type="submit" disabled={salvando}
+                                    className="flex-1 py-2 rounded-lg bg-verde-destaque/90 text-white text-sm font-semibold hover:bg-verde-destaque disabled:opacity-60">
+                                    {salvando ? "Salvando..." : "Criar reserva"}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-
-                {/* Card — Reservas por dia da semana */}
-                <div className="bg-cor-primaria-escura rounded-2xl p-5">
-                    <h2 className="font-semibold mb-4">Reservas por Dia da Semana</h2>
-                    <ResponsiveContainer width="100%" height={200}>
-                        <BarChart data={reservasPorDia}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#ffffff0f" />
-                            <XAxis dataKey="dia" tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                            <YAxis tick={{ fill: "#94a3b8", fontSize: 11 }} />
-                            <Tooltip
-                                formatter={(v) => [v, "Reservas"]}
-                                contentStyle={{ background: "#0f3460", border: "none", borderRadius: 8 }}
-                            />
-                            <Bar dataKey="qtd" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ResponsiveContainer>
-                </div>
-
-            </div>
+            )}
         </div>
     )
 }

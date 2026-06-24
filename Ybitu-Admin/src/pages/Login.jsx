@@ -10,23 +10,20 @@ export default function Login() {
     const [erro, setErro] = useState("");
 
     const handleLogin = async (e) => {
-        // Impede o recarregamento da página
         e.preventDefault();
         setErro("");
         setLoading(true);
 
         try {
-            const res = await api.post("/login", { userEmail: email, userSenha: senha });
-            const data = await res.json();
+            const data = await api.post("/user/login", { email, senha });
 
-            if (data.token) {
-                localStorage.setItem("token", data.token);
+            if (data.msg === "Login realizado com sucesso") {
                 window.location.href = "/home";
             } else {
-                setErro("Email ou Senha inválidos");
+                setErro("Email ou senha inválidos");
             }
         } catch (err) {
-            setErro(err);
+            setErro("Erro ao conectar com o servidor", err);
         } finally {
             setLoading(false);
         }

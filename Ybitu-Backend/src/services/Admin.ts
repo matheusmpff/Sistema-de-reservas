@@ -83,11 +83,6 @@ export const criarReservas = async (idUser: number, checkIn: Date, checkOut: Dat
             }
         });
 
-        await tx.quarto.update({
-            where: { numero: numeroQuarto },
-            data: { status: "OCUPADO" }
-        });
-
         return reserva;
     })
 };
@@ -231,13 +226,41 @@ export const alterarDataReserva = async(idUser: number, dataReserva: Date, novoC
 }
 
 export const alterarStatusPagamentoReserva = async (idUser: number, dataReserva: Date, novoStatus: TipoStatus) => {
-    return prisma.reserva.update({
-        where: {
-            idUser_dataReserva: {idUser: idUser, dataReserva: dataReserva}
-        },
-        data: {status: novoStatus}
-    })
-}
+    return prisma.$transaction(async (tx) => {
+
+        const reserva = await tx.reserva.findUnique({
+            where: { idUser_dataReserva: { idUser, dataReserva } },
+            include: {
+                reservaQuartos: { include: { Quartos: true } }
+            }
+        });
+
+        if (!reserva) throw new Error("Reserva não encontrada");
+
+        const numeroQuarto = reserva.reservaQuartos?.Quartos?.[0]?.numero;
+
+        const atualizada = await tx.reserva.update({
+            where: { idUser_dataReserva: { idUser, dataReserva } },
+            data: { status: novoStatus }
+        });
+
+        if (numeroQuarto) {
+            if (novoStatus === "IN") {
+                await tx.quarto.update({
+                    where: { numero: numeroQuarto },
+                    data: { status: "OCUPADO" }
+                });
+            } else if (novoStatus === "OUT" || novoStatus === "CANCELADO") {
+                await tx.quarto.update({
+                    where: { numero: numeroQuarto },
+                    data: { status: "DISPONIVEL" }
+                });
+            }
+        }
+
+        return atualizada;
+    });
+};
 
 export const alterarValorReserva = async (idUser: number, dataReserva: Date, valorAdicionado: number) => {
     return prisma.$transaction(async (tx) => {
