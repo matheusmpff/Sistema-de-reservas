@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import BarraProgresso from "../components/BarraProgresso";
 import { DayPicker } from "react-day-picker";
 import type { DateRange } from "react-day-picker";
 import { ptBR } from "date-fns/locale";

@@ -1,46 +1,82 @@
-import { isDate } from "date-fns";
-
 export type stateOp<T> = (c: T) => void;
 
-export type ResumoData = {
-  key: string,
-  title: string,
-  date_in: string,
-  date_out: string,
-  items: string[]
+type BookingContext = {
+  currentID: number,
+  bookings: BookingData[],
 }
 
-export type ReservaID = {id: string};
+type UseBookCont = [BookingContext, stateOp<BookingContext>];
 
-const HospedeType = {
-  Responsavel: 0,
-  Adulto: 1,
-  Crianca: 2,
+type BookingData = {
+  id: number,
+  user: GuestData,
+  otherGuests: GuestData[],
+  date_in: Date,
+  date_out: Date,
+  rooms: RoomData[],
+}
+
+type BookingID = { id: number };
+
+type GuestData = {
+  id: string, // not the same as the DB id
+  guestType: GuestType,
+  name: string,
+  birthDate: Date,
+  sex: "Masculino" | "Feminino",
+  phoneNumber: string, // can be the parent's phone
+  email?: string,
+  parentName?: string,
+}
+
+function toSex(value: string): "Masculino" | "Feminino" {
+  let v = value.toLocaleUpperCase();
+  if (v == "M" || v == "MASCULINO") {
+    return "Masculino";
+  }
+  if (v == "F" || v == "FEMININO") {
+    return "Feminino";
+  }
+  console.log("Erro em toSex: " + value);
+  return "Feminino";
+}
+
+const GuestType = {
+  User: 0,
+  Adult: 1,
+  Child: 2,
 } as const;
 
-type HospedeType = (typeof HospedeType)[keyof typeof HospedeType];
+type GuestType = (typeof GuestType)[keyof typeof GuestType];
 
-// map the HospedeType to a string
-function hTypeToString(hType: HospedeType) {
-  if (hType == HospedeType.Responsavel) {
+type RoomData = {
+  roomNumber: number,
+  roomType: RoomType,
+}
+
+type RoomType = {
+  rType: "Duplo" | "Triplo" | "Quádruplo",
+  items: string[],
+  imagesSrc: string[],
+  imagesLabel: string[],
+  quantity: number,
+}
+
+// map the GuestType to a string
+function hTypeToString(hType: GuestType) {
+  if (hType == GuestType.User) {
     return "Responsável";
   }
-  if (hType == HospedeType.Adulto) {
+  if (hType == GuestType.Adult) {
     return "Adulto";
   }
-  if (hType == HospedeType.Crianca) {
+  if (hType == GuestType.Child) {
     return "Criança";
   }
 }
 
-type HospedeDados = {
-  hType: HospedeType,
-  hName: string,
-  birthDate: Date,
-  phoneNumber: string,
-}
-
-export { HospedeType, hTypeToString, type HospedeDados };
+export { type BookingContext, type UseBookCont, type BookingData, type BookingID, GuestType,
+  hTypeToString, type GuestData, type RoomData,type RoomType, toSex };
 
 // types from Ybitu-Backend; needs to be sincronized with that file
 
@@ -58,32 +94,4 @@ type UserSignup = {
     senha: string
 }
 
-function isUserSignup(arg: any): arg is UserSignup {
-    // cannot be null
-    if (!arg) {
-        return false;
-    }
-    // needs to have its fields
-    if (!arg.nome || !arg.email || !arg.dataNasc || !arg.sexo || !arg.telefone || !arg.senha) {
-        return false;
-    }
-    if (typeof(arg.nome) != "string" || arg.nome != "") {
-        return false;
-    }
-    if (typeof(arg.email) != "string" || arg.email != "") {
-        return false;
-    }
-    if (isDate(arg.dataNasc)) {
-        return false;
-    }
-    if (typeof(arg.telefone) != "string" || arg.telefone != "") {
-        return false;
-    }
-    if (typeof(arg.senha) != "string" || arg.senha != "") {
-        return false;
-    }
-
-    return true;
-}
-
-export { type UserLogin, type UserSignup, isUserSignup };
+export { type UserLogin, type UserSignup };

@@ -8,7 +8,7 @@ import { Minus, Plus } from "lucide-react";
 import "@trg69/react-splide/css";
 import "../styles/Quartos.scss";
 
-import { type stateOp } from "../types.ts";
+import { type RoomType, type stateOp } from "../types.ts";
 import { useState } from "react";
 
 function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, add: stateOp<number>}) {
@@ -50,16 +50,7 @@ function AbaSelecao(prop: {limit: number}) {
   );
 };
 
-type QuartoData = {
-  type: string,
-  title: string,
-  imageSrc: string,
-  imageLabel: string,
-  items: string[],
-  quantity: number;
-};
-
-function AbaQuarto(prop: {data: QuartoData}) {
+function AbaQuarto(prop: {data: RoomType}) {
   if (!Number.isInteger(prop.data.quantity)) {
     console.log("Aba with non-integer number");
     return null;
@@ -67,15 +58,15 @@ function AbaQuarto(prop: {data: QuartoData}) {
 
   const itemList = prop.data.items.map((item, i) => {
     return (
-      <li key={prop.data.type + i.toString()}>{item}</li>
+      <li key={prop.data.rType + i.toString()}>{item}</li>
     );
   });
   
   return (
     <div className="aba">
-      <img src={prop.data.imageSrc} alt={prop.data.imageLabel} />
+      <img src={prop.data.imagesSrc[0]} alt={prop.data.imagesLabel[0]} />
       <div className="aba-info aba-area">
-        <h3>{prop.data.title}</h3>
+        <h3>{"Quarto " + prop.data.rType}</h3>
         <ul className="list-outside list-disc leading-[1.2]">
           {itemList}
         </ul>
@@ -120,28 +111,25 @@ export default function Quartos() {
     "aria-label": "Lista dos quartos",
   };
 
-  const quartosList: QuartoData[] = [
+  const quartosList: RoomType[] = [
     {
-      type: "quarto-duplo",
-      title: "Quarto duplo",
-      imageSrc: QuartoDuploImage,
-      imageLabel: "Foto de um belo quarto com uma cama de casal",
+      rType: "Duplo",
+      imagesSrc: [QuartoDuploImage],
+      imagesLabel: ["Foto de um belo quarto com uma cama de casal"],
       items: ["1 cama de casal", "1 banheiro", "Televisão", "Frigobar"],
       quantity: 3,
     },
     {
-      type: "quarto-triplo",
-      title: "Quarto triplo",
-      imageSrc: QuartoTriploImage,
-      imageLabel: "Foto de um belo quarto com uma cama de casal e uma cama de solteiro",
+      rType: "Triplo",
+      imagesSrc: [QuartoTriploImage],
+      imagesLabel: ["Foto de um belo quarto com uma cama de casal e uma cama de solteiro"],
       items: ["1 cama de casal ou 2 de solteiro", "1 cama de solteiro", "1 banheiro", "Televisão", "Frigobar"],
       quantity: 3,
     },
     {
-      type: "quarto-quadruplo",
-      title: "Quarto quádruplo",
-      imageSrc: QuartoQuadruploImage,
-      imageLabel: "Foto de um quarto com uma cama de casal e duas de solteiro",
+      rType: "Quádruplo",
+      imagesSrc: [QuartoQuadruploImage],
+      imagesLabel: ["Foto de um quarto com uma cama de casal e duas de solteiro"],
       items: ["1 cama de casal ou 2 de solteiro", "2 camas de solteiro", "1 banheiro", "Televisão", "Frigobar"],
       quantity: 3,
     },
@@ -154,7 +142,7 @@ export default function Quartos() {
       <Splide {... splide_config}>
         {quartosList.map((quarto) => {
             return (
-              <SplideSlide key={quarto.type}><AbaQuarto data={quarto} /></SplideSlide>
+              <SplideSlide key={quarto.rType}><AbaQuarto data={quarto} /></SplideSlide>
             );
           })
         }
