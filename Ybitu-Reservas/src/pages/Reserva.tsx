@@ -46,10 +46,27 @@ export default function ReservaRoutePage() {
   }
   curStep = decodeURIComponent(curStep);
 
+  const confirmStep = () => {
+    switch(curStep){
+      case "Data":
+        break;
+      case "Quartos":
+        if (reservas.bookings[reservas.currentID].rooms.length == 0) {
+          window.alert("Pelo menos 1 quarto precisa ser reservado")
+          return false;
+        }
+        break;
+      case "Hóspedes":
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
   
   return(
     <>
-      <BarraProgresso step={curStep} />
+      <BarraProgresso step={curStep} confirmStep={confirmStep} />
       <Outlet context={[reservas, setReservas]}/>
     </>
   );

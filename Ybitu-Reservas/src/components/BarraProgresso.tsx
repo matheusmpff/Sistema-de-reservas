@@ -4,7 +4,7 @@ import "../styles/BarraProgresso.scss"
 
 const steps_list: string[] = ["Data", "Quartos", "Hóspedes", "Pagamento"];
 
-export default function BarraProgresso(prop: {step: string }) {
+export default function BarraProgresso(prop: {step: string , confirmStep: () => boolean }) {
   type status = "done" | "on-going" | "not-yet"
 
   let step_index = steps_list.findIndex((it) => it == prop.step);
@@ -41,7 +41,9 @@ export default function BarraProgresso(prop: {step: string }) {
       window.location.href = "/Reserva/" + steps_list[step_index - 1];
     }
     if (to == "next") {
-      window.location.href = "/Reserva/" + steps_list[step_index + 1];
+      if (prop.confirmStep()) {
+        window.location.href = "/Reserva/" + steps_list[step_index + 1];
+      }
     }
     return;
   }
