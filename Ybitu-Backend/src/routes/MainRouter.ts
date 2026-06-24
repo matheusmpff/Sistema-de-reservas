@@ -80,7 +80,7 @@ MainRouter.post("/email", (req, res) => {
       res.json({ msg: "Deu Certooo" })
     }).catch(err => {
       console.log(err)
-      res.json({ msg: "Deu merda parceiro" })
+      res.json({ msg: "Deu problema na requisição" })
     })
   }
   catch (error: any){
