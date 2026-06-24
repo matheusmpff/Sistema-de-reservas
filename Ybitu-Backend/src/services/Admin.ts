@@ -1,6 +1,7 @@
 import { prisma } from "../libs/prisma.js";
 import type { QuartoStatus, QuartoTipo, TipoStatus } from "../generated/prisma/enums.js";
 import type { Prisma } from "../generated/prisma/client.js";
+import { includes } from "zod";
 
 const verificaConflito = async (
     tx: Prisma.TransactionClient,
@@ -365,3 +366,24 @@ export const listarFeedbacks = async () => {
         }
     });
 };
+
+export const listarQuartos = async () => {
+    return prisma.quarto.findMany();
+}
+
+export const listarHospedes = async () => {
+    return prisma.pessoa.findMany({
+        include: {
+            adulto: true,
+            crianca: {
+                include: {
+                    responsavel: {
+                        include: {
+                            pessoa: true,
+                        }
+                    }
+                }
+            }
+        }
+    })
+}

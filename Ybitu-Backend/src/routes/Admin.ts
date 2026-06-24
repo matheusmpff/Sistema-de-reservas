@@ -207,6 +207,22 @@ router.get("/feedbacks", async (req, res) => {
 
 })
 
+router.get("/quartos", async (req, res) => {
+    try {
+        res.json(await admin.listarQuartos());
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao listar quartos" });
+    }
+});
+
+router.get("/hospedes", async (req, res) => {
+    try {
+        res.json(await admin.listarHospedes());
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao listar hóspedes" });
+    }
+});
+
 
 export default router;
 
