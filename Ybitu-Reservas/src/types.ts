@@ -18,6 +18,14 @@ type BookingData = {
 
 type BookingID = { id: string };
 
+export function findBooking(id: string, list: BookingData[]): BookingData {
+  let element = list.find((book) => book.id == id);
+  if (element == undefined) {
+    return list[0];
+  }
+  return element;
+}
+
 type GuestData = {
   id: string, // not the same as the DB id
   guestType: GuestType,
@@ -78,7 +86,19 @@ function hTypeToString(hType: GuestType) {
 export { type BookingContext, type UseBookCont, type BookingData, type BookingID, GuestType,
   hTypeToString, type GuestData, type RoomData,type RoomType, toSex };
 
-// types from Ybitu-Backend; needs to be sincronized with that file
+// ===============================================================
+// types from Ybitu-Backend; needs to be sincronized with it
+// ===============================================================
+
+type UserServerData = {
+  email: string,
+  telefone: string,
+  pessoa: {
+    nome: string,
+    dataNasc: Date,
+    sexo: string,
+  }
+}
 
 type UserLogin = {
     email: string,
@@ -94,4 +114,4 @@ type UserSignup = {
     senha: string
 }
 
-export { type UserLogin, type UserSignup };
+export { type UserServerData, type UserLogin, type UserSignup };

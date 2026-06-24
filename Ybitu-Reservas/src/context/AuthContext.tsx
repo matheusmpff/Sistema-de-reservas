@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode, useEffect } from "react"
 
-type AuthContextType = {
+export type AuthContextType = {
     isLoggedIn: boolean,
     login: (nome:string) => void,
     logout: () => void,

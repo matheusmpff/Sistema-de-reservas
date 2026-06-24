@@ -1,5 +1,5 @@
 // internal components
-import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex, type BookingData } from "../types.ts";
+import { GuestType, hTypeToString, type UseBookCont, type GuestData, type stateOp, toSex, type BookingData, findBooking } from "../types.ts";
 
 import { useState } from "react";
 import { Trash } from "lucide-react";
@@ -130,13 +130,6 @@ function hospSelDisplay(selected: GuestData, changeFn: stateOp<GuestData>) {
   }
 }
 
-function findBooking(id: string, list: BookingData[]): BookingData {
-  let element = list.find((book) => book.id == id);
-  if (element == undefined) {
-    return list[0];
-  }
-  return element;
-}
 
 export default function Hospedes() {
   const [reservas, setReservas] = useOutletContext<UseBookCont>();
