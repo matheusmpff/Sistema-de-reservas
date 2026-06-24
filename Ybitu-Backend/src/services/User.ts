@@ -86,10 +86,13 @@ export const userData = async (email: string) => {
         },
         select: {
             email: true,
+            telefone:true,
             pessoa: {
                 select:{
                     nome:true,
-                    dataNasc: true
+                    dataNasc: true,
+                    sexo:true,
+
                 }
             },
         }
