@@ -1,8 +1,9 @@
 import express from "express";
 import { Auth } from "../middlewares/Auth.js";
 import nodemailer from "nodemailer";
-import * as zod from "zod";
 import adminRouter from "./Admin.js";
+import * as zod from "zod"
+import jwt from "jsonwebtoken"
 
 import userRouter from "./User.js";
 
@@ -30,9 +31,13 @@ MainRouter.get("/", (_req, res) => {
   res.json({ msg: "Oiii" });
 });
 
-MainRouter.get("/auth", Auth.private, (_req, res) => {
+MainRouter.get("/auth", Auth.private, (req, res) => {
+  const token = req.cookies.token;
+  const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as jwt.JwtPayload;
+  console.log(content.nome)
   res.status(201).json({
     logged: true,
+    nome: content.nome
   })
 })
 
@@ -50,7 +55,7 @@ const duvidaSchema = zod.object({
   userMessage: zod.string().min(5).max(255),
 })
 
-MainRouter.post("/email", (req, res) => { 
+MainRouter.post("/email", (req, res) => {
   console.log(req.body)
 
   try {

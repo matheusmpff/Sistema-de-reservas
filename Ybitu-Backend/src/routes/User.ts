@@ -24,14 +24,14 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
         const arr = await loginUser(login_input);
 
         if (arr) {
-            const token = jwt.sign({ email: req.body.email, id: arr[0], admin: arr[1] }, secret, { expiresIn: "30m" });
+            const token = jwt.sign({ email: req.body.email, id: arr[0], admin: arr[1], nome: arr[2] }, secret, { expiresIn: "30m" });
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
                 maxAge: 30 * 60 * 1000
             })
-            return res.json({ msg: "Login realizado com sucesso" });
+            return res.json({ msg: "Login realizado com sucesso",nome: arr[2] });
         }
         return res.json({ msg: "Dados inválidos" });
 
