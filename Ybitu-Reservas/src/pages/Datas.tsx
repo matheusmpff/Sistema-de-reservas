@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import BarraProgresso from "../components/BarraProgresso";
 import { DayPicker } from "react-day-picker";
 import type { DateRange } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
+import { useOutletContext } from "react-router";
+import type { UseBookCont } from "../types";
 
 function useIsMobile(breakpoint = 768) {
     const [isMobile, setIsMobile] = useState(
@@ -19,12 +20,37 @@ function useIsMobile(breakpoint = 768) {
 }
 
 export default function Datas() {
+    const [reservas, setReservas] = useOutletContext<UseBookCont>()
     const [range, setRange] = useState<DateRange | undefined>({
         from: undefined,
         to: undefined,
     });
 
     const isMobile = useIsMobile();
+
+    useEffect(() => {
+        if (range === undefined || range.from === undefined || range.to === undefined || range.from == range.to) {
+            console.log("pai")
+            return;
+        }
+        console.log("mae")
+        let date_in = range.from;
+        let date_out = range.to;
+
+        setReservas({
+            currentID: reservas.currentID,
+            bookings: reservas.bookings.map((book) => {
+                if (book.id == reservas.currentID) {
+                    return {
+                        ...book,
+                        date_in: date_in,
+                        date_out: date_out,
+                    };
+                }
+                return book;
+            })
+        })
+    }, [range])
 
     return (
         <>

@@ -1,10 +1,13 @@
 import type { JSX } from "react";
 
 import "../styles/BarraProgresso.scss"
+import { useNavigate } from "react-router";
 
 const steps_list: string[] = ["Data", "Quartos", "Hóspedes", "Pagamento"];
 
-export default function BarraProgresso(prop: {step: string }) {
+export default function BarraProgresso(prop: {step: string , confirmStep: () => boolean }) {
+  const navigate = useNavigate();
+
   type status = "done" | "on-going" | "not-yet"
 
   let step_index = steps_list.findIndex((it) => it == prop.step);
@@ -38,10 +41,14 @@ export default function BarraProgresso(prop: {step: string }) {
 
   const move_page = (to: "prev" | "next") => {
     if (to == "prev") {
-      window.location.href = "/Reserva/" + steps_list[step_index - 1];
+      navigate(steps_list[step_index - 1]);
+      // window.location.href = "/Reserva/" + steps_list[step_index - 1];
     }
     if (to == "next") {
-      window.location.href = "/Reserva/" + steps_list[step_index + 1];
+      if (prop.confirmStep()) {
+        navigate(steps_list[step_index + 1]);
+        // window.location.href = "/Reserva/" + steps_list[step_index + 1];
+      }
     }
     return;
   }

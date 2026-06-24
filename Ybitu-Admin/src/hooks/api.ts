@@ -1,34 +1,37 @@
 const BASE_URL = "http://localhost:3000";
 
+const handle = async (r: Response) => {
+    const text = await r.text()
+    const data = text ? JSON.parse(text) : {}
+    if (!r.ok) throw new Error(data.error ?? "Erro desconhecido")
+    return data
+}
+
 export const api = {
     get: (path: string) =>
         fetch(`${BASE_URL}${path}`, {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }).then((r) => r.json()),
+            credentials: "include",
+        }).then(handle),
 
     post: (path: string, body: object) =>
         fetch(`${BASE_URL}${path}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(body),
-        }).then((r) => r.json()),
+        }).then(handle),
 
     patch: (path: string, body: object) =>
         fetch(`${BASE_URL}${path}`, {
             method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(body),
-        }).then((r) => r.json()),
+        }).then(handle),
 
     delete: (path: string) =>
         fetch(`${BASE_URL}${path}`, {
             method: "DELETE",
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }),
-};
+            credentials: "include",
+        }).then(handle),
+}

@@ -11,7 +11,7 @@ const upload = multer({ dest: path.resolve("uploads") });
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
 if (!secret) {
-    throw new Error("JWT_SECRET não configurado");
+    throw new Error("JWT_SECRET_KEY não configurado");
 }
 
 const router = Router();
@@ -24,14 +24,14 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
         const arr = await loginUser(login_input);
 
         if (arr) {
-            const token = jwt.sign({ email: req.body.email, id: arr[0], admin: arr[1] }, secret, { expiresIn: "30m" });
+            const token = jwt.sign({ email: req.body.email, id: arr[0], admin: arr[1], nome: arr[2] }, secret, { expiresIn: "30m" });
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
                 maxAge: 30 * 60 * 1000
             })
-            return res.json({ msg: "Login realizado com sucesso" });
+            return res.json({ msg: "Login realizado com sucesso",nome: arr[2] });
         }
         return res.json({ msg: "Dados inválidos" });
 
@@ -108,7 +108,7 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     console.log(urls)
 
     try {
-        const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut);
+        const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut, req.body.nota);
 
         if (resposta) {
             res.status(201).json({ msg: "Feedback cadastrado" })

@@ -7,7 +7,7 @@ export default function ContactForm() {
     const [email, setEmail] = useState("")
     const [comentario, setComentario] = useState("")
 
-    const handleContactSubmit = async (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
+    const handleContactSubmit = async (e) => {
         e.preventDefault();
 
         const response = await fetch("http://localhost:3000/email", {
@@ -24,6 +24,14 @@ export default function ContactForm() {
         })
         const data =  await response.json()
         console.log(data);
+
+        if(response.ok){
+            alert("Mensagem enviada com sucesso");
+            window.location.reload();
+        }
+        else{
+            alert("Erro nos dados de envio, tente novamente");
+        }
         
     }
 
@@ -44,26 +52,26 @@ export default function ContactForm() {
 
     return (
         <>
-            <form className="form_contato">
+            <form className="form_contato" onSubmit={handleContactSubmit}>
                 <div className="lg:col-span-2 mb-4"><img src="src/assets/logo_branca.png" alt="" width="50" /></div>
                 <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Nome</label>
-                    <input onChange={(e)=>{setNome(e.target.value)}} className="input_contato" type="text" placeholder="Insira o nome" />
+                    <input onChange={(e)=>{setNome(e.target.value)}} required className="input_contato" type="text" placeholder="Insira o nome" />
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">Telefone</label>
-                    <input onChange={handlePhone} value={telefone} className="input_contato" type="text" placeholder="Insira seu telefone" />
+                    <input onChange={handlePhone} value={telefone} required className="input_contato" type="text" placeholder="Insira seu telefone" />
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">E-mail</label>
-                    <input onChange={(e)=>setEmail(e.target.value)} className="input_contato" type="text" placeholder="Insira seu e-mail" />
+                    <input onChange={(e)=>setEmail(e.target.value)} required className="input_contato" type="text" placeholder="Insira seu e-mail" />
                 </div>
                 <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Mensagem</label>
-                    <textarea onChange={handleMessage} value={comentario} className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
+                    <textarea onChange={handleMessage} required value={comentario} className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
                 </div>
                 <div className="form_element_contato">
-                    <button onClick={handleContactSubmit} className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
+                    <button type="submit" className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
                 </div>
             </form>
         </>

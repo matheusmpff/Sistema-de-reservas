@@ -85,4 +85,45 @@ type HospedeDados = {
   phoneNumber: string,
 }
 
+export const GuestType = {
+  User: 0,
+  Adult: 1,
+  Child: 2,
+} as const;
+
+export type GuestType = (typeof GuestType)[keyof typeof GuestType];
+
+export type RoomType = {
+  rType: "Duplo" | "Triplo" | "Quádruplo",
+  items: string[],
+  imagesSrc: string[],
+  imagesLabel: string[],
+  quantity: number,
+}
+
+export type RoomData = {
+  roomQuantity: number,
+  roomType: RoomType["rType"],
+}
+
+export type GuestData = {
+  id: string,
+  guestType: GuestType,
+  name: string,
+  birthDate: Date,
+  sex: "Masculino" | "Feminino",
+  phoneNumber: string,
+  email?: string,
+  parentName?: string,
+}
+
+export type BookingData = {
+  id: string,
+  user: GuestData,
+  otherGuests: GuestData[],
+  date_in: Date,
+  date_out: Date,
+  rooms: RoomData[],
+}
+
 export { HospedeType, hTypeToString, type HospedeDados };

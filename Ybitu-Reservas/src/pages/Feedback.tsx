@@ -16,9 +16,9 @@ export default function Feedback() {
 
         inputs.append("nome", nome);
         inputs.append("comentario", comentario);
-        inputs.append("checkIn",checkIn);
+        inputs.append("checkIn", checkIn);
         inputs.append("checkOut", checkOut);
-        inputs.append("email",email);
+        inputs.append("email", email);
         for (const photo of files) {
             inputs.append("photos", photo);
         }
@@ -28,6 +28,14 @@ export default function Feedback() {
             body: inputs
         })
         console.log(response)
+
+        if (response.ok) {
+            alert("Feedback enviado com sucesso!");
+            window.location.reload();
+        }
+        else {
+            alert("Não foi possível adicionar seu feedback. Para cada e-mail só é possível realizar 1 feedback. Verifique os dados e tente novamente.")
+        }
     }
 
     return (
@@ -53,7 +61,7 @@ export default function Feedback() {
 
                             <div className="grid_element">
                                 <label htmlFor="email">E-mail:</label>
-                                <input type="email" id="email" onChange={(e)=>{setEmail(e.target.value)}} className="input_text" placeholder="Insira seu e-mail" />
+                                <input type="email" id="email" onChange={(e) => { setEmail(e.target.value) }} className="input_text" placeholder="Insira seu e-mail" />
                             </div>
 
                             <div className="grid_element">
@@ -72,16 +80,16 @@ export default function Feedback() {
                             </div>
                             <div className="grid_element">
                                 <label htmlFor="comentario">Adicione arquivos:</label>
-                                <input className="image_button" type="file" onChange={(e) => { 
-                                    if(e.target.files.length>3){
+                                <input className="image_button" type="file" onChange={(e) => {
+                                    if (e.target.files.length > 3) {
                                         alert("Só é possível mandar até 3 imagens");
                                         e.target.value = ""
                                     }
-                                    else{
-                                        SetFile(e.target.files); 
+                                    else {
+                                        SetFile(e.target.files);
                                     }
-                                    
-                                    }} accept="image/*" multiple />
+
+                                }} accept="image/*" multiple />
                             </div>
 
 
