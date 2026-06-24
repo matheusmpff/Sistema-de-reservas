@@ -25,6 +25,7 @@ model Pessoa {
   adulto       Adulto? // Relação 1 - 0..1
   crianca      Crianca? // Relação 1 - 0..1
   acompanhante Acompanhante[] // Relação 1 - N
+  
 }
   
 model Adulto {
@@ -33,7 +34,7 @@ model Adulto {
   email    String @unique
   telefone String
   // Relação com as demais tabelas
-  pessoa   Pessoa    @relation(fields: [idPessoa], references: [id])
+  pessoa   Pessoa    @relation(fields: [idPessoa], references: [id],onDelete: Cascade)
   user     User? // Relação 1 - 0..1 (Um adulto pode ser um user ou não)
   criancas Crianca[] // Relação 1 - N (Um adulto pode ser responsável por mais de 1 criança)
 }
@@ -44,7 +45,7 @@ model Crianca {
   idResp   Int
   // Relação com as demais tabelas
   responsavel Adulto @relation(fields: [idResp], references: [idPessoa])
-  pessoa      Pessoa @relation(fields: [idPessoa], references: [id])
+  pessoa      Pessoa @relation(fields: [idPessoa], references: [id],onDelete: Cascade)
 }
 
 model User {
@@ -53,7 +54,7 @@ model User {
   senha    String
   admin    Boolean @default(false)
   // Relação com as demais tabelas
-  adulto Adulto @relation(fields: [idAdulto], references: [idPessoa])
+  adulto Adulto @relation(fields: [idAdulto], references: [idPessoa],onDelete: Cascade)
   reservas Reserva[]
 }
 
@@ -83,7 +84,7 @@ model Reserva {
   // Relação 1-0..1(Teria que sempre que criar uma reserva criar junto o reservaQuartos 
   //para garantir a relação 1-1 desejada)
   reservaQuartos ReservaQuartos?
-  user User @relation(fields: [idUser],references: [idAdulto])
+  user User @relation(fields: [idUser],references: [idAdulto], onDelete: Cascade)
 
   @@id([idUser, dataReserva]) // Identificador da Reserva é o usuário e a data da reserva
 }
@@ -96,8 +97,8 @@ model Acompanhante {
   @@id([reservaUser, reservaData, idPessoa]) // força que esse trio seja unico para evitar duplicação de acompanhante
   // Relações com as demais tabelas
   feedback FeedbackAcompanhante?
-  pessoa  Pessoa  @relation(fields: [idPessoa], references: [id])
-  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+  pessoa  Pessoa  @relation(fields: [idPessoa], references: [id], onDelete: Cascade)
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva],onDelete: Cascade)
 }
 
 model FeedbackUser {
@@ -106,10 +107,10 @@ model FeedbackUser {
   reservaData DateTime
   comentario String
   fotos String[]
-  nota Int
+  nota Int @default(5)
   @@id([reservaUser, reservaData])// ID é o usuário e a data de reserva
   // Relação com as demais tabelas
-  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva],onDelete: Cascade)
 }
 
 model FeedbackAcompanhante {
@@ -119,10 +120,10 @@ model FeedbackAcompanhante {
   idPessoa Int
   comentario String
   fotos String[]
-  nota Int
+  nota Int @default(5)
   @@id([reservaUser, reservaData, idPessoa])// ID é o usuário e a data de reserva
   // Relação com as demais tabelas
-  acompanhante Acompanhante @relation(fields: [reservaUser,reservaData,idPessoa], references: [reservaUser,reservaData,idPessoa])
+  acompanhante Acompanhante @relation(fields: [reservaUser,reservaData,idPessoa], references: [reservaUser,reservaData,idPessoa],onDelete: Cascade)
 }
 
 model ReservaQuartos {
@@ -134,7 +135,7 @@ model ReservaQuartos {
   @@id([reservaUser, reservaData])// ID é o usuário e a data da reserva
   // Relação com as demais tabelas
   Quartos Quarto[]
-  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva])
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva],onDelete: Cascade)
 }
 
 enum QuartoStatus {

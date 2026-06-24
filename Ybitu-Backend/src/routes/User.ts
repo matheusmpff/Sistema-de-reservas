@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { alterData, createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
+import { deleteAccount, alterData, createUser, feedback, loginUser, userBooking, userData } from "../services/User.js";
 import { type LoginInput, isSignupInput } from "../types.js";
 import jwt, { type JwtPayload } from "jsonwebtoken";
 import multer from "multer"
@@ -24,7 +24,7 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
         const arr = await loginUser(login_input);
 
         if (arr) {
-            const token = jwt.sign({ email: req.body.email, id: arr[0], admin:arr[1] }, secret, { expiresIn: "30m" });
+            const token = jwt.sign({ email: req.body.email, id: arr[0], admin: arr[1] }, secret, { expiresIn: "30m" });
             res.cookie("token", token, {
                 httpOnly: true,
                 secure: true,
@@ -144,13 +144,27 @@ router.post("/alterData", async (req, res) => {
             })
             res.status(200).json("Alteração realizada com sucesso!")
         }
-        else{
+        else {
             console.log(success);
             res.status(400).json("Email já está sendo utilizado")
         }
     } catch (err) {
         console.log(err)
         res.status(500).json({ msg: "Erro no servidor" })
+    }
+
+})
+
+router.get("/delete", Auth.private, async (req, res) => {
+    const token = req.cookies.token;
+    const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
+
+    if (await deleteAccount(content.id)) {
+        res.clearCookie("token")
+        res.status(200).json({ msg: "Conta deletada." });
+    }
+    else{
+        res.status(500).json({msg: "Erro no servidor."})
     }
 
 })

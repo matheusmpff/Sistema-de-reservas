@@ -169,6 +169,23 @@ export const alterData = async (id:number,newData:dataType)=>{
     return true;
 }
 
+export const deleteAccount = async (id:number)=>{
+    try{
+        const result = await prisma.pessoa.delete({
+            where:{
+                id,
+            }
+        })
+        console.log("Deu certo a operação")
+        return true
+    }
+    catch(err){
+        console.log(err)
+        return false;
+    }
+
+}
+
 export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {
     // Procura por um adulto com o email
     const adulto = await prisma.adulto.findUnique({
