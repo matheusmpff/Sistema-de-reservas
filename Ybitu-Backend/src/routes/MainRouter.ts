@@ -123,14 +123,14 @@ MainRouter.post("/bookingrequest", (req: Request<{}, {}, BookingData>, res: Resp
 
         Quartos:
         ${req.body.rooms.map((room) => {
-        return (`${room.roomNumber} -- ${room.roomType.rType}`)
+        return (`\t${room.roomQuantity} -- Quarto ${room.roomType}\n`)
       })}
       `
     }).then(() => {
       res.status(200).json({ msg: "Deu Certooo" })
     }).catch(err => {
       console.log(err)
-      res.json({ msg: "Deu problema na requisição" })
+      res.status(500).json({ msg: "Deu problema na requisição" })
     })
   }
   catch (error: any) {
@@ -139,7 +139,7 @@ MainRouter.post("/bookingrequest", (req: Request<{}, {}, BookingData>, res: Resp
       console.log("Validação do answerData falhou");
       console.log(error.issues);
     }
-    res.status(400).json(error)
+    res.status(400).json({ msg: "Erro em campos do usuário", ...error })
   }
 })
 

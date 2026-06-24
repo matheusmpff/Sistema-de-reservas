@@ -102,8 +102,8 @@ export type RoomType = {
 }
 
 export type RoomData = {
-  roomNumber: number,
-  roomType: RoomType,
+  roomQuantity: number,
+  roomType: RoomType["rType"],
 }
 
 export type GuestData = {

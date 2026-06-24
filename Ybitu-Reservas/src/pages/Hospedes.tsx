@@ -54,13 +54,13 @@ function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData>
   return(
     <main className="hospede-dados">
       <h2>Responsável</h2>
-      <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
-      <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => props.changeFn({...props.data, email: v})}/>
+      <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => v}/>
+      <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => v}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
-        <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => v}/>
+        <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) =>  v}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => v}/>
     </main>
   );
 }

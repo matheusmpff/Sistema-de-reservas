@@ -1,4 +1,5 @@
 // project components
+import CarrinhoImage from "./../assets/pagamento/carrinho.png";
 import PopUp, { type PopUpState } from "../components/PopUp.tsx";
 import { type BookingData, type BookingID, type stateOp, type UseBookCont } from "../types.ts";
 // external libraries
@@ -7,17 +8,17 @@ import { Pencil, Trash } from "lucide-react";
 
 // imrt styles
 import "../styles/Pagamento.scss";
-import { useOutletContext } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 type popFn = stateOp<PopUpState<BookingID>>;
 
 // delFn (delete function) actually just opens the popup to confirm that this item will be deleted
-function ReservaResumo(props: { data: BookingData, editFn: popFn, delFn: popFn }) {
+function ReservaResumo(props: { index: number, data: BookingData, editFn: popFn, delFn: popFn }) {
 
   const reservaList = props.data.rooms.map(
-    (item) => {
+    (item, i) => {
       return (
-        <li key={item.roomNumber}>{item.roomNumber}</li>
+        <li key={i}>{`${item.roomQuantity} quarto(s) ${item.roomType.toLocaleLowerCase()}(s)`}</li>
       );
     }
   );
@@ -27,7 +28,7 @@ function ReservaResumo(props: { data: BookingData, editFn: popFn, delFn: popFn }
   return (
     <div className="opcao-reserva">
       <div className="reserva-titulo">
-        <h3>Reserva Nº{props.data.id}</h3>
+        <h3>Reserva Nº{props.index}</h3>
         <div className="flex gap-1">
           <Pencil className="mouse-reaction" onClick={() => props.editFn(popSt)}/>
           <Trash className="mouse-reaction" onClick={() => props.delFn(popSt)} />
@@ -64,6 +65,7 @@ function ReservaResumo(props: { data: BookingData, editFn: popFn, delFn: popFn }
 // ];
 
 export default function Pagamento() {
+  const navigate = useNavigate();
   // state for the list of reservas
   const [reservas, setReservas] = useOutletContext<UseBookCont>();
 
@@ -91,6 +93,44 @@ export default function Pagamento() {
     setPopEdit({isOpen: false, data: {id: ""}});
   }
 
+  const addBooking = () => {
+    const uuid = crypto.randomUUID();
+    setReservas({
+      currentID: uuid,
+      bookings: [
+        ...reservas.bookings,
+        {
+          id: uuid,
+          date_in: new Date("foo"),
+          date_out: new Date("bar"),
+          user: reservas.bookings[0].user,
+          otherGuests: [],
+          rooms: [],
+        }
+      ],
+    });
+
+    navigate("/Reserva/Data");
+  };
+
+  const sendBookings = async () => {
+      const response = await fetch("http://localhost:3000/bookingrequest", {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify(reservas.bookings[0]),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8"
+        }
+      });
+      if (response.status == 400 || response.status == 500) {
+        const data = await response.json();
+        window.alert(data.msg);
+      }
+      else {
+        navigate("/Usuario");
+      }
+  }
+
   return (
   <>  
     <main id="pagamento-main">
@@ -112,22 +152,22 @@ export default function Pagamento() {
         </p>
         <p>Caso queira adicionar mais quartos clique no botão abaixo:</p>
 
-        <a href="Data" id="maisquartos" className="mouse-reaction">Adicionar mais quartos</a>
+        <a id="maisquartos" className="mouse-reaction" onClick={() => addBooking()}>Adicionar mais quartos</a>
       </section>
 
       <aside>
         <div className="mt-6 lg:mt-8">
-          <img className="w-[88px] lg:w-[96px]" src="src/assets/pagamento/carrinho.png" alt="Desenho de um carrinho de supermercado" />
+          <img className="w-[88px] lg:w-[96px]" src={CarrinhoImage} alt="Desenho de um carrinho de supermercado" />
         </div>
         <div>
           <h2>MEU CARRINHO</h2>
         </div>
         <div id="pagamento-lista">
-          {reservas.bookings.map((reserva) =>
-            <ReservaResumo key={reserva.id} data={reserva} editFn={setPopEdit} delFn={setPopDelete}/>)
+          {reservas.bookings.map((reserva, i) =>
+            <ReservaResumo key={reserva.id} index={i} data={reserva} editFn={setPopEdit} delFn={setPopDelete}/>)
           }
         </div>
-        <a className="secondary-button mouse-reaction" href="/feedback">CONCLUIR RESERVA</a>
+        <a className="secondary-button mouse-reaction" onClick={() => sendBookings()}>CONCLUIR RESERVA</a>
       </aside>
 
       <PopUp modalState={popDelete.isOpen}>
