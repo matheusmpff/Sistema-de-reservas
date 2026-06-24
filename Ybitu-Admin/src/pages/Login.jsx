@@ -26,7 +26,7 @@ export default function Login() {
                 setErro("Email ou Senha inválidos");
             }
         } catch (err) {
-            setErro("Erro ao conectar com o servidor. Tente novamente.");
+            setErro(err);
         } finally {
             setLoading(false);
         }

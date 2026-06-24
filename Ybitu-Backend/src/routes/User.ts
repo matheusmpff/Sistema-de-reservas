@@ -108,7 +108,7 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     console.log(urls)
 
     try {
-        const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut);
+        const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut, req.body.nota);
 
         if (resposta) {
             res.status(201).json({ msg: "Feedback cadastrado" })

@@ -186,7 +186,7 @@ export const deleteAccount = async (id:number)=>{
 
 }
 
-export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date) => {
+export const feedback = async (email: string, comentario: string, fotos: string[], checkIn: Date, checkOut: Date, nota: number) => {
     // Procura por um adulto com o email
     const adulto = await prisma.adulto.findUnique({
         where: {
@@ -230,7 +230,8 @@ export const feedback = async (email: string, comentario: string, fotos: string[
                                 dataReserva: reserva.dataReserva
                             }
                         }
-                    }
+                    },
+                    nota,
                 }
                 await prisma.feedbackUser.create({ data: feedback })
             }
@@ -271,8 +272,9 @@ export const feedback = async (email: string, comentario: string, fotos: string[
                             reservaData: acompanhante.reservaData,
                             idPessoa: acompanhante.idPessoa
                         }
-                    }
-                }
+                    },
+                },
+                nota,
             }
             await prisma.feedbackAcompanhante.create({ data: feedback })
         }
