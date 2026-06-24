@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
-import { findBooking, GuestType, toSex, type BookingContext, type UserServerData } from "../types.ts";
+import { findBooking, GuestType, toSex, type BookingContext, type BookingData, type UserServerData } from "../types.ts";
 
 import BarraProgresso from "../components/BarraProgresso.tsx";
 import { useAuth } from "../context/AuthContext.tsx";
@@ -42,41 +42,41 @@ function isValidDate(date: Date): boolean {
 }
 
 export default function ReservaRoutePage() {
-  const [reservas, setReservas] = useState({} as BookingContext);
+  const [reservas, setReservas] = useState({currentID: "", bookings: [] as BookingData[]});
   const { isLoggedIn } = useAuth();
 
   useEffect(() => {
-      const profileHandler = async () => {
-        if (isLoggedIn == true) {
-          const response = await fetch(`http://localhost:3000/user/data`, {credentials:"include"});
-          const data: UserServerData = await response.json();
-          let uuid = crypto.randomUUID();
-          setReservas({
-            currentID: uuid,
-            bookings: [{
-              id: uuid,
-              date_in: new Date("foo"),
-              date_out: new Date("bar"),
-              user: {
-                id: crypto.randomUUID(),
-                guestType: GuestType.User,
-                name: data.pessoa.nome,
-                phoneNumber: data.telefone,
-                birthDate: data.pessoa.dataNasc,
-                sex: toSex(data.pessoa.sexo),
-                email: data.email,
-              },
-              otherGuests: [],
-              rooms: [],
-            }]
-          })
+    const profileHandler = async () => {
+      if (isLoggedIn == true && reservas.currentID === "") {
+        const response = await fetch(`http://localhost:3000/user/data`, {credentials:"include"});
+        const data: UserServerData = await response.json();
+        let uuid = crypto.randomUUID();
+        setReservas({
+          currentID: uuid,
+          bookings: [{
+            id: uuid,
+            date_in: new Date("foo"),
+            date_out: new Date("bar"),
+            user: {
+              id: crypto.randomUUID(),
+              guestType: GuestType.User,
+              name: data.pessoa.nome,
+              phoneNumber: data.telefone,
+              birthDate: new Date(data.pessoa.dataNasc),
+              sex: toSex(data.pessoa.sexo),
+              email: data.email,
+            },
+            otherGuests: [],
+            rooms: [],
+          }]
+        })
 
-        } else {
-          window.location.href = ("/login");
-        }
+      } else {
+        window.location.href = ("/login");
+      }
     };
     profileHandler();
-  }, [])
+  }, []);
 
   // get pathname of the step ("Data" | "Quartos" ...)
   let location = useLocation();

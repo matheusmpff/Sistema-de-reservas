@@ -1,6 +1,9 @@
 import QuartoDuploImage from "../assets/quartos/QuartoCasal.jpeg";
 import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
 import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
+import { type UseBookCont, type RoomType, type stateOp, findBooking } from "../types.ts";
+
+import { useOutletContext } from "react-router";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
 import { Minus, Plus } from "lucide-react";
 
@@ -8,49 +11,50 @@ import { Minus, Plus } from "lucide-react";
 import "@trg69/react-splide/css";
 import "../styles/Quartos.scss";
 
-import { type RoomType, type stateOp } from "../types.ts";
-import { useState } from "react";
+type ContadorData = {
+  limit: number,
+  count: number,
+}
 
-function AbaContador(prop: {count: number, limit: number, sub: stateOp<number>, add: stateOp<number>}) {
+function AbaContador(prop: {data: ContadorData, sub: stateOp<void>, add: stateOp<number>}) {
   return (
       <>
         <h3>Quantidade de reservas:</h3>
         <div className="aba-mostrador">
-          <Minus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.sub(prop.count)} />
-          <p>{prop.count}</p>
-            <Plus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.add(prop.count)}/>
+          <Minus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.sub()} />
+          <p>{prop.data.count}</p>
+            <Plus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.add(prop.data.count)}/>
         </div>
       </>
   );
 };
 
-function AbaSelecao(prop: {limit: number}) {
-  let [count, setCount] = useState(0);
+function AbaSelecao(prop: {data: ContadorData, changeFn: stateOp<number>}) {
 
-  const subtract = (c: number) => {
-    setCount(c - 1);
+  const subtract = () => {
+    prop.changeFn(-1);
   };
   const add = (c: number) => {
-    if (c < prop.limit) {
-      setCount(c + 1);
+    if (c < prop.data.limit) {
+      prop.changeFn(1);
     }
   };
 
   const abrirContador = () => {
-    setCount(1);
+    prop.changeFn(1);
   };
 
   return (
     <div className="aba-contador aba-area">
-      {count == 0 && <div className="w-full h-full flex items-center justify-center">
+      {prop.data.count == 0 && <div className="w-full h-full flex items-center justify-center">
          <button className="aba-selecionar mouse-reaction" onClick={() => abrirContador()}>Selecionar quarto</button>
       </div>}
-      {count != 0 && <AbaContador count={count} limit={prop.limit} sub={subtract} add={add} />}
+      {prop.data.count != 0 && <AbaContador data={prop.data} sub={subtract} add={add} />}
     </div>
   );
 };
 
-function AbaQuarto(prop: {data: RoomType}) {
+function AbaQuarto(prop: {data: RoomType, countData: ContadorData, changeFn: (arg0: RoomType["rType"], arg1: number) => void}) {
   if (!Number.isInteger(prop.data.quantity)) {
     console.log("Aba with non-integer number");
     return null;
@@ -77,13 +81,38 @@ function AbaQuarto(prop: {data: RoomType}) {
           <p>{prop.data.quantity}</p>
         </div>
       </div>
-      <AbaSelecao limit={prop.data.quantity}/>
+      <AbaSelecao data={prop.countData} changeFn={(ammount: number) => prop.changeFn(prop.data.rType, ammount)}/>
     </div>
   );
 }
 
+const quartosList: RoomType[] = [
+  {
+    rType: "Duplo",
+    imagesSrc: [QuartoDuploImage],
+    imagesLabel: ["Foto de um belo quarto com uma cama de casal"],
+    items: ["1 cama de casal", "1 banheiro", "Televisão", "Frigobar"],
+    quantity: 3,
+  },
+  {
+    rType: "Triplo",
+    imagesSrc: [QuartoTriploImage],
+    imagesLabel: ["Foto de um belo quarto com uma cama de casal e uma cama de solteiro"],
+    items: ["1 cama de casal ou 2 de solteiro", "1 cama de solteiro", "1 banheiro", "Televisão", "Frigobar"],
+    quantity: 3,
+  },
+  {
+    rType: "Quádruplo",
+    imagesSrc: [QuartoQuadruploImage],
+    imagesLabel: ["Foto de um quarto com uma cama de casal e duas de solteiro"],
+    items: ["1 cama de casal ou 2 de solteiro", "2 camas de solteiro", "1 banheiro", "Televisão", "Frigobar"],
+    quantity: 3,
+  },
+];
 
 export default function Quartos() {
+  const [reservas, setReservas] = useOutletContext<UseBookCont>();
+  
   let splide_config: SplideProps = {
     options: {
       perPage: 3,
@@ -111,29 +140,29 @@ export default function Quartos() {
     "aria-label": "Lista dos quartos",
   };
 
-  const quartosList: RoomType[] = [
-    {
-      rType: "Duplo",
-      imagesSrc: [QuartoDuploImage],
-      imagesLabel: ["Foto de um belo quarto com uma cama de casal"],
-      items: ["1 cama de casal", "1 banheiro", "Televisão", "Frigobar"],
-      quantity: 3,
-    },
-    {
-      rType: "Triplo",
-      imagesSrc: [QuartoTriploImage],
-      imagesLabel: ["Foto de um belo quarto com uma cama de casal e uma cama de solteiro"],
-      items: ["1 cama de casal ou 2 de solteiro", "1 cama de solteiro", "1 banheiro", "Televisão", "Frigobar"],
-      quantity: 3,
-    },
-    {
-      rType: "Quádruplo",
-      imagesSrc: [QuartoQuadruploImage],
-      imagesLabel: ["Foto de um quarto com uma cama de casal e duas de solteiro"],
-      items: ["1 cama de casal ou 2 de solteiro", "2 camas de solteiro", "1 banheiro", "Televisão", "Frigobar"],
-      quantity: 3,
-    },
-  ];
+  const changeRoomQuantity = (type: RoomType["rType"], ammount: number) => {
+    let rooms = findBooking(reservas.currentID, reservas.bookings).rooms;
+    let index = rooms.findIndex((room) => room.roomType == type);
+    if (index == -1) {
+      rooms.push({roomQuantity: 1, roomType: type});
+    }
+    else {
+      rooms[index].roomQuantity += ammount;
+    }
+
+    rooms = rooms.filter((room) => room.roomQuantity > 0);
+
+    setReservas({
+      ...reservas,
+      bookings: reservas.bookings.map((book) => {
+        if (book.id != reservas.currentID) {
+          return book;
+        }
+
+        return {...book, rooms: rooms};
+      })
+    });
+  }
 
   return (
     <>
@@ -141,8 +170,13 @@ export default function Quartos() {
 
       <Splide {... splide_config}>
         {quartosList.map((quarto) => {
+            let count = findBooking(reservas.currentID, reservas.bookings).rooms.find((room) => room.roomType == quarto.rType)?.roomQuantity;
+            let countData: ContadorData = {
+              limit: quarto.quantity,
+              count: count === undefined ? 0 : count,
+            }
             return (
-              <SplideSlide key={quarto.rType}><AbaQuarto data={quarto} /></SplideSlide>
+              <SplideSlide key={quarto.rType}><AbaQuarto data={quarto} countData={countData} changeFn={changeRoomQuantity}/></SplideSlide>
             );
           })
         }

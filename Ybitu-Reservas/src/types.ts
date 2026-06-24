@@ -58,8 +58,8 @@ const GuestType = {
 type GuestType = (typeof GuestType)[keyof typeof GuestType];
 
 type RoomData = {
-  roomNumber: number,
-  roomType: RoomType,
+  roomQuantity: number,
+  roomType: RoomType["rType"],
 }
 
 type RoomType = {
