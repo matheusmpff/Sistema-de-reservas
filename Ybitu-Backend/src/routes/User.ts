@@ -11,7 +11,7 @@ const upload = multer({ dest: path.resolve("uploads") });
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
 if (!secret) {
-    throw new Error("JWT_SECRET não configurado");
+    throw new Error("JWT_SECRET_KEY não configurado");
 }
 
 const router = Router();

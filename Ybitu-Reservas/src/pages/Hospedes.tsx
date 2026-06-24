@@ -42,6 +42,14 @@ function HospInputSelect(props: {title: string, options: string[], field: string
   )
 }
 
+function handlePhoneNumber(value: string, changeFn: stateOp<GuestData>, data: GuestData) {
+  if (value.length < 20 && /^\+(\d*|\d+\(\d*\)?|\d+\(\d+\)\d*\-?\d*)$/g.test(value)) {
+    changeFn({ ...data, phoneNumber: value });
+    console.log("a");
+  }
+  return;
+}
+
 function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData> }) {
   return(
     <main className="hospede-dados">
@@ -49,10 +57,10 @@ function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData>
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => props.changeFn({...props.data, email: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => props.changeFn({...props.data, phoneNumber: v})}/>
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
     </main>
   );
 }
@@ -64,10 +72,10 @@ function AdultoDados(props: {data: GuestData, changeFn: stateOp<GuestData> }) {
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <HospInput title={"Email"} iType={"email"} field={props.data.email} changeFn={(v) => props.changeFn({...props.data, email: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => props.changeFn({...props.data, phoneNumber: v})}/>
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
     </main>
   );
 }
@@ -78,7 +86,7 @@ function CriancaDados(props: {data: GuestData, changeFn: stateOp<GuestData> }) {
       <h2>Criança</h2>
       <HospInput title={"Nome"} iType={"text"} field={props.data.name} changeFn={(v) => props.changeFn({...props.data, name: v})}/>
       <div className="two-hosp-inputs">
-        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toDateString()} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
+        <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]}  field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
       <HospInput title={"Nome do responsável"} iType={"text"} field={props.data.parentName} changeFn={(v) => props.changeFn({...props.data, parentName: v})}/>
