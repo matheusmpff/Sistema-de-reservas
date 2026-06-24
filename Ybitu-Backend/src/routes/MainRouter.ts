@@ -77,7 +77,7 @@ MainRouter.post("/email", (req, res) => {
         ${answerData.userMessage}
       `
     }).then(() => {
-      res.json({ msg: "Deu Certooo" })
+      res.status(200).json({ msg: "Deu Certooo" })
     }).catch(err => {
       console.log(err)
       res.json({ msg: "Deu problema na requisição" })
