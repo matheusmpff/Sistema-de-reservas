@@ -33,6 +33,13 @@ export default function ContactForm() {
             alert("Erro nos dados de envio, tente novamente");
         }
         
+        if(response.ok){
+            alert("Mensagem enviada com sucesso");
+            window.location.reload();
+        }
+        else{
+            alert("Erro nos dados de envio, tente novamente");
+        }
     }
 
     const handlePhone = async (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
