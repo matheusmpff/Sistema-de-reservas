@@ -1,12 +1,13 @@
+import { Link } from "react-router";
 export default function Footer() {
     return (
         <footer className="mt-12 border-y border-gray-700 bg-[#181715] text-white py-10 w-screen flex flex-col items-center justify-center">
             <div>
                 <ul className="flex gap-4 text-gray-300">
-                    <li>Inicio</li>
-                    <li>Pousada Ybitu</li>
-                    <li>Reserva</li>
-                    <li>Contato</li>
+                    <Link to="/Home"><li>Inicio</li></Link>
+                    <Link to="/Pousada"><li>Pousada Ybitu</li></Link>
+                    <Link to="/Reserva/Data"><li>Reservas</li></Link>
+                     <Link to="/Contato"><li>Contato</li></Link>
                 </ul>
             </div>
             <div className="flex gap-4 mt-3 mb-8" >
