@@ -31,7 +31,7 @@ export default function MinhasReservas() {
                     : <div>
                         <p>
                             Pelo visto não existem reservas ativas.
-                           Caso desejar, <Link to="/Data" className="text-[var(--cor-primaria)]"> venha agora reservar conosco!</Link>
+                           Caso desejar, <Link to="/Reserva/Data" className="text-[var(--cor-primaria)]"> venha agora reservar conosco!</Link>
                         </p>
                     </div>
             }
