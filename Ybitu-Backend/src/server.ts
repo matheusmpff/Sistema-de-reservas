@@ -11,14 +11,32 @@ await populateDB();
 
 const server = express();
 
+// 1. Defina a lista de origens permitidas
+const allowedOrigins = [
+  'http://localhost:5173', // App Principal (React)
+  'http://localhost:5174'  // Painel Admin (React)
+];
+
+// 2. Configure o CORS usando uma função para validar a origem
 server.use(cors({
-  origin: 'http://localhost:5173', // endereço do React
+  origin: function (origin, callback) {
+    // Permite requisições sem origem (como ferramentas mobile ou Postman/Insomnia)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Não permitido pelo CORS'));
+    }
+  },
   credentials: true
-}))
-server.use(cookieParser())
+}));
+
+server.use(cookieParser());
 server.use(helmet());
 server.use(express.json());
 
+// Seus roteadores normais
 server.use("/", MainRouter);
 server.use(notDefined);
 server.use(serverError);

@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router";
 import SideBar from "../src/components/sideBar";
 import Home from "../src/pages/Home";
