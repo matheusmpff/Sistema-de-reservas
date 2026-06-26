@@ -8,6 +8,7 @@ import type { Request, Response } from "express";
 import type { BookingData } from "../types.js";
 
 import userRouter from "./User.js";
+import { insertBooking } from "../services/User.js";
 
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
@@ -95,8 +96,10 @@ MainRouter.post("/email", (req, res) => {
   }
 });
 
-MainRouter.post("/bookingrequest", (req: Request<{}, {}, BookingData>, res: Response) => {
+MainRouter.post("/bookingrequest", async (req: Request<{}, {}, BookingData>, res: Response) => {
   try {
+    await insertBooking(req.body);
+    
     transporter.sendMail({
       from: process.env.GMAIL_ACCOUNT,
       to: process.env.GMAIL_ACCOUNT,
@@ -138,6 +141,9 @@ MainRouter.post("/bookingrequest", (req: Request<{}, {}, BookingData>, res: Resp
     if (error instanceof zod.ZodError) {
       console.log("Validação do answerData falhou");
       console.log(error.issues);
+    }
+    if (error instanceof Error) {
+      console.log(error.message);
     }
     res.status(400).json({ msg: "Erro em campos do usuário", ...error })
   }

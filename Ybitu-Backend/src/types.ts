@@ -101,6 +101,20 @@ export type RoomType = {
   quantity: number,
 }
 
+export function rTypeTranslation(type: RoomType["rType"]) {
+  if (type == "Duplo") {
+    return "DUPLO";
+  }
+  if (type == "Triplo") {
+    return "TRIPLO";
+  }
+  if (type == "Quádruplo") {
+    return "QUADRUPLO";
+  }
+  console.log("Quarto estranho");
+  return "DUPLO";
+}
+
 export type RoomData = {
   roomQuantity: number,
   roomType: RoomType["rType"],

@@ -1,7 +1,9 @@
 import { prisma } from "../libs/prisma.js";
-import type { LoginInput, SignupInput } from "../types.js";
+import { GuestType, rTypeTranslation, type BookingData, type GuestData, type LoginInput, type SignupInput } from "../types.js";
 import { Prisma } from "../generated/prisma/client.js";
 import bcrypt from "bcryptjs";
+import { NOMEM } from "node:dns";
+import { ro } from "zod/locales";
 
 export const createUser = async (props: SignupInput) => {
 
@@ -131,6 +133,166 @@ export const userBooking = async (email: string) => {
         }
     })
     return reservas;
+}
+
+export const insertBooking = async (book: BookingData) => {
+    const time = new Date();
+    const numPessoas = 1 + book.otherGuests.length;
+
+    if (book.user.email) {
+        await prisma.adulto.findUnique({
+            select: {
+                idPessoa: true,
+            },
+            where: {
+                email: book.user.email,
+            }
+        }).then((adult) => {
+            if (adult) {
+                book.user.id = adult.idPessoa.toString();
+            }
+            else {
+                throw Error("Usuário cujo email não está cadastrado.");
+            }
+        })
+    }
+    for (let pessoa of book.otherGuests) {
+        if (pessoa.guestType == GuestType.Adult && pessoa.email != undefined) {
+            let id = await prisma.adulto.findUnique({
+                select: {
+                    idPessoa: true,
+                },
+                where: {
+                    email: pessoa.email,
+                }
+            });
+            // if he's not in the db, create him; else put in the id field
+            if (!id) {
+                const newAdult = await prisma.adulto.create({
+                    data: {
+                        email: pessoa.email,
+                        telefone: pessoa.phoneNumber,
+                        pessoa: {
+                            create: {
+                                nome: pessoa.name,
+                                dataNasc: pessoa.birthDate,
+                                sexo: pessoa.sex,
+                            }
+                        }
+                    }
+                })
+                pessoa.id = newAdult.idPessoa.toString();
+            }
+            else {
+                pessoa.id = id.idPessoa.toString();
+            }
+        }
+        else if (pessoa.guestType == GuestType.Child && pessoa.parentName) {
+            const id = await prisma.crianca.findFirst({
+                select: {
+                    idPessoa: true,
+                },
+                where: {
+                    pessoa: {
+                        nome: pessoa.name
+                    },
+                    responsavel: {
+                        telefone: pessoa.phoneNumber
+                    },
+                }
+            });
+            if (!id) {
+                const newChild = await prisma.crianca.create({
+                    data: {
+                        responsavel: {
+                            connect: {
+                                telefone: pessoa.phoneNumber
+                            }
+                        },
+                        pessoa: {
+                            create: {
+                                nome: pessoa.name,
+                                dataNasc: pessoa.birthDate,
+                                sexo: pessoa.sex,
+                            }
+                        }
+                    }
+                })
+                pessoa.id = newChild.idPessoa.toString();
+            }
+            else {
+                pessoa.id = id.idPessoa.toString();
+            }
+        }
+        else {
+            throw Error("Acompanhante com tupla inválida no banco")
+        }
+    }
+
+    const availableRooms = [] as {numero: number}[];
+    for (const room of book.rooms) {
+        const avail = await prisma.quarto.findMany({
+            select: {
+                numero: true,
+            },
+            where: {
+                tipo: rTypeTranslation(room.roomType),
+                NOT: {
+                    OR: [
+                        {
+                            Reserva: {
+                                reserva: {
+                                    checkIn: {lte: book.date_in, gte: book.date_out}
+                                }
+                            }
+                        },
+                        {
+                            Reserva: {
+                                reserva: {
+                                    checkOut: {gte: book.date_in, lte: book.date_out}
+                                }
+                            },
+                        },
+                    ]
+                }
+            }
+        })
+        if (avail.length < room.roomQuantity) {
+            throw Error("Quantidade insuficiente de quartos disponiveis na data");
+        }
+        availableRooms.concat(avail.slice(0, room.roomQuantity).map((r) => {return {numero: r.numero}}))
+    }
+    availableRooms.map
+    
+    await prisma.reserva.create({
+        data: {
+            dataReserva: time,
+            checkIn: book.date_in,
+            checkOut: book.date_out,
+            numPessoas,
+            status: "EM_ANALISE",
+            valor: 0,
+            acompanhante: {
+                createMany: {
+                    data: book.otherGuests.map((guest) => {
+                        return {
+                            idPessoa: Number(guest.id),
+                        }
+                    })
+                }
+            },
+            idUser: Number(book.user.id),
+            reservaQuartos: {
+                create: {
+                    custo_frigobar: 0,
+                    multa: 0,
+                    Quartos: {
+                        connect: availableRooms,
+                    }
+                }
+            }
+        }
+    })
 }
 
 type dataType = {

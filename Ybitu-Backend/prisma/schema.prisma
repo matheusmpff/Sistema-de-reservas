@@ -32,7 +32,7 @@ model Adulto {
   // Colunas da tabela Adulto
   idPessoa Int    @id
   email    String @unique
-  telefone String
+  telefone String @unique
   // Relação com as demais tabelas
   pessoa   Pessoa    @relation(fields: [idPessoa], references: [id],onDelete: Cascade)
   user     User? // Relação 1 - 0..1 (Um adulto pode ser um user ou não)
