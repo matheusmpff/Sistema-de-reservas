@@ -6,10 +6,12 @@ export default function ContactForm() {
     const [telefone, setTelefone] = useState("+")
     const [email, setEmail] = useState("")
     const [comentario, setComentario] = useState("")
+    const [botao, setBotao] = useState(true)
 
     const handleContactSubmit = async (e) => {
         e.preventDefault();
 
+        setBotao(false);
         const response = await fetch("http://localhost:3000/email", {
             method: "POST",
             headers: {
@@ -78,7 +80,7 @@ export default function ContactForm() {
                     <textarea onChange={handleMessage} required value={comentario} className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
                 </div>
                 <div className="form_element_contato">
-                    <button type="submit" className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>
+                    {botao&&<button type="submit" className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>}
                 </div>
             </form>
         </>
