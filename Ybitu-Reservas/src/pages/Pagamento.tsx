@@ -74,6 +74,9 @@ export default function Pagamento() {
   const [popDelete, setPopDelete] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
   const [popEdit, setPopEdit] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
 
+  // just a state to show the user the request is loading
+  const [loading, setLoading] = useState(false);
+
   // when the user clicks the trash button, remove the element from the list
   const deleteResumo = (isDel: boolean) => {
     if (isDel) {
@@ -88,7 +91,7 @@ export default function Pagamento() {
 
   const editResumo = (isEdit: boolean) => {
     if (isEdit) {
-      window.location.href = "quartos";
+      navigate("/Reserva/Quartos");
     }
     setPopEdit({isOpen: false, data: {id: ""}});
   }
@@ -114,6 +117,7 @@ export default function Pagamento() {
   };
 
   const sendBookings = async () => {
+      setLoading(true);
       const response = await fetch("http://localhost:3000/bookingrequest", {
         credentials: "include",
         method: "POST",
@@ -122,6 +126,8 @@ export default function Pagamento() {
           "Content-Type": "application/json; charset=UTF-8"
         }
       });
+
+      setLoading(false);
       if (response.status == 400 || response.status == 500) {
         const data = await response.json();
         window.alert(data.msg);
@@ -167,7 +173,9 @@ export default function Pagamento() {
             <ReservaResumo key={reserva.id} index={i} data={reserva} editFn={setPopEdit} delFn={setPopDelete}/>)
           }
         </div>
-        <a className="secondary-button mouse-reaction" onClick={() => sendBookings()}>CONCLUIR RESERVA</a>
+        <a className="secondary-button mouse-reaction" onClick={() => sendBookings()}>
+          { loading? "ENVIANDO..." : "CONCLUIR RESERVA" }
+        </a>
       </aside>
 
       <PopUp modalState={popDelete.isOpen}>
