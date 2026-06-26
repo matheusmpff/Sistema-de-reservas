@@ -1,9 +1,70 @@
 import { prisma } from "../libs/prisma.js";
-import { GuestType, rTypeTranslation, type BookingData, type GuestData, type LoginInput, type SignupInput } from "../types.js";
+import { GuestType, rTypeTranslation, type BookingData, type GuestData, type LoginInput, type RoomType, type SignupInput } from "../types.js";
 import { Prisma } from "../generated/prisma/client.js";
 import bcrypt from "bcryptjs";
-import { NOMEM } from "node:dns";
-import { ro } from "zod/locales";
+
+export const populateDB = async () => {
+    if ((await prisma.quarto.findMany()).length == 0) {
+        await prisma.quarto.createMany({
+            data: [
+                {
+                    numero: 1,
+                    status: "DISPONIVEL",
+                    tipo: "DUPLO",
+                    capacidade: 2,
+                },
+                {
+                    numero: 2,
+                    status: "DISPONIVEL",
+                    tipo: "DUPLO",
+                    capacidade: 2,
+                },
+                {
+                    numero: 3,
+                    status: "DISPONIVEL",
+                    tipo: "DUPLO",
+                    capacidade: 2,
+                },
+                {
+                    numero: 4,
+                    status: "DISPONIVEL",
+                    tipo: "TRIPLO",
+                    capacidade: 3,
+                },
+                {
+                    numero: 5,
+                    status: "DISPONIVEL",
+                    tipo: "TRIPLO",
+                    capacidade: 3,
+                },
+                {
+                    numero: 6,
+                    status: "DISPONIVEL",
+                    tipo: "QUADRUPLO",
+                    capacidade: 4,
+                },
+                {
+                    numero: 7,
+                    status: "DISPONIVEL",
+                    tipo: "QUADRUPLO",
+                    capacidade: 4,
+                },
+                {
+                    numero: 8,
+                    status: "DISPONIVEL",
+                    tipo: "TRIPLO",
+                    capacidade: 3,
+                },
+                {
+                    numero: 9,
+                    status: "DISPONIVEL",
+                    tipo: "DUPLO",
+                    capacidade: 2,
+                },
+            ]
+        })
+    }
+}
 
 export const createUser = async (props: SignupInput) => {
 

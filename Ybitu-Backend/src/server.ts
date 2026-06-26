@@ -5,9 +5,11 @@ import MainRouter from "./routes/MainRouter.js";
 import { notDefined, serverError } from "./routes/ErrorHandler.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { populateDB } from "./services/User.js";
+
+await populateDB();
 
 const server = express();
-
 
 server.use(cors({
   origin: 'http://localhost:5173', // endereço do React
@@ -26,4 +28,3 @@ server.use(serverError);
 server.listen(3000,() => {
     console.log("Servidor está rodando em : http://localhost:3000/");
 })
-
