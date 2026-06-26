@@ -62,7 +62,7 @@ export default function Home() {
                             Acesse agora a sessão de reservas para visualizar todas as opções disponíveis.
                         </p>
                         <div className="flex justify-end">
-                            <Link to="/Data">
+                            <Link to="/Reserva/Data">
                                 <button className="btn_reserva">
                                     VERIFICAR RESERVAS
                                 </button>
@@ -79,7 +79,7 @@ export default function Home() {
                             variedade de opções. Conheça agora as opções de reservas disponíveis!
                         </p>
                         <div className="flex justify-end ">
-                            <Link to="/Data">
+                            <Link to="/Reserva/Data">
                                 <button className="btn_reserva">
                                     VERIFICAR RESERVAS
                                 </button>
@@ -100,7 +100,7 @@ export default function Home() {
                             da pousada durante a estadia. Clique no botão abaixo para iniciar sua reserva!
                         </p>
                         <div className="flex justify-end">
-                            <Link to="/Data">
+                            <Link to="/Reserva/Data">
                                 <button className="btn_reserva">
                                     VERIFICAR RESERVAS
                                 </button>
