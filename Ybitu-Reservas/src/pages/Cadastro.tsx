@@ -89,7 +89,7 @@ export default function Cadastro() {
                                 <input className="input_style" onChange={(e) => { setTelInput(e.target.value) }} type="string" id="tel" placeholder="Insira seu telefone..." />
                             </div>
 
-                            <button onClick={handleSubmit} className="btn_primary btn_style">FAZER CADASTRO</button>
+                            <button onClick={handleSubmit} className="primary-button btn_style">FAZER CADASTRO</button>
                         </form>
                     </div>
                 </div>

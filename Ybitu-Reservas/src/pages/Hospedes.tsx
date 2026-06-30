@@ -258,8 +258,8 @@ export default function Hospedes() {
         <div id="hospede-main">
           {hospSelDisplay(findHosp(hospSelected), changeGuestFn)}
           <div className="flex justify-evenly py-10 lg:py-6">
-              <button className="btn_primary h-16 w-40" onClick={addAdult}>Adicionar adulto</button>
-            <button className="btn_primary h-16 w-40" onClick={addChild}>Adicionar criança</button>
+              <button className="primary-button h-16 w-40" onClick={addAdult}>Adicionar adulto</button>
+            <button className="primary-button h-16 w-40" onClick={addChild}>Adicionar criança</button>
           </div>
         </div>
 
