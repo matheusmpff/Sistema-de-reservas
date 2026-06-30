@@ -1,5 +1,6 @@
 import { UserCircle2 } from "lucide-react";
 import { useState } from "react";
+import { z } from "zod";
 
 type userProps = {
     email: string
@@ -7,7 +8,6 @@ type userProps = {
     dataNasc: string
 }
 export default function Profile({ user }: { user: userProps }) {
-
     const [email, setEmail] = useState(user.email);
     const [nome, setNome] = useState(user.nome);
     const [dataNasc, setData] = useState(user.dataNasc);
@@ -15,6 +15,49 @@ export default function Profile({ user }: { user: userProps }) {
 
     const alterDataHandler = async (e) => {
         e.preventDefault();
+        const pattern = z.object({
+            nome: z.string().min(2, {error: "O nome deve ter no mínimo 2 caracteres"}).max(50,{error:"O nome pode ter no máximo 50 caracteres"}),
+            email: z.email({error:"É preciso inserir um e-mail válido"}),
+            dataNasc: z.coerce.date().refine((nasc)=>{
+                const agora = new Date();
+
+                if(agora.getFullYear() -nasc.getFullYear() < 18){
+                    console.log("aqui1")
+                    return false;
+                }
+                else{
+                    if(agora.getFullYear() -nasc.getFullYear() > 18){
+                        return true;
+                    }
+                }
+                if(agora.getMonth()< nasc.getMonth() ){
+                    console.log("aqui2")
+                    return false;
+                }
+                if(agora.getMonth() == nasc.getMonth() && agora.getDate()<nasc.getDate()){
+                    console.log("aqui3")
+                    return false;
+                }
+
+                return true;
+            },{error: "Idade precisa ser maior de 18 anos"})
+        })
+
+        const resultado = pattern.safeParse({
+            nome,
+            dataNasc,
+        })
+
+        if(!resultado.success){
+            alert(resultado.error.issues[0].message);
+            
+        }
+        else{
+            alert("OK");
+        }
+
+        return;
+        
         const confirmed = window.confirm("Tem certeza que deseja realizar essa ação?");
 
         if (!confirmed) {
