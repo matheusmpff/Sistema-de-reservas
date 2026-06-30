@@ -1,5 +1,7 @@
 import "../styles/Cadastro.css";
 import { useState } from "react";
+import { validateSignup } from "../validation/validation";
+import { IMaskInput } from "react-imask";
 
 export default function Cadastro() {
     const [nomeInput, setNomeInput] = useState("");
@@ -12,6 +14,20 @@ export default function Cadastro() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const checkFone = telInput.replaceAll(/[\- ()]/g, "");
+        const resposta = validateSignup({
+            nome: nomeInput,
+            email: emailInput,
+            senha: senhaInput,
+            dataNasc: dataInput,
+            checkFone,
+            sexo: sexoInput
+        })
+
+        if (!resposta.success) {
+            alert(resposta.error.issues[0].message);
+            return;
+        }
 
         const response = await fetch("http://localhost:3000/user", {
             method: "POST",
@@ -31,9 +47,9 @@ export default function Cadastro() {
         console.log(data);
         if (response.status == 201) {
             window.location.href = "/Login";
-            
+
         }
-        else{
+        else {
             alert("Erro no cadastro. Tente novamente.")
         }
     }
@@ -68,7 +84,7 @@ export default function Cadastro() {
                             </div>
                             <div className="grid_element">
                                 <label className="label_style" htmlFor="datanasc">Data de nascimento:</label>
-                                <input className="input_style" onChange={(e) => { setDataInput(e.target.value)}} type="date" id="datanasc" placeholder="Insira sua data de nascimento..." />
+                                <input className="input_style" onChange={(e) => { setDataInput(e.target.value) }} type="date" id="datanasc" placeholder="Insira sua data de nascimento..." />
                             </div>
                             <div className=" grid_element ">
                                 <label className="label_style" htmlFor="Email">E-mail:</label>
@@ -81,12 +97,22 @@ export default function Cadastro() {
                             </div>
 
                             <div className=" grid_element ">
-                                <label className="label_style" htmlFor="sexo">Masculino/Feminino:</label>
-                                <input className="input_style" onChange={(e) => { setSexoInput(e.target.value) }} type="string" id="sexo" placeholder="Insira aqui uma das opções..." />
+                                <label className="label_style text-black" htmlFor="sexo">Masculino/Feminino:</label>
+                                <select onChange={(e) => { setSexoInput(e.target.value) }} className="input_style">
+                                    <option value="Escolha uma opção">Escolha uma opção...</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
                             </div>
                             <div className=" grid_element ">
                                 <label className="label_style" htmlFor="tel">Telefone:</label>
-                                <input className="input_style" onChange={(e) => { setTelInput(e.target.value) }} type="string" id="tel" placeholder="Insira seu telefone..." />
+                                <IMaskInput
+                                    placeholder="Insira seu telefone"
+                                    className="input_style"
+                                    mask="+55 (00) 00000-0000"
+                                    value={telInput}
+                                    onAccept={(valor) => { setTelInput(valor) }}
+                                />
                             </div>
 
                             <button onClick={handleSubmit} className="primary-button btn_style">FAZER CADASTRO</button>
