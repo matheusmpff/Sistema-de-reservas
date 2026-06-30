@@ -13,15 +13,16 @@ export default function Feedback() {
         e.preventDefault();
 
         const inputs = new FormData();
-
         inputs.append("nome", nome);
         inputs.append("comentario", comentario);
-        inputs.append("checkIn", checkIn);
-        inputs.append("checkOut", checkOut);
+        inputs.append("checkIn", checkIn.split("T")[0]);
+        inputs.append("checkOut", checkOut.split("T")[0]);
         inputs.append("email", email);
         for (const photo of files) {
             inputs.append("photos", photo);
         }
+
+        
 
         const response = await fetch("http://localhost:3000/user/feedback", {
             method: "POST",
