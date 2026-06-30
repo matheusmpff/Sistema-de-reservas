@@ -80,7 +80,7 @@ export default function ContactForm() {
                     <textarea onChange={handleMessage} required value={comentario} className=" textarea_contato" name="" id="" placeholder="Insira sua mensagem"></textarea>
                 </div>
                 <div className="form_element_contato">
-                    {botao&&<button type="submit" className="mt-6 p-3  w-fit btn_primary">Enviar mensagem</button>}
+                    {botao&&<button type="submit" className="mt-6 p-3  w-fit primary-button">Enviar mensagem</button>}
                 </div>
             </form>
         </>

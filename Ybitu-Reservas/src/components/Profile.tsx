@@ -151,7 +151,7 @@ export default function Profile({ user }: { user: userProps }) {
             </form>
 
             <div className="mt-10 flex items-center justify-center">
-                <button form="profForm" type="submit" className=" p-2 btn_primary">Alterar Dados</button>
+                <button form="profForm" type="submit" className=" p-2 primary-button">Alterar Dados</button>
 
             </div>
         </>
