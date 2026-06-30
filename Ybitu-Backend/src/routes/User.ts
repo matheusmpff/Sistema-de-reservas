@@ -95,18 +95,18 @@ router.get("/booking", Auth.private, async (req, res) => {
 
 router.post("/feedback", upload.array("photos", 3), async (req, res, next) => {
     const files = req.files as Express.Multer.File[];
-    const checkIn = new Date(req.body.checkIn);
-    const checkOut = new Date(req.body.checkOut);
-    console.log(checkIn, checkOut)
     let urls: string[] = []
-
     if (req.files != undefined) {
         for (let photo of files) {
             urls.push(photo.path)
         }
     }
     console.log(urls)
-
+    
+    const [dataIn, mesIn, anoIn] = req.body.checkIn.split("-").map(Number);
+    const [dataOut, mesOut, anoOut] = req.body.checkOut.split("-").map(Number);
+    const checkIn = new Date(dataIn,mesIn-1,anoIn)
+    const checkOut = new Date(dataOut,mesOut-1,anoOut)
     try {
         const resposta = await feedback(req.body.email, req.body.comentario, urls, checkIn, checkOut, req.body.nota);
 
