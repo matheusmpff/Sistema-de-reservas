@@ -24,7 +24,7 @@ function AbaContador(prop: {data: ContadorDados, sub: stateOp<void>, add: stateO
         <h3>Quantidade de reservas:</h3>
         <div className="aba-mostrador">
           <Minus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.sub()} />
-          <p>{prop.data.loading ? "Carregando" : prop.data.count}</p>
+          <p>{prop.data.count}</p>
           <Plus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.add(prop.data.count)}/>
         </div>
       </>
@@ -45,7 +45,7 @@ function AbaSelecao(prop: {data: ContadorDados, changeFn: stateOp<number>}) {
   return (
     <div className="aba-contador aba-area">
       {prop.data.count == 0 && <div className="w-full h-full flex items-center justify-center">
-         <button className="primary-button h-16 w-42 mouse-reaction" onClick={() => add(prop.data.count)}>Selecionar quarto</button>
+         <button className="aba-selecionar mouse-reaction" onClick={() => abrirContador()}>Selecionar quarto</button>
       </div>}
       {prop.data.count != 0 && <AbaContador data={prop.data} sub={subtract} add={add} />}
     </div>
