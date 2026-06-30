@@ -119,21 +119,29 @@ export default function Pagamento() {
 
   const sendBookings = async () => {
       setLoading(true);
-      const response = await fetch("http://localhost:3000/bookingrequest", {
-        credentials: "include",
-        method: "POST",
-        body: JSON.stringify(reservas.bookings[0]),
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8"
+      for (const book of reservas.bookings) {
+        const response = await fetch("http://localhost:3000/user/bookingrequest", {
+          credentials: "include",
+          method: "POST",
+          body: JSON.stringify(book),
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+          }
+        });
+        if (response.status == 400 || response.status == 500) {
+          const data = await response.json();
+          window.alert(data.msg);
         }
-      });
+        else {
+          setReservas({
+            ...reservas,
+            bookings: reservas.bookings.filter((b) => b.id != book.id)
+          });
+        }
+      }
 
       setLoading(false);
-      if (response.status == 400 || response.status == 500) {
-        const data = await response.json();
-        window.alert(data.msg);
-      }
-      else {
+      if (reservas.bookings.length == 0) {
         navigate("/Usuario");
       }
   }

@@ -81,9 +81,7 @@ model Reserva {
   //Relações com as outras tabelas
   acompanhante   Acompanhante[] // Relação 1-N
   feedbackUser   FeedbackUser? // Relação 1-0..1
-  // Relação 1-0..1(Teria que sempre que criar uma reserva criar junto o reservaQuartos 
-  //para garantir a relação 1-1 desejada)
-  reservaQuartos ReservaQuartos?
+  reservaQuartos ReservaQuartos[]
   user User @relation(fields: [idUser],references: [idAdulto], onDelete: Cascade)
 
   @@id([idUser, dataReserva]) // Identificador da Reserva é o usuário e a data da reserva
@@ -130,12 +128,13 @@ model ReservaQuartos {
   // Colunas da tabela
   reservaUser Int
   reservaData DateTime
+  numeroQuarto Int
   custo_frigobar Float
   multa Float
-  @@id([reservaUser, reservaData])// ID é o usuário e a data da reserva
+  @@id([reservaUser, reservaData, numeroQuarto])// ID é o usuário e a data da reserva
   // Relação com as demais tabelas
-  Quartos Quarto[]
-  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva],onDelete: Cascade)
+  Quarto Quarto @relation(fields: [numeroQuarto], references: [numero], onDelete: Cascade)
+  reserva Reserva @relation(fields: [reservaUser, reservaData], references: [idUser, dataReserva], onDelete: Cascade)
 }
 
 enum QuartoStatus {
@@ -157,7 +156,5 @@ model Quarto {
   capacidade Int
   status QuartoStatus 
   // Relação com as demais tabela
-  reservaUser Int?
-  reservaData DateTime?
-  Reserva ReservaQuartos? @relation(fields: [reservaUser,reservaData],references: [reservaUser,reservaData])
+  ReservaQuartos ReservaQuartos[]
 }

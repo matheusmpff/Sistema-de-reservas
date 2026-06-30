@@ -2,13 +2,10 @@ import express from "express";
 import { Auth } from "../middlewares/Auth.js";
 import nodemailer from "nodemailer";
 import adminRouter from "./Admin.js";
-import * as zod from "zod"
-import jwt from "jsonwebtoken"
-import type { Request, Response } from "express";
-import type { BookingData } from "../types.js";
+import * as zod from "zod";
+import jwt from "jsonwebtoken";
 
 import userRouter from "./User.js";
-import { insertBooking } from "../services/User.js";
 
 const secret = process.env.JWT_SECRET_KEY;
 console.log(secret)
@@ -95,58 +92,5 @@ MainRouter.post("/email", (req, res) => {
     res.status(400).json(error)
   }
 });
-
-MainRouter.post("/bookingrequest", async (req: Request<{}, {}, BookingData>, res: Response) => {
-  try {
-    await insertBooking(req.body);
-    
-    transporter.sendMail({
-      from: process.env.GMAIL_ACCOUNT,
-      to: process.env.GMAIL_ACCOUNT,
-      replyTo: req.body.user.email,
-      subject: "NOVA SOLICITAÇÃO DE RESERVA!",
-      text: `
-        Nova solicitação de reserva feita por ${req.body.user.name}.
-
-        Dados de contato do responsável: ${req.body.user.phoneNumber}, ${req.body.user.email}
-
-        Dados dos acompanhantes do responsável:
-
-        ${req.body.otherGuests.map((guest, index) => {
-          return(`
-            ${index}. ${guest.name}:
-              Aniversário: ${guest.birthDate},
-              Telefone: ${guest.phoneNumber},
-              sexo: ${guest.sex}
-              Pais \ responsáveis: ${guest.parentName ? guest.parentName : "--"}
-
-            `)
-      })}
-        CHECK-IN: ${req.body.date_in} \ CHECK-OUT: ${req.body.date_out}
-
-        Quartos:
-        ${req.body.rooms.map((room) => {
-        return (`\t${room.roomQuantity} -- Quarto ${room.roomType}\n`)
-      })}
-      `
-    }).then(() => {
-      res.status(200).json({ msg: "Deu Certooo" })
-    }).catch(err => {
-      console.log(err)
-      res.status(500).json({ msg: "Deu problema na requisição" })
-    })
-  }
-  catch (error: any) {
-    console.log("Erro em MainRouter");
-    if (error instanceof zod.ZodError) {
-      console.log("Validação do answerData falhou");
-      console.log(error.issues);
-    }
-    if (error instanceof Error) {
-      console.log(error.message);
-    }
-    res.status(400).json({ msg: "Erro em campos do usuário", ...error })
-  }
-})
 
 export default MainRouter;

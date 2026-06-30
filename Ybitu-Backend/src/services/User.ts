@@ -3,6 +3,7 @@ import { GuestType, rTypeTranslation, type BookingData, type GuestData, type Log
 import { Prisma } from "../generated/prisma/client.js";
 import bcrypt from "bcryptjs";
 import { existsSync } from "node:fs";
+import type { ReservaQuartosCreateManyReservaInput } from "../generated/prisma/models.js";
 
 export const populateDB = async () => {
     if ((await prisma.quarto.findMany()).length == 0) {
@@ -219,6 +220,27 @@ export const userBooking = async (email: string) => {
     return reservas;
 }
 
+// return all rooms avalaible in a given date range
+export const getAvailableRooms = async (date_in: Date, date_out: Date) => {
+    const availableRooms = await prisma.quarto.findMany({
+        select: {
+            numero: true,
+            tipo: true,
+        },
+        where: {
+            ReservaQuartos: {
+                none: {
+                    reserva: {
+                        checkIn: { lt: date_out },
+                        checkOut: { gt: date_in },
+                    }
+                }
+            }
+        }
+    });
+    return availableRooms;
+}
+
 export const insertBooking = async (book: BookingData) => {
     const time = new Date();
     const numPessoas = 1 + book.otherGuests.length;
@@ -313,41 +335,17 @@ export const insertBooking = async (book: BookingData) => {
         }
     }
 
-    const availableRooms = [] as {numero: number}[];
+    const avail = await getAvailableRooms(book.date_in, book.date_out);
+    let availableRooms = [] as ReservaQuartosCreateManyReservaInput[];
     for (const room of book.rooms) {
-        const avail = await prisma.quarto.findMany({
-            select: {
-                numero: true,
-            },
-            where: {
-                tipo: rTypeTranslation(room.roomType),
-                NOT: {
-                    OR: [
-                        {
-                            Reserva: {
-                                reserva: {
-                                    checkIn: {lte: book.date_in, gte: book.date_out}
-                                }
-                            }
-                        },
-                        {
-                            Reserva: {
-                                reserva: {
-                                    checkOut: {gte: book.date_in, lte: book.date_out}
-                                }
-                            },
-                        },
-                    ]
-                }
-            }
-        })
-        if (avail.length < room.roomQuantity) {
+        let availType = avail.filter((r) => r.tipo == rTypeTranslation(room.roomType));
+        if (availType.length < room.roomQuantity) {
             throw Error("Quantidade insuficiente de quartos disponiveis na data");
         }
-        availableRooms.concat(avail.slice(0, room.roomQuantity).map((r) => {return {numero: r.numero}}))
+        availableRooms.concat(availType.slice(0, room.roomQuantity).map((r) => {return {numeroQuarto: r.numero, custo_frigobar: 0, multa: 0}}))
     }
-    availableRooms.map
-    
+
+
     await prisma.reserva.create({
         data: {
             dataReserva: time,
@@ -367,12 +365,8 @@ export const insertBooking = async (book: BookingData) => {
             },
             idUser: Number(book.user.id),
             reservaQuartos: {
-                create: {
-                    custo_frigobar: 0,
-                    multa: 0,
-                    Quartos: {
-                        connect: availableRooms,
-                    }
+                createMany: {
+                    data: availableRooms,
                 }
             }
         }
