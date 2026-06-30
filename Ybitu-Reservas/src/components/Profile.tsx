@@ -16,48 +16,44 @@ export default function Profile({ user }: { user: userProps }) {
     const alterDataHandler = async (e) => {
         e.preventDefault();
         const pattern = z.object({
-            nome: z.string().min(2, {error: "O nome deve ter no mínimo 2 caracteres"}).max(50,{error:"O nome pode ter no máximo 50 caracteres"}),
-            email: z.email({error:"É preciso inserir um e-mail válido"}),
-            dataNasc: z.coerce.date().refine((nasc)=>{
+            nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
+                /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
+                { error: "O nome contém caracteres inválidos." }
+            ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
+            email: z.email({ error: "É preciso inserir um e-mail válido" }),
+            dataNasc: z.coerce.date().refine((nasc) => {
                 const agora = new Date();
 
-                if(agora.getFullYear() -nasc.getFullYear() < 18){
-                    console.log("aqui1")
+                if (agora.getFullYear() - nasc.getFullYear() < 18) {
                     return false;
                 }
-                else{
-                    if(agora.getFullYear() -nasc.getFullYear() > 18){
+                else {
+                    if (agora.getFullYear() - nasc.getFullYear() > 18) {
                         return true;
                     }
                 }
-                if(agora.getMonth()< nasc.getMonth() ){
-                    console.log("aqui2")
+                if (agora.getMonth() < nasc.getMonth()) {
                     return false;
                 }
-                if(agora.getMonth() == nasc.getMonth() && agora.getDate()<nasc.getDate()){
-                    console.log("aqui3")
+                if (agora.getMonth() == nasc.getMonth() && agora.getDate() < nasc.getDate()) {
                     return false;
                 }
 
                 return true;
-            },{error: "Idade precisa ser maior de 18 anos"})
+            }, { error: "Idade precisa ser maior de 18 anos" })
         })
 
         const resultado = pattern.safeParse({
             nome,
+            email,
             dataNasc,
         })
 
-        if(!resultado.success){
+        if (!resultado.success) {
             alert(resultado.error.issues[0].message);
-            
-        }
-        else{
-            alert("OK");
+            return;
         }
 
-        return;
-        
         const confirmed = window.confirm("Tem certeza que deseja realizar essa ação?");
 
         if (!confirmed) {
@@ -100,7 +96,7 @@ export default function Profile({ user }: { user: userProps }) {
                     window.location.reload();
                 }, 100);
             }
-            else{
+            else {
                 alert("Erro ao deletar a conta. Tente novamente mais tarde.")
             }
         }
@@ -130,7 +126,7 @@ export default function Profile({ user }: { user: userProps }) {
                         } else {
                             setNome(e.target.value)
                         }
-                    }} required className="user_form_option" type="text" id="nome" placeholder={`${user.nome}`} />
+                    }} required className="user_form_option" type="text" id="nome" placeholder={`${user.nome.trim().replace(/\s+/g, " ")}`} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="email">E-mail:</label>
@@ -142,7 +138,7 @@ export default function Profile({ user }: { user: userProps }) {
                             else {
                                 setEmail(e.target.value)
                             }
-                        }} required className="user_form_option" type="email" id="email" placeholder={`${user.email}`} />
+                        }} required className="user_form_option" type="email" id="email" placeholder={`${user.email.trim()}`} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="dataNasc">Data de Nascimento:</label>
