@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from "react";
 import "../styles/Contato.css";
 import { z } from "zod";
 import {IMaskInput} from "react-imask";
+import { validateContactForm } from "../validation/validation";
 
 export default function ContactForm() {
     const [nome, setNome] = useState("")
@@ -13,21 +14,7 @@ export default function ContactForm() {
     const handleContactSubmit = async (e) => {
         e.preventDefault();
         const checkFone = telefone.replaceAll(/[\- ()]/g, "");
-        const pattern = z.object({
-            nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
-                /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
-                { error: "O nome contém caracteres inválidos." }
-            ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
-            email: z.email({ error: "É preciso inserir um e-mail válido" }),
-            checkFone: z.e164({error:"Telefone no formato inválido."})
-
-        })
-
-        const resultado = pattern.safeParse({
-            nome,
-            email,
-            checkFone
-        })
+        const resultado = validateContactForm(nome,email,checkFone)
 
         if (!resultado.success) {
             alert(resultado.error.issues[0].message)

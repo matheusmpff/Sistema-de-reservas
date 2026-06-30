@@ -34,19 +34,3 @@
     @apply bg-[var(--cor-background)] py-4 px-3 rounded mt-3 text-black;
 }
 
-.telefone{
-    
-}
-
-.PhoneInputCountryIcon{
-    width: 30px;
-}
-
-.PhoneInputCountrySelect{
-    @apply bg-[var(--cor-background)] text-black ;
-    
-}
-
-.PhoneInputInput{
-    @apply bg-[var(--cor-background)] py-4 px-3 rounded mt-3 text-black w-full;
-}
