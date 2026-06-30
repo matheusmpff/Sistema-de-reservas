@@ -2,6 +2,7 @@ import { prisma } from "../libs/prisma.js";
 import { GuestType, rTypeTranslation, type BookingData, type GuestData, type LoginInput, type RoomType, type SignupInput } from "../types.js";
 import { Prisma } from "../generated/prisma/client.js";
 import bcrypt from "bcryptjs";
+import { existsSync } from "node:fs";
 
 export const populateDB = async () => {
     if ((await prisma.quarto.findMany()).length == 0) {
@@ -62,8 +63,30 @@ export const populateDB = async () => {
                     capacidade: 2,
                 },
             ]
-        })
+        });
     }
+
+    // create Admin user
+    const user: SignupInput = {
+        nome: "Muzza",
+        dataNasc: new Date("2001-12-23"),
+        senha: "adminadmin",
+        sexo: "Feminino",
+        email: "admin3@ybitu.com",
+        telefone: "+55198587838"
+    }
+    await createUser(user);
+    await prisma.user.updateMany({
+        where: {
+            adulto: {
+                email: "admin3@ybitu.com",
+            },
+        },
+        data: {
+            admin: true,
+        },
+        limit: 1,
+    });
 }
 
 export const createUser = async (props: SignupInput) => {
