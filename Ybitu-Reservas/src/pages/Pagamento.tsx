@@ -91,6 +91,7 @@ export default function Pagamento() {
 
   const editResumo = (isEdit: boolean) => {
     if (isEdit) {
+      setReservas({...reservas, currentID: popEdit.data.id})
       navigate("/Reserva/Quartos");
     }
     setPopEdit({isOpen: false, data: {id: ""}});
