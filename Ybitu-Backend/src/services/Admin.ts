@@ -14,7 +14,7 @@ const verificaConflito = async (
     return tx.reserva.findFirst({
         where: {
             reservaQuartos: {
-                Quartos: { some: { numero: numeroQuarto } }
+                Quarto: { some: { numero: numeroQuarto } }
             },
             checkIn: { lt: checkOut },
             checkOut: { gt: checkIn },
@@ -43,7 +43,7 @@ export const listarReservas = async () => {
             },
             reservaQuartos: {
                 include: {
-                    Quartos: true,
+                    Quarto: true,
                 }
             }
         }
@@ -77,7 +77,7 @@ export const criarReservas = async (idUser: number, checkIn: Date, checkOut: Dat
                 reservaData: reserva.dataReserva,
                 custo_frigobar: 0,
                 multa: 0,
-                Quartos: {
+                Quarto: {
                     connect: { numero: numeroQuarto }
                 }
             }
@@ -110,7 +110,7 @@ export const alterarQuarto = async (idUser: number, dataReserva: Date, numeroNov
             where: {
                 reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva}
             },
-            include: {Quartos: true}
+            include: {Quarto: true}
         });
 
         if (!reservaQuartos || reservaQuartos.Quartos.length === 0) {
@@ -129,7 +129,7 @@ export const alterarQuarto = async (idUser: number, dataReserva: Date, numeroNov
                 reservaUser_reservaData: { reservaUser: idUser, reservaData: dataReserva }
             },
             data: {
-                Quartos: {
+                Quarto: {
                     disconnect: { numero: quartoAntigo},
                     connect: { numero: numeroNovoQuarto }
                 }
@@ -159,7 +159,7 @@ export const alterarDataReserva = async(idUser: number, dataReserva: Date, novoC
             where: {
                 reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva},
             },
-            include:{Quartos: true}
+            include:{Quarto: true}
         })
 
         if (!reservaQuarto || reservaQuarto.Quartos.length === 0) throw new Error("Reserva sem nenhum quarto associado");
@@ -199,7 +199,7 @@ export const alterarDataReserva = async(idUser: number, dataReserva: Date, novoC
                     reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva}
                 },
                 data: {
-                    Quartos: {
+                    Quarto: {
                         disconnect: {numero: reservaQuarto.Quartos[0]?.numero as number},
                         connect: {numero: quarto},
                     }
@@ -231,7 +231,7 @@ export const alterarStatusPagamentoReserva = async (idUser: number, dataReserva:
         const reserva = await tx.reserva.findUnique({
             where: { idUser_dataReserva: { idUser, dataReserva } },
             include: {
-                reservaQuartos: { include: { Quartos: true } }
+                reservaQuartos: { include: { Quarto: true } }
             }
         });
 
