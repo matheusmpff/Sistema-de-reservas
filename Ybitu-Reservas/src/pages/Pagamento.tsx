@@ -3,7 +3,7 @@ import CarrinhoImage from "./../assets/pagamento/carrinho.png";
 import PopUp, { type PopUpState } from "../components/PopUp.tsx";
 import { type BookingData, type BookingID, type stateOp, type UseBookCont } from "../types.ts";
 // external libraries
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pencil, Trash } from "lucide-react";
 
 // imrt styles
@@ -46,23 +46,6 @@ function ReservaResumo(props: { index: number, data: BookingData, editFn: popFn,
   )
 }
 
-// the data of the reservas. when implemented, we will take them from the other pages
-// const resumoInitial: BookingContext[] = [
-//   {
-//     key: 0,
-//     title: "Grupo 1",
-//     date_in: "26/08/2026",
-//     date_out: "29/08/2026",
-//     items: ["1 quarto casal", "1 quarto quádruplo"]
-//   },
-//   {
-//     key: 1,
-//     title: "Grupo 2",
-//     date_in: "26/09/2026",
-//     date_out: "29/09/2026",
-//     items: ["1 quarto triplo"]
-//   }
-// ];
 
 export default function Pagamento() {
   const navigate = useNavigate();
@@ -141,10 +124,13 @@ export default function Pagamento() {
       }
 
       setLoading(false);
-      if (reservas.bookings.length == 0) {
-        navigate("/Usuario");
-      }
   }
+
+  useEffect(() => {
+    if (reservas.bookings.length == 0) {
+      navigate("/Usuario");
+    }
+  }, [reservas]);
 
   return (
   <>  
