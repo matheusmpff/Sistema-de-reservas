@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import userRouter from "./User.js";
 
 const secret = process.env.JWT_SECRET_KEY;
-console.log(secret)
+// console.log(secret)
 if (!secret) {
   throw new Error("JWT_SECRET não configurado");
 }
@@ -34,7 +34,7 @@ MainRouter.get("/", (_req, res) => {
 MainRouter.get("/auth", Auth.private, (req, res) => {
   const token = req.cookies.token;
   const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as jwt.JwtPayload;
-  console.log(content.nome)
+  // console.log(content.nome)
   res.status(201).json({
     logged: true,
     nome: content.nome
@@ -56,7 +56,7 @@ const duvidaSchema = zod.object({
 })
 
 MainRouter.post("/email", (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
 
   try {
     let answerData = duvidaSchema.parse(req.body);

@@ -10,7 +10,7 @@ import { error } from "console";
 const upload = multer({dest:path.resolve("uploads")});
 
 const secret = process.env.JWT_SECRET_KEY;
-console.log(secret);
+// console.log(secret);
 if (!secret) throw new Error("Falha na autenticação JWT");
 
 const router = Router();

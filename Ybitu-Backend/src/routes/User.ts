@@ -11,7 +11,7 @@ import nodemailer from "nodemailer";
 const upload = multer({ dest: path.resolve("uploads") });
 
 const secret = process.env.JWT_SECRET_KEY;
-console.log(secret)
+// console.log(secret)
 if (!secret) {
     throw new Error("JWT_SECRET_KEY não configurado");
 };
@@ -56,7 +56,7 @@ router.post("/login", async (req: { body: LoginInput }, res) => {
 
 // User tries to signup his info with email and password
 router.post("/", async (req, res) => {
-    console.log("a rota foi chamada");
+    // console.log("a rota foi chamada");
     const userData = req.body;
 
     if (isSignupInput(userData)) {
@@ -80,8 +80,8 @@ router.post("/", async (req, res) => {
 router.get("/data", Auth.private, async (req, res) => {
     const token = req.cookies.token;
     const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
-    console.log("ROTA /user/data FOI CHAMADA");
-    console.log("EMAIL:", content.email);
+    // console.log("ROTA /user/data FOI CHAMADA");
+    // console.log("EMAIL:", content.email);
 
     try {
         res.json(await userData(content.email));
@@ -97,7 +97,7 @@ router.get("/booking", Auth.private, async (req, res) => {
         const token = req.cookies.token;
         const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
         let resposta = await userBooking(content.email);
-        console.log(resposta);
+        // console.log(resposta);
         return res.status(201).json({ booking: resposta });
     }
     catch (err) {
@@ -199,7 +199,7 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, _next) => {
             urls.push(photo.path)
         }
     }
-    console.log(urls)
+    // console.log(urls)
     
     const [dataIn, mesIn, anoIn] = req.body.checkIn.split("-").map(Number);
     const [dataOut, mesOut, anoOut] = req.body.checkOut.split("-").map(Number);
@@ -221,11 +221,11 @@ router.post("/feedback", upload.array("photos", 3), async (req, res, _next) => {
 })
 
 router.post("/alterData", async (req, res) => {
-    console.log("entrei aqui");
+    // console.log("entrei aqui");
     const token = req.cookies.token;
     const content = jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
 
-    console.log(req.body);
+    // console.log(req.body);
     try {
         const success = await alterData(content.id, {
             email: req.body.email,

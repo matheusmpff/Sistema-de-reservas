@@ -262,7 +262,11 @@ export const insertBooking = async (book: BookingData) => {
             }
         })
     }
-    for (let pessoa of book.otherGuests) {
+    else {
+        throw Error("Usuário sem email");
+    }
+
+    for (let pessoa of book.otherGuests.filter((p) => p.guestType == GuestType.Adult)) {
         if (pessoa.guestType == GuestType.Adult && pessoa.email != undefined) {
             let id = await prisma.adulto.findUnique({
                 select: {
@@ -293,7 +297,13 @@ export const insertBooking = async (book: BookingData) => {
                 pessoa.id = id.idPessoa.toString();
             }
         }
-        else if (pessoa.guestType == GuestType.Child && pessoa.parentName) {
+        else {
+            throw Error("Acompanhante com tupla inválida no banco")
+        }
+    }
+
+    for (let pessoa of book.otherGuests.filter((p) => p.guestType == GuestType.Child)) {
+        if (pessoa.guestType == GuestType.Child && pessoa.parentName) {
             const id = await prisma.crianca.findFirst({
                 select: {
                     idPessoa: true,
@@ -331,7 +341,7 @@ export const insertBooking = async (book: BookingData) => {
             }
         }
         else {
-            throw Error("Acompanhante com tupla inválida no banco")
+            throw Error("Criança sem responsável")
         }
     }
 
@@ -419,7 +429,7 @@ export const deleteAccount = async (id:number)=>{
                 id,
             }
         })
-        console.log("Deu certo a operação")
+        // console.log("Deu certo a operação")
         return true
     }
     catch(err){
