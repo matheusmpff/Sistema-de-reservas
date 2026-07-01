@@ -1,7 +1,6 @@
 import { prisma } from "../libs/prisma.js";
 import type { QuartoStatus, QuartoTipo, TipoStatus } from "../generated/prisma/enums.js";
 import type { Prisma } from "../generated/prisma/client.js";
-import { includes } from "zod";
 
 const verificaConflito = async (
     tx: Prisma.TransactionClient,
@@ -14,7 +13,7 @@ const verificaConflito = async (
     return tx.reserva.findFirst({
         where: {
             reservaQuartos: {
-                Quarto: { some: { numero: numeroQuarto } }
+                some: { numeroQuarto: numeroQuarto } // Correção no filtro de relacionamento 1-N
             },
             checkIn: { lt: checkOut },
             checkOut: { gt: checkIn },
@@ -75,11 +74,9 @@ export const criarReservas = async (idUser: number, checkIn: Date, checkOut: Dat
             data: {
                 reservaUser: reserva.idUser,
                 reservaData: reserva.dataReserva,
+                numeroQuarto: numeroQuarto, // Passando o ID do quarto diretamente
                 custo_frigobar: 0,
                 multa: 0,
-                Quarto: {
-                    connect: { numero: numeroQuarto }
-                }
             }
         });
 
@@ -100,39 +97,42 @@ export const alterarQuarto = async (idUser: number, dataReserva: Date, numeroNov
             throw new Error("Reserva não encontrada");
         }
 
-        const conflito = await verificaConflito(tx, numeroNovoQuarto, reservaAtual?.checkIn, reservaAtual?.checkOut);
+        const conflito = await verificaConflito(tx, numeroNovoQuarto, reservaAtual.checkIn, reservaAtual.checkOut);
 
         if (conflito){
             throw new Error("Quarto solicitado indisponível na data selecionada.")
         }
 
-        const reservaQuartos = await tx.reservaQuartos.findUnique({
+        // Alterado de findUnique para findFirst devido à chave composta incompleta
+        const reservaQuartos = await tx.reservaQuartos.findFirst({
             where: {
-                reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva}
-            },
-            include: {Quarto: true}
+                reservaUser: idUser,
+                reservaData: dataReserva
+            }
         });
 
-        if (!reservaQuartos || reservaQuartos.Quartos.length === 0) {
+        if (!reservaQuartos) {
             throw new Error("Reserva não possui quarto vinculado");
         }
 
-        const quartoAntigo = reservaQuartos.Quartos[0]?.numero as number;
+        const quartoAntigo = reservaQuartos.numeroQuarto;
 
         await tx.quarto.update({
             where: { numero: quartoAntigo },
             data: { status: "DISPONIVEL"}
         });
 
+        // Como numeroQuarto faz parte da chave PK composta, precisamos passar todos os 3 campos no where para atualizar
         await tx.reservaQuartos.update({
             where: {
-                reservaUser_reservaData: { reservaUser: idUser, reservaData: dataReserva }
+                reservaUser_reservaData_numeroQuarto: { 
+                    reservaUser: idUser, 
+                    reservaData: dataReserva, 
+                    numeroQuarto: quartoAntigo 
+                }
             },
             data: {
-                Quarto: {
-                    disconnect: { numero: quartoAntigo},
-                    connect: { numero: numeroNovoQuarto }
-                }
+                numeroQuarto: numeroNovoQuarto
             }
         });
 
@@ -149,73 +149,76 @@ export const alterarDataReserva = async(idUser: number, dataReserva: Date, novoC
 
         const reservaAtual = await tx.reserva.findUnique({
             where: {
-                idUser_dataReserva: {idUser: idUser, dataReserva: dataReserva},
+                idUser_dataReserva: {idUser, dataReserva},
             },
         })
 
         if (!reservaAtual) throw new Error("Reserva não encontrada");
 
-        const reservaQuarto = await tx.reservaQuartos.findUnique({
+        // Alterado para findFirst e corrigido o include (Quarto no singular)
+        const reservaQuarto = await tx.reservaQuartos.findFirst({
             where: {
-                reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva},
+                reservaUser: idUser,
+                reservaData: dataReserva,
             },
-            include:{Quarto: true}
+            include:{ Quarto: true }
         })
 
-        if (!reservaQuarto || reservaQuarto.Quartos.length === 0) throw new Error("Reserva sem nenhum quarto associado");
+        if (!reservaQuarto) throw new Error("Reserva sem nenhum quarto associado");
 
-        let quarto = reservaQuarto.Quartos[0]?.numero as number;
+        let quarto = reservaQuarto.numeroQuarto;
 
-        const conflito = await verificaConflito(tx, quarto, novoCheckIn, novoCheckOut);
+        // Passamos os dados atuais para ignorar conflito com ela mesma caso as datas se sobreponham
+        const conflito = await verificaConflito(tx, quarto, novoCheckIn, novoCheckOut, idUser, dataReserva);
 
         if (conflito) {
-
-            const tipoQuarto = reservaQuarto.Quartos[0]?.tipo as QuartoTipo;
+            const tipoQuarto = reservaQuarto.Quarto.tipo;
 
             const quartosDoMesmoTipo = await tx.quarto.findMany({
-                where: {tipo: tipoQuarto}
+                where: { tipo: tipoQuarto }
             });
 
             let quartoNovo = null;
             for (const q of quartosDoMesmoTipo){
-                const conflitoNovo = await verificaConflito(tx, q.numero, novoCheckIn, novoCheckOut);
+                const conflitoNovo = await verificaConflito(tx, q.numero, novoCheckIn, novoCheckOut, idUser, dataReserva);
                 if (!conflitoNovo) {
-                    quartoNovo  = q;
+                    quartoNovo = q;
                     break;
                 }
             }
 
             if (!quartoNovo) throw new Error("Nenhum quarto do mesmo tipo disponível na data selecionada")
 
+            const quartoAntigo = quarto;
             quarto = quartoNovo.numero;
 
             await tx.quarto.update({
-                where: {numero: reservaQuarto.Quartos[0]?.numero as number},
-                data: {status: "DISPONIVEL"},
+                where: { numero: quartoAntigo },
+                data: { status: "DISPONIVEL" },
             })
 
             await tx.reservaQuartos.update({
                 where: {
-                    reservaUser_reservaData: {reservaUser: idUser, reservaData: dataReserva}
+                    reservaUser_reservaData_numeroQuarto: {
+                        reservaUser: idUser,
+                        reservaData: dataReserva,
+                        numeroQuarto: quartoAntigo
+                    }
                 },
                 data: {
-                    Quarto: {
-                        disconnect: {numero: reservaQuarto.Quartos[0]?.numero as number},
-                        connect: {numero: quarto},
-                    }
+                    numeroQuarto: quarto
                 }
             });
 
             await tx.quarto.update({
-                where: {numero: quarto},
-                data: {status: "OCUPADO"},
+                where: { numero: quarto },
+                data: { status: "OCUPADO" },
             });
-
         }
 
         await tx.reserva.update({
             where:{
-                idUser_dataReserva: {idUser: idUser, dataReserva: dataReserva},
+                idUser_dataReserva: { idUser, dataReserva },
             },
             data: {
                 checkIn: novoCheckIn,
@@ -231,13 +234,14 @@ export const alterarStatusPagamentoReserva = async (idUser: number, dataReserva:
         const reserva = await tx.reserva.findUnique({
             where: { idUser_dataReserva: { idUser, dataReserva } },
             include: {
-                reservaQuartos: { include: { Quarto: true } }
+                reservaQuartos: true // reservaQuartos é uma lista mapeada no model Reserva
             }
         });
 
         if (!reserva) throw new Error("Reserva não encontrada");
 
-        const numeroQuarto = reserva.reservaQuartos?.Quartos?.[0]?.numero;
+        // Acessando o primeiro item do array de relações de forma segura
+        const numeroQuarto = reserva.reservaQuartos?.[0]?.numeroQuarto;
 
         const atualizada = await tx.reserva.update({
             where: { idUser_dataReserva: { idUser, dataReserva } },
@@ -267,10 +271,7 @@ export const alterarValorReserva = async (idUser: number, dataReserva: Date, val
 
         const reservaAtual = await tx.reserva.findUnique({
             where: {
-                idUser_dataReserva: {
-                    idUser: idUser,
-                    dataReserva: dataReserva,
-                }
+                idUser_dataReserva: { idUser, dataReserva }
             }
         })
 
@@ -281,12 +282,9 @@ export const alterarValorReserva = async (idUser: number, dataReserva: Date, val
 
         await tx.reserva.update({
             where: {
-                idUser_dataReserva: {
-                    idUser: idUser,
-                    dataReserva: dataReserva,
-                }
+                idUser_dataReserva: { idUser, dataReserva }
             },
-            data: {valor: valorAtual},
+            data: { valor: valorAtual },
         });
         
     });
@@ -294,42 +292,47 @@ export const alterarValorReserva = async (idUser: number, dataReserva: Date, val
 
 export const alterarStatusQuarto = async (numeroQuarto: number, novoStatus: QuartoStatus) => {
     return prisma.quarto.update({
-        where: {numero: numeroQuarto},
-        data: {status: novoStatus}
+        where: { numero: numeroQuarto },
+        data: { status: novoStatus }
     });
 }
 
-// Documento cadastrado errado, telefone, etc...
 export const alterarHospedeDados = async (
     idPessoa: number, 
     dados: {
         telefone?: string;
         email?: string;
-        dataNasc?: Date;
+        dataNasc?: Date | string;
         nome?: string;
         sexo?: string;
     }
 ) => {
     return prisma.$transaction(async(tx) => {
 
-        const pessoa = tx.pessoa.findUnique({
-            where: {id: idPessoa}
+        const pessoa = await tx.pessoa.findUnique({
+            where: { id: idPessoa }
         });
 
         if (!pessoa) throw new Error("Hóspede não encontrado.");
 
         if (dados.dataNasc || dados.nome || dados.sexo){
             await tx.pessoa.update({
-                where: {id: idPessoa},
+                where: { id: idPessoa },
                 data: {
-                    ...(dados.nome && {nome: dados.nome}),
-                    ...(dados.dataNasc && {dataNasc: dados.dataNasc}),
-                    ...(dados.sexo && {sexo: dados.sexo}),
+                    ...(dados.nome && { nome: dados.nome }),
+                    ...(dados.dataNasc && { dataNasc: new Date(dados.dataNasc) }),
+                    ...(dados.sexo && { sexo: dados.sexo }),
                 }
             });
         }
 
         if (dados.telefone || dados.email) {
+            const adultoExiste = await tx.adulto.findUnique({ where: { idPessoa } });
+            
+            if (!adultoExiste) {
+                throw new Error("Apenas hóspedes adultos possuem dados de e-mail e telefone.");
+            }
+
             await tx.adulto.update({
                 where: { idPessoa },
                 data: {
@@ -338,24 +341,20 @@ export const alterarHospedeDados = async (
                 }
             })
         }
-
-
     })
-}; 
+};
 
-
-// criança -> adulto
 export const alterarHospedeTipo = async (idPessoa: number, email: string, telefone: string) => {
     return prisma.$transaction(async(tx) => {
 
         const crianca = await tx.crianca.findUnique({
-            where: {idPessoa}
+            where: { idPessoa }
         });
 
         if (!crianca) throw new Error("Hóspede é maior de idade.");
 
         await tx.crianca.delete({
-            where: {idPessoa}
+            where: { idPessoa }
         });
 
         await tx.adulto.create({
@@ -365,9 +364,7 @@ export const alterarHospedeTipo = async (idPessoa: number, email: string, telefo
                 telefone,
             }
         });
-
     })
-
 };
 
 export const listarFeedbacks = async () => {
