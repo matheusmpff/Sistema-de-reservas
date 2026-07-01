@@ -54,8 +54,8 @@ function LoginForm({ checks }: { checks: string[] }) {
         })
 
         const data = await response.json()
-        console.log(data)
-        console.log(data.nome)
+        // console.log(data)
+        // console.log(data.nome)
 
         if (data.msg === "Login realizado com sucesso") {
             login(data.nome)
