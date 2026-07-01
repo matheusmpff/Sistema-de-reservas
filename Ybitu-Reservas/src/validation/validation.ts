@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import { z } from "zod";
 
 export const validateAdulto = (nome: string, email: string, dataNasc: string) => {
@@ -65,7 +66,7 @@ export const validateContactForm = (nome: string, email: string, checkFone: stri
             { error: "O nome contém caracteres inválidos." }
         ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
         email: z.email({ error: "É preciso inserir um e-mail válido" }),
-        checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14,{error: "Falta números para um telefone válido."})
+        checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14, { error: "Falta números para um telefone válido." })
 
     })
 
@@ -82,7 +83,7 @@ const patternValidateSignup = z.object({
         { error: "O nome contém caracteres inválidos." }
     ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
     email: z.email({ error: "É preciso inserir um e-mail válido" }),
-    checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14,{error: "Falta números para um telefone válido."}),
+    checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14, { error: "Falta números para um telefone válido." }),
     dataNasc: z.coerce.date().refine((nasc) => {
         const agora = new Date();
 
@@ -110,4 +111,41 @@ const patternValidateSignup = z.object({
 
 export const validateSignup = (props: { nome: string, email: string, dataNasc: string, checkFone: string, sexo: string, senha: string }) => {
     return patternValidateSignup.safeParse(props);
+}
+
+export const validateFeedback = (props: { nome: string, email: string, checkIn: string, checkOut: string }) => {
+    const pattern = z.object({
+        nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
+            /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
+            { error: "O nome contém caracteres inválidos." }
+        ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
+        email: z.email({ error: "É preciso inserir um e-mail válido" }),
+        checkIn: z.coerce.date().refine((checkIn) => {
+            const checkOut = new Date(props.checkOut);
+
+            if(checkOut.getTime() < checkIn.getTime()){
+                return false;
+            }
+            return true;
+        }, { error: "Check-in inconsistente com o Check-Out" })
+        .refine((checkIn) => {
+            const agora = new Date();
+
+            if(agora.getTime() < checkIn.getTime()){
+                return false;
+            }
+            return true;
+        }, { error: "Ainda não houve o check-in dessa viagem" }),
+        checkOut:  z.coerce.date()
+        .refine((checkOut) => {
+            const agora = new Date();
+
+            if(agora.getTime() < checkOut.getTime()){
+                return false;
+            }
+            return true;
+        }, { error: "Check-out não realizado para essa reserva. Feedback pode ocorrer apenas quando finaliza-se a hospedagem" })
+    })
+
+    return pattern.safeParse(props);
 }
