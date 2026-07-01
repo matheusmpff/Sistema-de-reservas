@@ -5,6 +5,9 @@ import MainRouter from "./routes/MainRouter.js";
 import { notDefined, serverError } from "./routes/ErrorHandler.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { populateDB } from "./services/User.js";
+
+await populateDB();
 
 const server = express();
 
@@ -38,6 +41,14 @@ server.use("/", MainRouter);
 server.use(notDefined);
 server.use(serverError);
 
-server.listen(3000, () => {
+
+
+const s = server.listen(3000,() => {
     console.log("Servidor está rodando em : http://localhost:3000/");
+});
+
+process.on("SIGTERM", () => {
+  s.close(() => {
+    process.exit(0);
+  })
 });

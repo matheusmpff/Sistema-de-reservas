@@ -66,16 +66,28 @@ Responsável pela interface utilizada pela administração da pousada, contém a
 
 ## Como Executar o Projeto
 
+É necessário instalar as dependências em cada aplicação e, após isso, executar a aplicação:
+
 ### Ybitu Reservas
 
 ```bash
+cd Ybitu-Reservas
 npm install
 npm run dev
 ```
 
-### Ybitu Back-end
+### Ybitu Admin
 
 ```bash
+cd Ybitu-Admin
+npm install
+npm run dev
+```
+
+### Ybitu Backend
+
+```bash
+cd Ybitu-Backend
 npm install
 npm run dev
 ```
@@ -94,6 +106,7 @@ GMAIL_PASSWORD=
 #### JWT_SECRET_KEY
 
 Chave  para gerar tokens JWT que são usados na autenticação dos usuários.
+
 #### GMAIL_ACCOUNT
 
 E-mail utilizado para envio de mensagens automáticas e formulários de contato.
@@ -110,9 +123,6 @@ Configurar as variáveis de ambiente necessárias e executar os comandos do Pris
 
 ```bash
 npx prisma db push
-```
-e
-```bash
 npx prisma generate
 ```
 

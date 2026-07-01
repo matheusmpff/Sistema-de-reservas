@@ -2,6 +2,7 @@ import { useState } from "react"
 import "../styles/style.scss"
 import { Link, useNavigate } from "react-router"
 import { useAuth } from "../context/AuthContext"
+import z from "zod";
 
 export default function Login() {
     const checks = [
@@ -32,6 +33,14 @@ function LoginForm({ checks }: { checks: string[] }) {
             return
         }
 
+        const pattern = z.email();
+        const resultado = pattern.safeParse(emailInput);
+
+        if(!resultado.success){
+            alert("Preencha com um e-mail válido");
+            return;
+        }
+
         const response = await fetch("http://localhost:3000/user/login", {
             method: "POST",
             headers: {
@@ -45,8 +54,8 @@ function LoginForm({ checks }: { checks: string[] }) {
         })
 
         const data = await response.json()
-        console.log(data)
-        console.log(data.nome)
+        // console.log(data)
+        // console.log(data.nome)
 
         if (data.msg === "Login realizado com sucesso") {
             login(data.nome)

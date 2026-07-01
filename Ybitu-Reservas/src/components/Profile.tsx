@@ -1,5 +1,6 @@
 import { UserCircle2 } from "lucide-react";
 import { useState } from "react";
+import { validateAdulto } from "../validation/validation";
 
 type userProps = {
     email: string
@@ -7,7 +8,6 @@ type userProps = {
     dataNasc: string
 }
 export default function Profile({ user }: { user: userProps }) {
-
     const [email, setEmail] = useState(user.email);
     const [nome, setNome] = useState(user.nome);
     const [dataNasc, setData] = useState(user.dataNasc);
@@ -15,6 +15,13 @@ export default function Profile({ user }: { user: userProps }) {
 
     const alterDataHandler = async (e) => {
         e.preventDefault();
+        const resultado = validateAdulto(nome,email,dataNasc)
+
+        if (!resultado.success) {
+            alert(resultado.error.issues[0].message);
+            return;
+        }
+
         const confirmed = window.confirm("Tem certeza que deseja realizar essa ação?");
 
         if (!confirmed) {
@@ -57,7 +64,7 @@ export default function Profile({ user }: { user: userProps }) {
                     window.location.reload();
                 }, 100);
             }
-            else{
+            else {
                 alert("Erro ao deletar a conta. Tente novamente mais tarde.")
             }
         }
@@ -87,7 +94,7 @@ export default function Profile({ user }: { user: userProps }) {
                         } else {
                             setNome(e.target.value)
                         }
-                    }} required className="user_form_option" type="text" id="nome" placeholder={`${user.nome}`} />
+                    }} required className="user_form_option" type="text" id="nome" placeholder={`${user.nome.trim().replace(/\s+/g, " ")}`} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="email">E-mail:</label>
@@ -99,7 +106,7 @@ export default function Profile({ user }: { user: userProps }) {
                             else {
                                 setEmail(e.target.value)
                             }
-                        }} required className="user_form_option" type="email" id="email" placeholder={`${user.email}`} />
+                        }} required className="user_form_option" type="email" id="email" placeholder={`${user.email.trim()}`} />
                 </div>
                 <div className="user_form_div">
                     <label htmlFor="dataNasc">Data de Nascimento:</label>
@@ -108,7 +115,7 @@ export default function Profile({ user }: { user: userProps }) {
             </form>
 
             <div className="mt-10 flex items-center justify-center">
-                <button form="profForm" type="submit" className=" p-2 btn_primary">Alterar Dados</button>
+                <button form="profForm" type="submit" className=" p-2 primary-button">Alterar Dados</button>
 
             </div>
         </>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
-import { findBooking, GuestType, toSex, type BookingContext, type BookingData, type UserServerData } from "../types.ts";
+import { findBooking, GuestType, toSex, type BookingData, type UserServerData } from "../types.ts";
 
 import BarraProgresso from "../components/BarraProgresso.tsx";
 import { useAuth } from "../context/AuthContext.tsx";
+import { validateAdulto, validateCrianca, validatePhone } from "../validation/validation.ts";
+import { ZodError } from "zod";
 
 // const bookingMock: BookingContext = {
 //   currentID: crypto.randomUUID(),
@@ -82,7 +84,7 @@ export default function ReservaRoutePage() {
   let location = useLocation();
   let curStep = location.pathname.split("/").at(2);
   if (curStep == undefined) {
-    console.log(curStep);
+    // console.log(curStep);
     curStep = "Data";
   }
   curStep = decodeURIComponent(curStep);
@@ -91,18 +93,38 @@ export default function ReservaRoutePage() {
   const confirmStep = () => {
     switch(curStep){
       case "Data":
-        if (!isValidDate(findBooking(reservas.currentID, reservas.bookings).date_in) || !isValidDate(findBooking(reservas.currentID, reservas.bookings).date_out)) {
+        if (!isValidDate(findBooking(reservas).date_in) || !isValidDate(findBooking(reservas).date_out)) {
           window.alert("A data deve ser selecionada!");
           return false;
         }
         break;
       case "Quartos":
-        if (findBooking(reservas.currentID, reservas.bookings).rooms.length == 0) {
+        if (findBooking(reservas).rooms.length == 0) {
           window.alert("Pelo menos 1 quarto precisa ser reservado")
           return false;
         }
         break;
       case "Hóspedes":
+        for (const person of findBooking(reservas).otherGuests) {
+          try {
+            if (person.guestType == GuestType.Adult) {
+              if (!person.email) throw Error("Adulto sem email");
+              if (validateAdulto(person.name, person.email, person.birthDate.toISOString().split("T")[0]).error) throw Error("Campo de um adulto");
+              if (validatePhone(person.phoneNumber.replaceAll(/[\- ()]/g, "")).error) throw Error("Telefone de um adulto");
+            }
+            else if (person.guestType == GuestType.Child) {
+              if (!person.parentName) throw Error("Criança sem nome do responsável");
+              if (validateCrianca(person.name, person.birthDate.toISOString().split("T")[0], person.parentName).error) throw Error("Campo de uma criança");
+              if (validatePhone(person.phoneNumber.replaceAll(/[\- ()]/g, "")).error) throw Error("Telefone de um responsável");
+            }
+          }
+          catch (error){
+            if (error instanceof Error) {
+              window.alert("Erro em algum campo dos acompanhantes!\nMotivo: " + error.message);
+            }
+            return false;
+          }
+        }
         break;
       default:
         return false;

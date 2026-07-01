@@ -3,7 +3,7 @@ import { DayPicker } from "react-day-picker";
 import type { DateRange } from "react-day-picker";
 import { ptBR } from "date-fns/locale";
 import { useOutletContext } from "react-router";
-import type { UseBookCont } from "../types";
+import { findBooking, type UseBookCont } from "../types";
 
 function useIsMobile(breakpoint = 768) {
     const [isMobile, setIsMobile] = useState(
@@ -29,27 +29,29 @@ export default function Datas() {
     const isMobile = useIsMobile();
 
     useEffect(() => {
-        if (range === undefined || range.from === undefined || range.to === undefined || range.from == range.to) {
-            console.log("pai")
+        if (!range || !range.from || !range.to || range.from.getTime() == range.to.getTime()) {
             return;
         }
-        console.log("mae")
         let date_in = range.from;
         let date_out = range.to;
 
-        setReservas({
-            currentID: reservas.currentID,
-            bookings: reservas.bookings.map((book) => {
-                if (book.id == reservas.currentID) {
-                    return {
-                        ...book,
-                        date_in: date_in,
-                        date_out: date_out,
-                    };
-                }
-                return book;
-            })
-        })
+        if (date_in.getTime() != findBooking(reservas).date_in.getTime() || date_out.getTime() != findBooking(reservas).date_out.getTime()) {
+            setReservas({
+                currentID: reservas.currentID,
+                bookings: reservas.bookings.map((book) => {
+                    if (book.id == reservas.currentID) {
+                        return {
+                            ...book,
+                            date_in,
+                            date_out,
+                            rooms: [],
+                        };
+                    }
+                    return book;
+                })
+            });
+        }
+
     }, [range])
 
     return (

@@ -33,3 +33,4 @@
 .input_contato{
     @apply bg-[var(--cor-background)] py-4 px-3 rounded mt-3 text-black;
 }
+

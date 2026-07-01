@@ -3,7 +3,7 @@ import CarrinhoImage from "./../assets/pagamento/carrinho.png";
 import PopUp, { type PopUpState } from "../components/PopUp.tsx";
 import { type BookingData, type BookingID, type stateOp, type UseBookCont } from "../types.ts";
 // external libraries
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Pencil, Trash } from "lucide-react";
 
 // imrt styles
@@ -46,23 +46,6 @@ function ReservaResumo(props: { index: number, data: BookingData, editFn: popFn,
   )
 }
 
-// the data of the reservas. when implemented, we will take them from the other pages
-// const resumoInitial: BookingContext[] = [
-//   {
-//     key: 0,
-//     title: "Grupo 1",
-//     date_in: "26/08/2026",
-//     date_out: "29/08/2026",
-//     items: ["1 quarto casal", "1 quarto quádruplo"]
-//   },
-//   {
-//     key: 1,
-//     title: "Grupo 2",
-//     date_in: "26/09/2026",
-//     date_out: "29/09/2026",
-//     items: ["1 quarto triplo"]
-//   }
-// ];
 
 export default function Pagamento() {
   const navigate = useNavigate();
@@ -73,6 +56,9 @@ export default function Pagamento() {
   // and what item called it
   const [popDelete, setPopDelete] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
   const [popEdit, setPopEdit] = useState({ isOpen: false, data: {id: ""}} as PopUpState<BookingID>);
+
+  // just a state to show the user the request is loading
+  const [loading, setLoading] = useState(false);
 
   // when the user clicks the trash button, remove the element from the list
   const deleteResumo = (isDel: boolean) => {
@@ -88,7 +74,8 @@ export default function Pagamento() {
 
   const editResumo = (isEdit: boolean) => {
     if (isEdit) {
-      window.location.href = "quartos";
+      setReservas({...reservas, currentID: popEdit.data.id})
+      navigate("/Reserva/Quartos");
     }
     setPopEdit({isOpen: false, data: {id: ""}});
   }
@@ -114,22 +101,39 @@ export default function Pagamento() {
   };
 
   const sendBookings = async () => {
-      const response = await fetch("http://localhost:3000/bookingrequest", {
-        credentials: "include",
-        method: "POST",
-        body: JSON.stringify(reservas.bookings[0]),
-        headers: {
-          "Content-Type": "application/json; charset=UTF-8"
+      setLoading(true);
+      let savedBooks = [];
+      for (const book of reservas.bookings) {
+        const response = await fetch("http://localhost:3000/user/bookingrequest", {
+          credentials: "include",
+          method: "POST",
+          body: JSON.stringify(book),
+          headers: {
+            "Content-Type": "application/json; charset=UTF-8"
+          }
+        });
+        if (response.status == 400 || response.status == 500) {
+          const data = await response.json();
+          window.alert(data.msg);
         }
+        else {
+          savedBooks.push(book.id);
+        }
+      }
+      setReservas({
+        ...reservas,
+        // remove bookings that were saved
+        bookings: reservas.bookings.filter((b) => savedBooks.find((id) => id == b.id) == undefined)
       });
-      if (response.status == 400 || response.status == 500) {
-        const data = await response.json();
-        window.alert(data.msg);
-      }
-      else {
-        navigate("/Usuario");
-      }
+
+      setLoading(false);
   }
+
+  useEffect(() => {
+    if (reservas.bookings.length == 0) {
+      navigate("/Usuario");
+    }
+  }, [reservas]);
 
   return (
   <>  
@@ -167,7 +171,9 @@ export default function Pagamento() {
             <ReservaResumo key={reserva.id} index={i} data={reserva} editFn={setPopEdit} delFn={setPopDelete}/>)
           }
         </div>
-        <a className="secondary-button mouse-reaction" onClick={() => sendBookings()}>CONCLUIR RESERVA</a>
+        <a className="secondary-button mouse-reaction" onClick={() => sendBookings()}>
+          { loading? "ENVIANDO..." : "CONCLUIR RESERVA" }
+        </a>
       </aside>
 
       <PopUp modalState={popDelete.isOpen}>

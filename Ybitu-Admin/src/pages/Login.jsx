@@ -81,7 +81,6 @@ export default function Login() {
                                 <input type="checkbox" className="accent-verde-destaque" />
                                 Relembrar usuário?
                             </label>
-                            <Link to={"/cadastro"}>Cadastre-se</Link>
                         </div>
 
                         <button

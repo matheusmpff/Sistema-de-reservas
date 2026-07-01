@@ -1,5 +1,6 @@
 import "../styles/Feedback.css";
 import { useState } from "react";
+import { validateFeedback } from "../validation/validation";
 export default function Feedback() {
 
     const [files, SetFile] = useState(null);
@@ -12,6 +13,18 @@ export default function Feedback() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+       const resposta =  validateFeedback({
+            nome,
+            email,
+            checkIn,
+            checkOut
+        });
+
+        if(!resposta.success){
+            alert(resposta.error.issues[0].message);
+            return;
+        }
+        
         const inputs = new FormData();
         inputs.append("nome", nome);
         inputs.append("comentario", comentario);
@@ -94,7 +107,7 @@ export default function Feedback() {
                             </div>
 
 
-                            <button onClick={handleSubmit} className="btn_primary btn_style">Enviar</button>
+                            <button onClick={handleSubmit} className="primary-button btn_style">Enviar</button>
                         </form>
                     </div>
                 </div>

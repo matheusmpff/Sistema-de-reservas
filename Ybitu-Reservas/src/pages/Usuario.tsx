@@ -40,7 +40,7 @@ export default function Usuario() {
     }, [])
 
 
-    console.log(isLoggedIn);
+    // console.log(isLoggedIn);
     return (
         <div className="container mx-auto mt-20 flex flex-col md:flex-row min-h-[70vh]">
             <aside className=" min-w-fit flex flex-col items-center" >
