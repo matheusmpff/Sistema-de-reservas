@@ -38,6 +38,47 @@ export const validateAdulto = (nome: string, email: string, dataNasc: string) =>
     return resultado;
 };
 
+export const validateCrianca = (nome: string, dataNasc: string, nomePai: string) => {
+    const pattern = z.object({
+        nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
+            /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
+            { error: "O nome contém caracteres inválidos." }
+        ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
+        nomePai: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
+            /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
+            { error: "O nome contém caracteres inválidos." }
+        ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
+        dataNasc: z.coerce.date().refine((nasc) => {
+            const agora = new Date();
+
+            if (agora.getFullYear() - nasc.getFullYear() < 18) {
+                return true;
+            }
+            else {
+                if (agora.getFullYear() - nasc.getFullYear() > 18) {
+                    return false;
+                }
+            }
+            if (agora.getMonth() < nasc.getMonth()) {
+                return true;
+            }
+            if (agora.getMonth() == nasc.getMonth() && agora.getDate() < nasc.getDate()) {
+                return true;
+            }
+
+            return false;
+        }, { error: "Idade precisa ser menor que 18 anos" })
+    })
+
+    const resultado = pattern.safeParse({
+        nome,
+        nomePai,
+        dataNasc,
+    })
+
+    return resultado;
+};
+
 export const validatePhone = (phone: string) => {
     const pattern = z.e164({ error: "Telefone no formato inválido." });
 

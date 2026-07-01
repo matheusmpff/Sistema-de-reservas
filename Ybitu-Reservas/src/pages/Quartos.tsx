@@ -25,7 +25,7 @@ function AbaContador(prop: {data: ContadorDados, sub: stateOp<void>, add: stateO
         <h3>Quantidade de reservas:</h3>
         <div className="aba-mostrador">
           <Minus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.sub()} />
-          <p>{prop.data.loading ? "Carregando" : prop.data.count}</p>
+          <p>{prop.data.count}</p>
           <Plus className="contador-click mouse-reaction" strokeWidth={1.4} onClick={() => prop.add(prop.data.count)}/>
         </div>
       </>
@@ -77,7 +77,7 @@ function AbaQuarto(prop: {data: RoomType, countData: ContadorDados, changeFn: (a
       <div className="aba-numerador aba-area">
         <h3>Quantidade disponível:</h3>
         <div className="aba-mostrador">
-          <p>{prop.countData.limit}</p>
+          <p>{prop.countData.loading ? "Carregando" : prop.countData.limit}</p>
         </div>
       </div>
       <AbaSelecao data={prop.countData} changeFn={(ammount: number) => prop.changeFn(prop.data.rType, ammount)}/>

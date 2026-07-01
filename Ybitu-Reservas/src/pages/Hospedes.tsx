@@ -7,7 +7,24 @@ import { Trash } from "lucide-react";
 // css
 import "../styles/Hospedes.scss";
 import { useOutletContext } from "react-router";
+import { IMaskInput } from "react-imask";
 
+
+// function phoneValueToMask(value: string): string {
+//   let out = value.substring(0, 3);
+//   // after the '('
+//   if (value.length > 3) {
+//     out = out.concat(" (" + value.substring(3, 5));
+//   }
+//   // after the ')'
+//   if (value.length > 5) {
+//     out = out.concat(") " + value.substring(5, 10));
+//   }
+//   if (value.length > 10) {
+//     out = out.concat("-" + value.substring(10));
+//   }
+//   return out;
+// }
 
 function HospInput(props: {title: string, iType: string, field: string | undefined, changeFn: stateOp<string>}) {
   if (props.field == undefined) {
@@ -17,10 +34,22 @@ function HospInput(props: {title: string, iType: string, field: string | undefin
 
   let input_elem = <input type={props.iType} value={props.field.toString()} onChange={(e) => props.changeFn(e.target.value)}></input>;
 
-  if(props.iType == "date") {
+  if (props.iType == "date") {
     // the max value for date is today
     input_elem = (
-      <input type={props.iType} max={new Date().toISOString().split("T")[0]} value={props.field.toString()} onChange={(e) => props.changeFn(e.target.value)} />);
+      <input type={props.iType} max={new Date().toISOString().split("T")[0]} value={props.field.toString()} onChange={(e) => props.changeFn(e.target.value)} />
+    );
+  }
+  else if (props.iType == "tel") {
+    input_elem = (
+      <IMaskInput
+          placeholder="Insira o telefone"
+          // className ="input_contato"
+          value={props.field}
+          mask="+55 (00) 00000-0000"
+          onAccept = {(valor)=>{props.changeFn(valor)}}
+      />
+    )
   }
 
   return(
@@ -42,13 +71,13 @@ function HospInputSelect(props: {title: string, options: string[], field: string
   )
 }
 
-function handlePhoneNumber(value: string, changeFn: stateOp<GuestData>, data: GuestData) {
-  if (value.length < 20 && /^\+(\d*|\d+\(\d*\)?|\d+\(\d+\)\d*\-?\d*)$/g.test(value)) {
-    changeFn({ ...data, phoneNumber: value });
-    console.log("a");
-  }
-  return;
-}
+// function handlePhoneNumber(value: string, changeFn: stateOp<GuestData>, data: GuestData) {
+//   if (value.length < 20 && /^\+(\d*|\d+\(\d*\)?|\d+\(\d+\)\d*\-?\d*)$/g.test(value)) {
+//     changeFn({ ...data, phoneNumber: value });
+//     console.log("a");
+//   }
+//   return;
+// }
 
 function ResponsavelDados(props: { data: GuestData, changeFn: stateOp<GuestData> }) {
   return(
@@ -75,7 +104,8 @@ function AdultoDados(props: {data: GuestData, changeFn: stateOp<GuestData> }) {
         <HospInput title={"Data de nascimento"} iType={"date"} field={props.data.birthDate.toISOString().split("T")[0]} changeFn={(v) => props.changeFn({...props.data, birthDate: new Date(v)})}/>
         <HospInputSelect title={"Sexo"} options={["Masculino", "Feminino"]} field={props.data.sex} changeFn={(v) => props.changeFn({...props.data, sex: toSex(v)})}/>
       </div>
-      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/>
+      {/* <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => handlePhoneNumber(v, props.changeFn, props.data)}/> */}
+      <HospInput title={"Telefone"} iType={"tel"} field={props.data.phoneNumber} changeFn={(v) => props.changeFn({...props.data, phoneNumber: v})} />
     </main>
   );
 }
@@ -181,7 +211,7 @@ export default function Hospedes() {
             sex: "Masculino",
             birthDate: new Date(),
             parentName: "",
-            phoneNumber: "+",
+            phoneNumber: "",
           }]),
         }
       }),
@@ -208,7 +238,7 @@ export default function Hospedes() {
             sex: "Masculino",
             birthDate: new Date(),
             email: "",
-            phoneNumber: "+",
+            phoneNumber: "",
           }]),
         }
       }),

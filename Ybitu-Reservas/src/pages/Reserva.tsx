@@ -4,6 +4,8 @@ import { findBooking, GuestType, toSex, type BookingData, type UserServerData } 
 
 import BarraProgresso from "../components/BarraProgresso.tsx";
 import { useAuth } from "../context/AuthContext.tsx";
+import { validateAdulto, validateCrianca, validatePhone } from "../validation/validation.ts";
+import { ZodError } from "zod";
 
 // const bookingMock: BookingContext = {
 //   currentID: crypto.randomUUID(),
@@ -103,6 +105,27 @@ export default function ReservaRoutePage() {
         }
         break;
       case "Hóspedes":
+        console.log("ababa");
+        for (const person of findBooking(reservas).otherGuests) {
+          try {
+            if (person.guestType == GuestType.Adult) {
+              if (!person.email) throw Error("Adulto sem email");
+              if (validateAdulto(person.name, person.email, person.birthDate.toISOString().split("T")[0]).error) throw Error("Campo de um adulto");
+              if (validatePhone(person.phoneNumber.replaceAll(/[\- ()]/g, "")).error) throw Error("Telefone de um adulto");
+            }
+            else if (person.guestType == GuestType.Child) {
+              if (!person.parentName) throw Error("Criança sem nome do responsável");
+              if (validateCrianca(person.name, person.birthDate.toISOString().split("T")[0], person.parentName).error) throw Error("Campo de uma criança");
+              if (validatePhone(person.phoneNumber.replaceAll(/[\- ()]/g, "")).error) throw Error("Telefone de um responsável");
+            }
+          }
+          catch (error){
+            if (error instanceof Error) {
+              window.alert("Erro em algum campo dos acompanhantes!\nMotivo: " + error.message);
+            }
+            return false;
+          }
+        }
         break;
       default:
         return false;
