@@ -2,6 +2,7 @@ import { useState } from "react"
 import "../styles/style.scss"
 import { Link, useNavigate } from "react-router"
 import { useAuth } from "../context/AuthContext"
+import z from "zod";
 
 export default function Login() {
     const checks = [
@@ -30,6 +31,14 @@ function LoginForm({ checks }: { checks: string[] }) {
         if (!emailInput || !senhaInput) {
             setErro("Preencha e-mail e senha.")
             return
+        }
+
+        const pattern = z.email();
+        const resultado = pattern.safeParse(emailInput);
+
+        if(!resultado.success){
+            alert("Preencha com um e-mail válido");
+            return;
         }
 
         const response = await fetch("http://localhost:3000/user/login", {

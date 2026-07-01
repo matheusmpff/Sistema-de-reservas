@@ -1,4 +1,3 @@
-import { Check } from "lucide-react";
 import { z } from "zod";
 
 export const validateAdulto = (nome: string, email: string, dataNasc: string) => {
