@@ -51,7 +51,7 @@ MainRouter.get("/logout", Auth.private, (_req, res) => {
 const duvidaSchema = zod.object({
   userEmail: zod.email(),
   userName: zod.string().min(2),
-  userPhone: zod.e164(),
+  userPhone: zod.union([zod.e164(),zod.literal("")]),
   userMessage: zod.string().min(5).max(255),
 })
 

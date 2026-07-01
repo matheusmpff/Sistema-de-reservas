@@ -1,6 +1,5 @@
 import { useState, type MouseEvent } from "react";
 import "../styles/Contato.css";
-import { z } from "zod";
 import {IMaskInput} from "react-imask";
 import { validateContactForm } from "../validation/validation";
 
@@ -37,13 +36,6 @@ export default function ContactForm() {
         const data = await response.json()
         console.log(data);
 
-        if (response.ok) {
-            alert("Mensagem enviada com sucesso");
-            window.location.reload();
-        }
-        else {
-            alert("Erro nos dados de envio, tente novamente");
-        }
 
         if (response.ok) {
             alert("Mensagem enviada com sucesso");
@@ -51,6 +43,7 @@ export default function ContactForm() {
         }
         else {
             alert("Erro nos dados de envio, tente novamente");
+            window.location.reload();
         }
     }
 
@@ -75,7 +68,7 @@ export default function ContactForm() {
                 <div className="lg:col-span-2 mb-4"><img src="src/assets/logo_branca.png" alt="" width="50" /></div>
                 <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Nome</label>
-                    <input onChange={(e) => { setNome(e.target.value) }} required className="input_contato" type="text" placeholder="Insira o nome" />
+                    <input onChange={(e) => { setNome(e.target.value.trim()) }} required className="input_contato" type="text" placeholder="Insira o nome" />
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">Telefone</label>
@@ -89,7 +82,7 @@ export default function ContactForm() {
                 </div>
                 <div className="form_element_contato">
                     <label htmlFor="">E-mail</label>
-                    <input onChange={(e) => setEmail(e.target.value)} required className="input_contato" type="text" placeholder="Insira seu e-mail" />
+                    <input onChange={(e) => setEmail(e.target.value.trim())} required className="input_contato" type="text" placeholder="Insira seu e-mail" />
                 </div>
                 <div className="form_element_contato lg:col-span-2">
                     <label htmlFor="">Mensagem</label>

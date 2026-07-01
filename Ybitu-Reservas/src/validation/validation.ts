@@ -44,21 +44,35 @@ export const validatePhone = (phone: string) => {
     return pattern.safeParse(phone);
 }
 
-export const validateContactForm = (nome: string, email: string, checkPhone: string) => {
+export const validateContactForm = (nome: string, email: string, checkFone: string) => {
+    if (checkFone === "") {
+        const pattern = z.object({
+            nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
+                /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
+                { error: "O nome contém caracteres inválidos." }
+            ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
+            email: z.email({ error: "É preciso inserir um e-mail válido" })
+        })
+
+        return pattern.safeParse({
+            nome,
+            email
+        })
+    }
     const pattern = z.object({
         nome: z.string().min(2, { error: "O nome deve ter no mínimo 2 caracteres" }).regex(
             /^[A-Za-zÀ-ÖØ-öø-ÿ' ]+$/,
             { error: "O nome contém caracteres inválidos." }
         ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
         email: z.email({ error: "É preciso inserir um e-mail válido" }),
-        checkFone: z.e164({ error: "Telefone no formato inválido." })
+        checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14,{error: "Falta números para um telefone válido."})
 
     })
 
     return pattern.safeParse({
         nome,
         email,
-        checkPhone
+        checkFone
     })
 }
 
@@ -68,7 +82,7 @@ const patternValidateSignup = z.object({
         { error: "O nome contém caracteres inválidos." }
     ).max(50, { error: "O nome pode ter no máximo 50 caracteres" }).trim(),
     email: z.email({ error: "É preciso inserir um e-mail válido" }),
-    checkFone: z.e164({ error: "Telefone no formato inválido." }),
+    checkFone: z.e164({ error: "Telefone no formato inválido." }).min(14,{error: "Falta números para um telefone válido."}),
     dataNasc: z.coerce.date().refine((nasc) => {
         const agora = new Date();
 
@@ -89,11 +103,11 @@ const patternValidateSignup = z.object({
 
         return true;
     }, { error: "Idade precisa ser maior de 18 anos" }),
-    sexo: z.union([z.literal("Masculino"), z.literal("Feminino")],{error:"Escolha uma das opções..."}),
+    sexo: z.union([z.literal("Masculino"), z.literal("Feminino")], { error: "Escolha uma das opções..." }),
     senha: z.string().min(8, { error: "A senha tem que ter pelo menos 8 caracteres" })
-    .max(20,{error: "Pode ter no máximo 20 caracteres"})
+        .max(20, { error: "Pode ter no máximo 20 caracteres" })
 })
 
-export const validateSignup = (props:{nome:string,email:string,dataNasc:string,checkFone:string,sexo:string, senha:string}) => {
+export const validateSignup = (props: { nome: string, email: string, dataNasc: string, checkFone: string, sexo: string, senha: string }) => {
     return patternValidateSignup.safeParse(props);
 }
