@@ -138,7 +138,7 @@ export default function Andamento() {
     const ativas = reservas.filter(r => !["CANCELADO","OUT"].includes(r.status))
     const receita  = ativas.reduce((acc, r) => acc + (r.valor ?? 0), 0)
     const pendente = ativas.filter(r => r.status === "EM_ANALISE").reduce((acc, r) => acc + (r.valor ?? 0), 0)
-    const quartosOcupados = new Set(ativas.flatMap(r => r.reservaQuartos?.Quartos?.map(q => q.numero) ?? [])).size
+    const quartosOcupados = new Set(ativas.flatMap(r => r.reservaQuartos?.map(rq => rq.Quarto?.numero) ?? [])).size
 
     const stats = [
         { label: "Reservas ativas",    valor: String(ativas.length),                       cor: "border-blue-500" },
@@ -150,7 +150,7 @@ export default function Andamento() {
     const filtradas = ativas.filter(r => {
         if (!busca) return true
         const nome   = r.user?.adulto?.pessoa?.nome?.toLowerCase() ?? ""
-        const quarto = String(r.reservaQuartos?.Quartos?.[0]?.numero ?? "")
+        const quarto = String(r.reservaQuartos?.[0]?.Quarto.numero ?? "")
         return nome.includes(busca.toLowerCase()) || quarto.includes(busca)
     })
 
@@ -189,8 +189,8 @@ export default function Andamento() {
                 {!loading && filtradas.map((r, i) => {
                     const nome      = r.user?.adulto?.pessoa?.nome ?? "—"
                     const qtdPessoas = r.numPessoas ?? 1
-                    const quarto    = r.reservaQuartos?.Quartos?.[0]?.numero ?? "—"
-                    const tipo      = r.reservaQuartos?.Quartos?.[0]?.tipo ?? ""
+                    const quarto = r.reservaQuartos?.[0]?.Quarto?.numero ?? "—"
+                    const tipo   = r.reservaQuartos?.[0]?.Quarto?.tipo   ?? ""
                     const total     = totalDias(r.checkIn, r.checkOut)
                     const rest      = diasRestantes(r.checkIn, r.checkOut)
                     const pct       = Math.min(100, Math.round((rest / total) * 100))
@@ -250,7 +250,7 @@ export default function Andamento() {
                         </div>
 
                         <p className="text-sm text-slate-400">
-                            {selecionada.user?.adulto?.pessoa?.nome} — Quarto {selecionada.reservaQuartos?.Quartos?.[0]?.numero ?? "—"}
+                            {selecionada.user?.adulto?.pessoa?.nome} — Quarto {selecionada.reservaQuartos?.[0]?.Quarto?.numero ?? "—"}
                         </p>
 
                         {/* Status */}
