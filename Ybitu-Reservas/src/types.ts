@@ -18,8 +18,9 @@ type BookingData = {
 
 type BookingID = { id: string };
 
-export function findBooking(id: string, list: BookingData[]): BookingData {
-  let element = list.find((book) => book.id == id);
+export function findBooking(conti: BookingContext): BookingData {
+  let { currentID, bookings } = conti;
+  let element = bookings.find((book) => book.id == currentID);
   if (element == undefined) {
     throw Error("Procurando reserva com ID inexistente");
   }

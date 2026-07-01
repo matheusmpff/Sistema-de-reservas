@@ -102,6 +102,7 @@ export default function Pagamento() {
 
   const sendBookings = async () => {
       setLoading(true);
+      let savedBooks = [];
       for (const book of reservas.bookings) {
         const response = await fetch("http://localhost:3000/user/bookingrequest", {
           credentials: "include",
@@ -116,12 +117,14 @@ export default function Pagamento() {
           window.alert(data.msg);
         }
         else {
-          setReservas({
-            ...reservas,
-            bookings: reservas.bookings.filter((b) => b.id != book.id)
-          });
+          savedBooks.push(book.id);
         }
       }
+      setReservas({
+        ...reservas,
+        // remove bookings that were saved
+        bookings: reservas.bookings.filter((b) => savedBooks.find((id) => id == b.id) == undefined)
+      });
 
       setLoading(false);
   }

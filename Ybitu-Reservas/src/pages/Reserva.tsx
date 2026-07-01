@@ -91,13 +91,13 @@ export default function ReservaRoutePage() {
   const confirmStep = () => {
     switch(curStep){
       case "Data":
-        if (!isValidDate(findBooking(reservas.currentID, reservas.bookings).date_in) || !isValidDate(findBooking(reservas.currentID, reservas.bookings).date_out)) {
+        if (!isValidDate(findBooking(reservas).date_in) || !isValidDate(findBooking(reservas).date_out)) {
           window.alert("A data deve ser selecionada!");
           return false;
         }
         break;
       case "Quartos":
-        if (findBooking(reservas.currentID, reservas.bookings).rooms.length == 0) {
+        if (findBooking(reservas).rooms.length == 0) {
           window.alert("Pelo menos 1 quarto precisa ser reservado")
           return false;
         }

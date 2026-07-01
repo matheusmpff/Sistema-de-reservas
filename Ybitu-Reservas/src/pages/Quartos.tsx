@@ -130,8 +130,8 @@ export default function Quartos() {
   // load the quantity of rooms available for each type in the date range selected in the previous page
   useEffect(() => {
     const query_param = new URLSearchParams({
-      date_in: findBooking(reservas.currentID, reservas.bookings).date_in.toISOString().split("T")[0],
-      date_out: findBooking(reservas.currentID, reservas.bookings).date_out.toISOString().split("T")[0],
+      date_in: findBooking(reservas).date_in.toISOString().split("T")[0],
+      date_out: findBooking(reservas).date_out.toISOString().split("T")[0],
     }).toString();
 
     fetch("http://localhost:3000/user/availablerooms?" + query_param, {
@@ -190,7 +190,7 @@ export default function Quartos() {
   };
 
   const changeRoomQuantity = (type: RoomType["rType"], ammount: number) => {
-    let rooms = findBooking(reservas.currentID, reservas.bookings).rooms;
+    let rooms = findBooking(reservas).rooms;
     let index = rooms.findIndex((room) => room.roomType == type);
     if (index == -1) {
       rooms.push({roomQuantity: 1, roomType: type});
@@ -219,7 +219,7 @@ export default function Quartos() {
 
       <Splide {... splide_config}>
         {quartosList.map((quarto) => {
-            let count = findBooking(reservas.currentID, reservas.bookings).rooms.find((room) => room.roomType == quarto.rType)?.roomQuantity;
+            let count = findBooking(reservas).rooms.find((room) => room.roomType == quarto.rType)?.roomQuantity;
             let countData: ContadorDados = {
               limit: roomQuantity[quarto.rType],
               count: count === undefined ? 0 : count,
