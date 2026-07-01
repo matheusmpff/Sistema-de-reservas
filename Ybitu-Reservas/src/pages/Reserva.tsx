@@ -84,7 +84,7 @@ export default function ReservaRoutePage() {
   let location = useLocation();
   let curStep = location.pathname.split("/").at(2);
   if (curStep == undefined) {
-    console.log(curStep);
+    // console.log(curStep);
     curStep = "Data";
   }
   curStep = decodeURIComponent(curStep);
@@ -105,7 +105,6 @@ export default function ReservaRoutePage() {
         }
         break;
       case "Hóspedes":
-        console.log("ababa");
         for (const person of findBooking(reservas).otherGuests) {
           try {
             if (person.guestType == GuestType.Adult) {
