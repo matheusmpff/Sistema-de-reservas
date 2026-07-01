@@ -141,7 +141,16 @@ export default function Quartos() {
     .then( async (res) => {
       if (res.status == 200) {
         let message = await res.json();
-        const avail = availRoomsResponse.parse(message);
+        let avail = availRoomsResponse.parse(message);
+
+        // subtract rooms chosen in other booking in this session
+        for (const book of reservas.bookings) {
+          if (book.id != reservas.currentID && book.date_in.getTime() < findBooking(reservas).date_out.getTime() && book.date_out.getTime() > findBooking(reservas).date_in.getTime()) {
+            for (const room of book.rooms) {
+              avail[room.roomType] -= room.roomQuantity;
+            }
+          }
+        }
 
         setRoomQuantity({
           Duplo: avail.Duplo,
