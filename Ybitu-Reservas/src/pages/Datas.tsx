@@ -30,10 +30,8 @@ export default function Datas() {
 
     useEffect(() => {
         if (range === undefined || range.from === undefined || range.to === undefined || range.from == range.to) {
-            console.log("pai")
             return;
         }
-        console.log("mae")
         let date_in = range.from;
         let date_out = range.to;
 

@@ -342,7 +342,7 @@ export const insertBooking = async (book: BookingData) => {
         if (availType.length < room.roomQuantity) {
             throw Error("Quantidade insuficiente de quartos disponiveis na data");
         }
-        availableRooms.concat(availType.slice(0, room.roomQuantity).map((r) => {return {numeroQuarto: r.numero, custo_frigobar: 0, multa: 0}}))
+        availableRooms = availableRooms.concat(availType.slice(0, room.roomQuantity).map((r) => {return {numeroQuarto: r.numero, custo_frigobar: 0, multa: 0}}))
     }
 
 

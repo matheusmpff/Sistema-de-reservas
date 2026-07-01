@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router";
-import { findBooking, GuestType, toSex, type BookingContext, type BookingData, type UserServerData } from "../types.ts";
+import { findBooking, GuestType, toSex, type BookingData, type UserServerData } from "../types.ts";
 
 import BarraProgresso from "../components/BarraProgresso.tsx";
 import { useAuth } from "../context/AuthContext.tsx";

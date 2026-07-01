@@ -3,8 +3,9 @@ import QuartoTriploImage from "../assets/quartos/QuartoTriplo.jpeg";
 import QuartoQuadruploImage from "../assets/quartos/QuartoQuadruplo.jpeg";
 import { type UseBookCont, type RoomType, type stateOp, findBooking } from "../types.ts";
 
+import * as zod from "zod";
 import { useOutletContext } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Splide, SplideSlide, type SplideProps } from "@trg69/react-splide";
 import { Minus, Plus } from "lucide-react";
 
@@ -76,7 +77,7 @@ function AbaQuarto(prop: {data: RoomType, countData: ContadorDados, changeFn: (a
       <div className="aba-numerador aba-area">
         <h3>Quantidade disponível:</h3>
         <div className="aba-mostrador">
-          <p>{prop.data.quantity}</p>
+          <p>{prop.countData.limit}</p>
         </div>
       </div>
       <AbaSelecao data={prop.countData} changeFn={(ammount: number) => prop.changeFn(prop.data.rType, ammount)}/>
@@ -108,18 +109,59 @@ const quartosList: RoomType[] = [
   },
 ];
 
+const availRoomsResponse = zod.object({
+  Duplo: zod.int(),
+  Triplo: zod.int(),
+  Quádruplo: zod.int(),
+});
+
 export default function Quartos() {
   const [reservas, setReservas] = useOutletContext<UseBookCont>();
 
   // temporary state while fetching number of rooms
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  fetch("http://localhost:3000/user/availablerooms", { credentials: "include" })
-    .then((res) => {
-      if (res.status == 200) {
-      }
+  const [roomQuantity, setRoomQuantity] = useState({
+    Duplo: 0,
+    Triplo: 0,
+    Quádruplo: 0,
+  });
+
+  // load the quantity of rooms available for each type in the date range selected in the previous page
+  useEffect(() => {
+    const query_param = new URLSearchParams({
+      date_in: findBooking(reservas.currentID, reservas.bookings).date_in.toISOString().split("T")[0],
+      date_out: findBooking(reservas.currentID, reservas.bookings).date_out.toISOString().split("T")[0],
+    }).toString();
+
+    fetch("http://localhost:3000/user/availablerooms?" + query_param, {
+      credentials: "include",
+      cache: "no-store",
     })
-  
+    .then( async (res) => {
+      if (res.status == 200) {
+        let message = await res.json();
+        const avail = availRoomsResponse.parse(message);
+
+        setRoomQuantity({
+          Duplo: avail.Duplo,
+          Triplo: avail.Triplo,
+          Quádruplo: avail.Quádruplo,
+        });
+        setLoading(false);
+      }
+      else {
+        let message: { msg?: string } = await res.json();
+        if (message.msg) {
+          window.alert(message.msg);
+        }
+      }
+    }).catch((reason) => {
+      window.alert(reason);
+    })
+  }, []);
+
+
   let splide_config: SplideProps = {
     options: {
       perPage: 3,
@@ -179,7 +221,7 @@ export default function Quartos() {
         {quartosList.map((quarto) => {
             let count = findBooking(reservas.currentID, reservas.bookings).rooms.find((room) => room.roomType == quarto.rType)?.roomQuantity;
             let countData: ContadorDados = {
-              limit: quarto.quantity,
+              limit: roomQuantity[quarto.rType],
               count: count === undefined ? 0 : count,
               loading,
             }

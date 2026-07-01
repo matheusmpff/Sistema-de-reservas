@@ -106,21 +106,31 @@ router.get("/booking", Auth.private, async (req, res) => {
     }
 })
 
-router.get("/availablerooms", Auth.private, async (req: Request<{}, {}, BookingData>, res) => {
+router.get("/availablerooms", Auth.private, async (req, res) => {
     try {
         const token = req.cookies.token;
         jwt.verify(token, process.env.JWT_SECRET_KEY as string) as JwtPayload;
 
-        const availableRooms = await getAvailableRooms(req.body.date_in, req.body.date_out);
+        const { date_in, date_out } = req.query;
+        // TODO: add transform
+        const d_in = zod.coerce.date().parse(date_in);
+        const d_out = zod.coerce.date().parse(date_out);
+
+        const availableRooms = await getAvailableRooms(d_in, d_out);
 
         res.status(200).send({
-            quartoDuplo: availableRooms.filter((a) => a.tipo == "DUPLO").length,
-            quartoTriplo: availableRooms.filter((a) => a.tipo == "TRIPLO").length,
-            quartoQuadruplo: availableRooms.filter((a) => a.tipo == "QUADRUPLO").length,
+            Duplo: availableRooms.filter((a) => a.tipo == "DUPLO").length,
+            Triplo: availableRooms.filter((a) => a.tipo == "TRIPLO").length,
+            Quádruplo: availableRooms.filter((a) => a.tipo == "QUADRUPLO").length,
         });
     }
-    catch {
-        res.status(500).send({ msg: "Eita preula" })
+    catch (err) {
+        if (err instanceof zod.ZodError) {
+            res.status(400).send({ msg: err.message })
+        }
+        else {
+            res.status(500).send({ msg: err })
+        }
     }
 })
 
